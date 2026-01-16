@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Smart Attendance System</title>
+</head>
+<body style="font-family: Arial; text-align:center; margin-top:40px;">
+
+<h1>Smart Attendance System</h1>
+
+<!-- 🔔 MESSAGE AREA (FLASH MESSAGE) -->
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <div style="background:#e8ffe8; border:1px solid green; padding:10px; margin-bottom:20px;">
+      {% for message in messages %}
+        <p><b>{{ message }}</b></p>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endwith %}
+
+<!-- 👤 REGISTRATION -->
+<form action="/register" method="post">
+    <input type="text" name="student_name" placeholder="Enter Student Name" required>
+    <br><br>
+    <button type="submit">Register Student</button>
+</form>
+
+<br><hr><br>
+
+<!-- ⚙️ TRAIN MODEL -->
+<form action="/train">
+    <button>Train / Update Model</button>
+</form>
+
+<br><br>
+
+<!-- 📸 ATTENDANCE -->
+<form action="/attendance">
+    <button>Take Attendance</button>
+</form>
+
+<br><br>
+
+<!-- 🔄 RESET -->
+<form action="/reset">
+    <button style="color:red;">Reset Model</button>
+</form>
+
+<p style="margin-top:30px; color:gray;">
+    Note: Camera opens in a separate window.  
+    If not visible, check taskbar or press ALT + TAB.
+</p>
+
+</body>
+</html>
