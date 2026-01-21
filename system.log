@@ -1,0 +1,1246 @@
+{"timestamp": "2026-01-17 00:09:00", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-01-17 00:09:00", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-01-17 00:28:41", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-01-17 00:28:41", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-01-17 00:29:24", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-01-17 00:29:24", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-01-17 00:30:36", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-01-17 00:30:36", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-01-17 00:30:37", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-01-17 00:30:37", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-01-17 00:32:43", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-01-17 00:32:43", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-01-17 00:33:06", "type": "info", "message": "Web interface accessed"}
+{"timestamp": "2026-01-17 00:33:06", "type": "info", "message": "Web interface accessed"}
+{"timestamp": "2026-01-17 00:33:34", "type": "info", "message": "Web interface accessed"}
+{"timestamp": "2026-01-17 00:33:42", "type": "info", "message": "Attendance taking started"}
+{"timestamp": "2026-01-17 00:33:43", "type": "info", "message": "Web interface accessed"}
+{"timestamp": "2026-01-17 00:33:45", "type": "info", "message": "Traceback (most recent call last):"}
+{"timestamp": "2026-01-17 00:33:45", "type": "info", "message": "File \"D:\\Smart_Attendance_System\\recognize_and_attendance.py\", line 102, in <module>"}
+{"timestamp": "2026-01-17 00:33:45", "type": "info", "message": "print(\"\\U0001f4f8 Attendance taking started! Camera open for 10 seconds...\")"}
+{"timestamp": "2026-01-17 00:33:45", "type": "info", "message": "~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"}
+{"timestamp": "2026-01-17 00:33:45", "type": "info", "message": "File \"C:\\Users\\govin\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\encodings\\cp1252.py\", line 19, in encode"}
+{"timestamp": "2026-01-17 00:33:45", "type": "info", "message": "return codecs.charmap_encode(input,self.errors,encoding_table)[0]"}
+{"timestamp": "2026-01-17 00:33:46", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-01-17 00:33:46", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-01-17 00:33:59", "type": "info", "message": "Attendance taking started"}
+{"timestamp": "2026-01-17 00:34:00", "type": "info", "message": "Web interface accessed"}
+{"timestamp": "2026-01-17 00:34:04", "type": "info", "message": "Traceback (most recent call last):"}
+{"timestamp": "2026-01-17 00:34:04", "type": "info", "message": "File \"D:\\Smart_Attendance_System\\recognize_and_attendance.py\", line 102, in <module>"}
+{"timestamp": "2026-01-17 00:34:04", "type": "info", "message": "print(\"\\U0001f4f8 Attendance taking started! Camera open for 10 seconds...\")"}
+{"timestamp": "2026-01-17 00:34:04", "type": "info", "message": "~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"}
+{"timestamp": "2026-01-17 00:34:04", "type": "info", "message": "File \"C:\\Users\\govin\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\encodings\\cp1252.py\", line 19, in encode"}
+{"timestamp": "2026-01-17 00:34:04", "type": "info", "message": "return codecs.charmap_encode(input,self.errors,encoding_table)[0]"}
+{"timestamp": "2026-01-17 00:34:04", "type": "info", "message": "~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"}
+{"timestamp": "2026-01-17 00:34:04", "type": "info", "message": "UnicodeEncodeError: 'charmap' codec can't encode character '\\U0001f4f8' in position 0: character maps to <undefined>"}
+{"timestamp": "2026-01-17 00:34:13", "type": "info", "message": "Registration started for student: Govind"}
+{"timestamp": "2026-01-17 00:34:14", "type": "info", "message": "Web interface accessed"}
+{"timestamp": "2026-01-17 00:34:24", "type": "info", "message": "Traceback (most recent call last):"}
+{"timestamp": "2026-01-17 00:34:25", "type": "info", "message": "File \"D:\\Smart_Attendance_System\\dataset_capture.py\", line 148, in <module>"}
+{"timestamp": "2026-01-17 00:34:25", "type": "info", "message": "print(f\"\\u2705 Registration completed for {student_name}\")"}
+{"timestamp": "2026-01-17 00:34:25", "type": "info", "message": "~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"}
+{"timestamp": "2026-01-17 00:34:25", "type": "info", "message": "File \"C:\\Users\\govin\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\encodings\\cp1252.py\", line 19, in encode"}
+{"timestamp": "2026-01-17 00:34:25", "type": "info", "message": "return codecs.charmap_encode(input,self.errors,encoding_table)[0]"}
+{"timestamp": "2026-01-17 00:34:25", "type": "info", "message": "~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"}
+{"timestamp": "2026-01-17 00:34:25", "type": "info", "message": "UnicodeEncodeError: 'charmap' codec can't encode character '\\u2705' in position 0: character maps to <undefined>"}
+{"timestamp": "2026-01-17 00:34:27", "type": "info", "message": "Attendance taking started"}
+{"timestamp": "2026-01-17 00:34:29", "type": "info", "message": "Attendance taking started"}
+{"timestamp": "2026-01-17 00:34:29", "type": "info", "message": "Web interface accessed"}
+{"timestamp": "2026-01-17 00:34:29", "type": "info", "message": "Model training started"}
+{"timestamp": "2026-01-17 00:34:30", "type": "info", "message": "Web interface accessed"}
+{"timestamp": "2026-01-17 00:34:30", "type": "info", "message": "Traceback (most recent call last):"}
+{"timestamp": "2026-01-17 00:34:30", "type": "info", "message": "File \"D:\\Smart_Attendance_System\\recognize_and_attendance.py\", line 102, in <module>"}
+{"timestamp": "2026-01-17 00:34:30", "type": "info", "message": "print(\"\\U0001f4f8 Attendance taking started! Camera open for 10 seconds...\")"}
+{"timestamp": "2026-01-17 00:34:30", "type": "info", "message": "~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"}
+{"timestamp": "2026-01-17 00:34:30", "type": "info", "message": "File \"C:\\Users\\govin\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\encodings\\cp1252.py\", line 19, in encode"}
+{"timestamp": "2026-01-17 00:34:30", "type": "info", "message": "return codecs.charmap_encode(input,self.errors,encoding_table)[0]"}
+{"timestamp": "2026-01-17 00:34:30", "type": "info", "message": "~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"}
+{"timestamp": "2026-01-17 00:34:30", "type": "info", "message": "UnicodeEncodeError: 'charmap' codec can't encode character '\\U0001f4f8' in position 0: character maps to <undefined>"}
+{"timestamp": "2026-01-17 00:34:31", "type": "info", "message": "Starting model training..."}
+{"timestamp": "2026-01-17 00:34:31", "type": "info", "message": "--------------------------------------------------"}
+{"timestamp": "2026-01-17 00:34:31", "type": "info", "message": "Processing: Abhishek (Label: 0)"}
+{"timestamp": "2026-01-17 00:34:31", "type": "info", "message": "Traceback (most recent call last):"}
+{"timestamp": "2026-01-17 00:34:31", "type": "info", "message": "File \"D:\\Smart_Attendance_System\\train_model.py\", line 83, in <module>"}
+{"timestamp": "2026-01-17 00:34:31", "type": "info", "message": "print(f\"  \\u2705 Processed {image_count} images for {person_name}\")"}
+{"timestamp": "2026-01-17 00:34:31", "type": "info", "message": "~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"}
+{"timestamp": "2026-01-17 00:34:31", "type": "info", "message": "File \"C:\\Users\\govin\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\encodings\\cp1252.py\", line 19, in encode"}
+{"timestamp": "2026-01-17 00:34:31", "type": "info", "message": "return codecs.charmap_encode(input,self.errors,encoding_table)[0]"}
+{"timestamp": "2026-01-17 00:34:31", "type": "info", "message": "~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"}
+{"timestamp": "2026-01-17 00:34:31", "type": "info", "message": "UnicodeEncodeError: 'charmap' codec can't encode character '\\u2705' in position 2: character maps to <undefined>"}
+{"timestamp": "2026-01-17 00:34:32", "type": "info", "message": "Traceback (most recent call last):"}
+{"timestamp": "2026-01-17 00:34:32", "type": "info", "message": "File \"D:\\Smart_Attendance_System\\recognize_and_attendance.py\", line 102, in <module>"}
+{"timestamp": "2026-01-17 00:34:32", "type": "info", "message": "print(\"\\U0001f4f8 Attendance taking started! Camera open for 10 seconds...\")"}
+{"timestamp": "2026-01-17 00:34:32", "type": "info", "message": "~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"}
+{"timestamp": "2026-01-17 00:34:32", "type": "info", "message": "File \"C:\\Users\\govin\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\encodings\\cp1252.py\", line 19, in encode"}
+{"timestamp": "2026-01-17 00:34:32", "type": "info", "message": "return codecs.charmap_encode(input,self.errors,encoding_table)[0]"}
+{"timestamp": "2026-01-17 00:34:32", "type": "info", "message": "~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"}
+{"timestamp": "2026-01-17 00:34:32", "type": "info", "message": "UnicodeEncodeError: 'charmap' codec can't encode character '\\U0001f4f8' in position 0: character maps to <undefined>"}
+{"timestamp": "2026-01-17 00:34:33", "type": "info", "message": "Attendance taking started"}
+{"timestamp": "2026-01-17 00:34:34", "type": "info", "message": "Web interface accessed"}
+{"timestamp": "2026-01-17 00:34:35", "type": "info", "message": "Attendance taking started"}
+{"timestamp": "2026-01-17 00:34:36", "type": "info", "message": "Traceback (most recent call last):"}
+{"timestamp": "2026-01-17 00:34:36", "type": "info", "message": "File \"D:\\Smart_Attendance_System\\recognize_and_attendance.py\", line 102, in <module>"}
+{"timestamp": "2026-01-17 00:34:36", "type": "info", "message": "print(\"\\U0001f4f8 Attendance taking started! Camera open for 10 seconds...\")"}
+{"timestamp": "2026-01-17 00:34:36", "type": "info", "message": "~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"}
+{"timestamp": "2026-01-17 00:34:36", "type": "info", "message": "File \"C:\\Users\\govin\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\encodings\\cp1252.py\", line 19, in encode"}
+{"timestamp": "2026-01-17 00:34:36", "type": "info", "message": "return codecs.charmap_encode(input,self.errors,encoding_table)[0]"}
+{"timestamp": "2026-01-17 00:34:36", "type": "info", "message": "~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"}
+{"timestamp": "2026-01-17 00:34:36", "type": "info", "message": "UnicodeEncodeError: 'charmap' codec can't encode character '\\U0001f4f8' in position 0: character maps to <undefined>"}
+{"timestamp": "2026-01-17 00:34:36", "type": "info", "message": "Attendance taking started"}
+{"timestamp": "2026-01-17 00:34:37", "type": "info", "message": "Web interface accessed"}
+{"timestamp": "2026-01-17 00:34:38", "type": "info", "message": "Traceback (most recent call last):"}
+{"timestamp": "2026-01-17 00:34:38", "type": "info", "message": "File \"D:\\Smart_Attendance_System\\recognize_and_attendance.py\", line 102, in <module>"}
+{"timestamp": "2026-01-17 00:34:38", "type": "info", "message": "print(\"\\U0001f4f8 Attendance taking started! Camera open for 10 seconds...\")"}
+{"timestamp": "2026-01-17 00:34:38", "type": "info", "message": "~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"}
+{"timestamp": "2026-01-17 00:34:38", "type": "info", "message": "File \"C:\\Users\\govin\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\encodings\\cp1252.py\", line 19, in encode"}
+{"timestamp": "2026-01-17 00:34:38", "type": "info", "message": "return codecs.charmap_encode(input,self.errors,encoding_table)[0]"}
+{"timestamp": "2026-01-17 00:34:38", "type": "info", "message": "~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"}
+{"timestamp": "2026-01-17 00:34:38", "type": "info", "message": "UnicodeEncodeError: 'charmap' codec can't encode character '\\U0001f4f8' in position 0: character maps to <undefined>"}
+{"timestamp": "2026-01-17 00:34:40", "type": "info", "message": "Traceback (most recent call last):"}
+{"timestamp": "2026-01-17 00:34:40", "type": "info", "message": "File \"D:\\Smart_Attendance_System\\recognize_and_attendance.py\", line 102, in <module>"}
+{"timestamp": "2026-01-17 00:34:40", "type": "info", "message": "print(\"\\U0001f4f8 Attendance taking started! Camera open for 10 seconds...\")"}
+{"timestamp": "2026-01-17 00:34:40", "type": "info", "message": "~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"}
+{"timestamp": "2026-01-17 00:34:40", "type": "info", "message": "File \"C:\\Users\\govin\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\encodings\\cp1252.py\", line 19, in encode"}
+{"timestamp": "2026-01-17 00:34:40", "type": "info", "message": "return codecs.charmap_encode(input,self.errors,encoding_table)[0]"}
+{"timestamp": "2026-01-17 00:34:40", "type": "info", "message": "~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"}
+{"timestamp": "2026-01-17 00:34:40", "type": "info", "message": "UnicodeEncodeError: 'charmap' codec can't encode character '\\U0001f4f8' in position 0: character maps to <undefined>"}
+{"timestamp": "2026-01-17 00:34:45", "type": "info", "message": "Attendance taking started"}
+{"timestamp": "2026-01-17 00:34:46", "type": "info", "message": "Web interface accessed"}
+{"timestamp": "2026-01-17 00:34:48", "type": "info", "message": "Traceback (most recent call last):"}
+{"timestamp": "2026-01-17 00:34:48", "type": "info", "message": "File \"D:\\Smart_Attendance_System\\recognize_and_attendance.py\", line 102, in <module>"}
+{"timestamp": "2026-01-17 00:34:48", "type": "info", "message": "print(\"\\U0001f4f8 Attendance taking started! Camera open for 10 seconds...\")"}
+{"timestamp": "2026-01-17 00:34:48", "type": "info", "message": "~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"}
+{"timestamp": "2026-01-17 00:34:48", "type": "info", "message": "File \"C:\\Users\\govin\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\encodings\\cp1252.py\", line 19, in encode"}
+{"timestamp": "2026-01-17 00:34:48", "type": "info", "message": "return codecs.charmap_encode(input,self.errors,encoding_table)[0]"}
+{"timestamp": "2026-01-17 00:34:48", "type": "info", "message": "~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"}
+{"timestamp": "2026-01-17 00:34:48", "type": "info", "message": "UnicodeEncodeError: 'charmap' codec can't encode character '\\U0001f4f8' in position 0: character maps to <undefined>"}
+{"timestamp": "2026-01-17 00:35:33", "type": "info", "message": "Attendance taking started"}
+{"timestamp": "2026-01-17 00:35:33", "type": "info", "message": "Attendance taking started"}
+{"timestamp": "2026-01-17 00:35:34", "type": "info", "message": "Attendance taking started"}
+{"timestamp": "2026-01-17 00:35:35", "type": "info", "message": "Attendance taking started"}
+{"timestamp": "2026-01-17 00:35:35", "type": "info", "message": "Web interface accessed"}
+{"timestamp": "2026-01-17 00:35:35", "type": "info", "message": "Traceback (most recent call last):"}
+{"timestamp": "2026-01-17 00:35:35", "type": "info", "message": "File \"D:\\Smart_Attendance_System\\recognize_and_attendance.py\", line 102, in <module>"}
+{"timestamp": "2026-01-17 00:35:35", "type": "info", "message": "print(\"\\U0001f4f8 Attendance taking started! Camera open for 10 seconds...\")"}
+{"timestamp": "2026-01-17 00:35:35", "type": "info", "message": "~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"}
+{"timestamp": "2026-01-17 00:35:35", "type": "info", "message": "File \"C:\\Users\\govin\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\encodings\\cp1252.py\", line 19, in encode"}
+{"timestamp": "2026-01-17 00:35:36", "type": "info", "message": "return codecs.charmap_encode(input,self.errors,encoding_table)[0]"}
+{"timestamp": "2026-01-17 00:35:36", "type": "info", "message": "~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"}
+{"timestamp": "2026-01-17 00:35:36", "type": "info", "message": "UnicodeEncodeError: 'charmap' codec can't encode character '\\U0001f4f8' in position 0: character maps to <undefined>"}
+{"timestamp": "2026-01-17 00:35:36", "type": "info", "message": "Traceback (most recent call last):"}
+{"timestamp": "2026-01-17 00:35:36", "type": "info", "message": "File \"D:\\Smart_Attendance_System\\recognize_and_attendance.py\", line 102, in <module>"}
+{"timestamp": "2026-01-17 00:35:36", "type": "info", "message": "print(\"\\U0001f4f8 Attendance taking started! Camera open for 10 seconds...\")"}
+{"timestamp": "2026-01-17 00:35:36", "type": "info", "message": "~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"}
+{"timestamp": "2026-01-17 00:35:36", "type": "info", "message": "File \"C:\\Users\\govin\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\encodings\\cp1252.py\", line 19, in encode"}
+{"timestamp": "2026-01-17 00:35:36", "type": "info", "message": "return codecs.charmap_encode(input,self.errors,encoding_table)[0]"}
+{"timestamp": "2026-01-17 00:35:36", "type": "info", "message": "~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"}
+{"timestamp": "2026-01-17 00:35:36", "type": "info", "message": "UnicodeEncodeError: 'charmap' codec can't encode character '\\U0001f4f8' in position 0: character maps to <undefined>"}
+{"timestamp": "2026-01-17 00:35:36", "type": "info", "message": "Traceback (most recent call last):"}
+{"timestamp": "2026-01-17 00:35:36", "type": "info", "message": "File \"D:\\Smart_Attendance_System\\recognize_and_attendance.py\", line 102, in <module>"}
+{"timestamp": "2026-01-17 00:35:36", "type": "info", "message": "print(\"\\U0001f4f8 Attendance taking started! Camera open for 10 seconds...\")"}
+{"timestamp": "2026-01-17 00:35:36", "type": "info", "message": "~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"}
+{"timestamp": "2026-01-17 00:35:36", "type": "info", "message": "File \"C:\\Users\\govin\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\encodings\\cp1252.py\", line 19, in encode"}
+{"timestamp": "2026-01-17 00:35:36", "type": "info", "message": "return codecs.charmap_encode(input,self.errors,encoding_table)[0]"}
+{"timestamp": "2026-01-17 00:35:36", "type": "info", "message": "~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"}
+{"timestamp": "2026-01-17 00:35:36", "type": "info", "message": "UnicodeEncodeError: 'charmap' codec can't encode character '\\U0001f4f8' in position 0: character maps to <undefined>"}
+{"timestamp": "2026-01-17 00:35:37", "type": "info", "message": "Traceback (most recent call last):"}
+{"timestamp": "2026-01-17 00:35:37", "type": "info", "message": "File \"D:\\Smart_Attendance_System\\recognize_and_attendance.py\", line 102, in <module>"}
+{"timestamp": "2026-01-17 00:35:37", "type": "info", "message": "print(\"\\U0001f4f8 Attendance taking started! Camera open for 10 seconds...\")"}
+{"timestamp": "2026-01-17 00:35:37", "type": "info", "message": "~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"}
+{"timestamp": "2026-01-17 00:35:37", "type": "info", "message": "File \"C:\\Users\\govin\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\encodings\\cp1252.py\", line 19, in encode"}
+{"timestamp": "2026-01-17 00:35:37", "type": "info", "message": "return codecs.charmap_encode(input,self.errors,encoding_table)[0]"}
+{"timestamp": "2026-01-17 00:35:37", "type": "info", "message": "~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"}
+{"timestamp": "2026-01-17 00:35:37", "type": "info", "message": "UnicodeEncodeError: 'charmap' codec can't encode character '\\U0001f4f8' in position 0: character maps to <undefined>"}
+{"timestamp": "2026-01-17 00:35:46", "type": "info", "message": "Attendance taking started"}
+{"timestamp": "2026-01-17 00:35:47", "type": "info", "message": "Web interface accessed"}
+{"timestamp": "2026-01-17 00:35:51", "type": "info", "message": "Traceback (most recent call last):"}
+{"timestamp": "2026-01-17 00:35:51", "type": "info", "message": "File \"D:\\Smart_Attendance_System\\recognize_and_attendance.py\", line 102, in <module>"}
+{"timestamp": "2026-01-17 00:35:51", "type": "info", "message": "print(\"\\U0001f4f8 Attendance taking started! Camera open for 10 seconds...\")"}
+{"timestamp": "2026-01-17 00:35:51", "type": "info", "message": "~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"}
+{"timestamp": "2026-01-17 00:35:51", "type": "info", "message": "File \"C:\\Users\\govin\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\encodings\\cp1252.py\", line 19, in encode"}
+{"timestamp": "2026-01-17 00:35:51", "type": "info", "message": "return codecs.charmap_encode(input,self.errors,encoding_table)[0]"}
+{"timestamp": "2026-01-17 00:35:51", "type": "info", "message": "~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"}
+{"timestamp": "2026-01-17 00:35:51", "type": "info", "message": "UnicodeEncodeError: 'charmap' codec can't encode character '\\U0001f4f8' in position 0: character maps to <undefined>"}
+{"timestamp": "2026-01-17 00:40:05", "type": "info", "message": "Attendance taking started"}
+{"timestamp": "2026-01-17 00:40:05", "type": "info", "message": "Web interface accessed"}
+{"timestamp": "2026-01-17 00:40:06", "type": "info", "message": "Traceback (most recent call last):"}
+{"timestamp": "2026-01-17 00:40:06", "type": "info", "message": "File \"D:\\Smart_Attendance_System\\recognize_and_attendance.py\", line 102, in <module>"}
+{"timestamp": "2026-01-17 00:40:06", "type": "info", "message": "print(\"\\U0001f4f8 Attendance taking started! Camera open for 10 seconds...\")"}
+{"timestamp": "2026-01-17 00:40:06", "type": "info", "message": "~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"}
+{"timestamp": "2026-01-17 00:40:06", "type": "info", "message": "File \"C:\\Users\\govin\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\encodings\\cp1252.py\", line 19, in encode"}
+{"timestamp": "2026-01-17 00:40:06", "type": "info", "message": "return codecs.charmap_encode(input,self.errors,encoding_table)[0]"}
+{"timestamp": "2026-01-17 00:40:06", "type": "info", "message": "~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"}
+{"timestamp": "2026-01-17 00:40:06", "type": "info", "message": "UnicodeEncodeError: 'charmap' codec can't encode character '\\U0001f4f8' in position 0: character maps to <undefined>"}
+{"timestamp": "2026-01-17 00:42:10", "type": "info", "message": "Attendance taking started"}
+{"timestamp": "2026-01-17 00:42:10", "type": "info", "message": "Web interface accessed"}
+{"timestamp": "2026-01-17 00:42:12", "type": "info", "message": "Traceback (most recent call last):"}
+{"timestamp": "2026-01-17 00:42:12", "type": "info", "message": "File \"D:\\Smart_Attendance_System\\recognize_and_attendance.py\", line 102, in <module>"}
+{"timestamp": "2026-01-17 00:42:12", "type": "info", "message": "print(\"\\U0001f4f8 Attendance taking started! Camera open for 10 seconds...\")"}
+{"timestamp": "2026-01-17 00:42:12", "type": "info", "message": "~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"}
+{"timestamp": "2026-01-17 00:42:12", "type": "info", "message": "File \"C:\\Users\\govin\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\encodings\\cp1252.py\", line 19, in encode"}
+{"timestamp": "2026-01-17 00:42:12", "type": "info", "message": "return codecs.charmap_encode(input,self.errors,encoding_table)[0]"}
+{"timestamp": "2026-01-17 00:42:12", "type": "info", "message": "~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"}
+{"timestamp": "2026-01-17 00:42:12", "type": "info", "message": "UnicodeEncodeError: 'charmap' codec can't encode character '\\U0001f4f8' in position 0: character maps to <undefined>"}
+{"timestamp": "2026-01-17 00:43:09", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-01-17 00:43:09", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-01-17 00:43:09", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-01-17 00:43:09", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-01-17 00:46:07", "type": "info", "message": "Attendance taking started"}
+{"timestamp": "2026-01-17 00:46:07", "type": "info", "message": "Web interface accessed"}
+{"timestamp": "2026-01-17 00:46:09", "type": "info", "message": "Traceback (most recent call last):"}
+{"timestamp": "2026-01-17 00:46:09", "type": "info", "message": "File \"D:\\Smart_Attendance_System\\recognize_and_attendance.py\", line 102, in <module>"}
+{"timestamp": "2026-01-17 00:46:09", "type": "info", "message": "print(\"\\U0001f4f8 Attendance taking started! Camera open for 10 seconds...\")"}
+{"timestamp": "2026-01-17 00:46:09", "type": "info", "message": "~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"}
+{"timestamp": "2026-01-17 00:46:09", "type": "info", "message": "File \"C:\\Users\\govin\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\encodings\\cp1252.py\", line 19, in encode"}
+{"timestamp": "2026-01-17 00:46:09", "type": "info", "message": "return codecs.charmap_encode(input,self.errors,encoding_table)[0]"}
+{"timestamp": "2026-01-17 00:46:09", "type": "info", "message": "~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"}
+{"timestamp": "2026-01-17 00:46:09", "type": "info", "message": "UnicodeEncodeError: 'charmap' codec can't encode character '\\U0001f4f8' in position 0: character maps to <undefined>"}
+{"timestamp": "2026-01-17 00:46:22", "type": "info", "message": "Model training started"}
+{"timestamp": "2026-01-17 00:46:22", "type": "info", "message": "Model training started"}
+{"timestamp": "2026-01-17 00:46:22", "type": "info", "message": "Web interface accessed"}
+{"timestamp": "2026-01-17 00:46:23", "type": "info", "message": "Starting model training..."}
+{"timestamp": "2026-01-17 00:46:23", "type": "info", "message": "--------------------------------------------------"}
+{"timestamp": "2026-01-17 00:46:23", "type": "info", "message": "Starting model training..."}
+{"timestamp": "2026-01-17 00:46:23", "type": "info", "message": "Processing: Abhishek (Label: 0)"}
+{"timestamp": "2026-01-17 00:46:23", "type": "info", "message": "--------------------------------------------------"}
+{"timestamp": "2026-01-17 00:46:23", "type": "info", "message": "Traceback (most recent call last):"}
+{"timestamp": "2026-01-17 00:46:23", "type": "info", "message": "Processing: Abhishek (Label: 0)"}
+{"timestamp": "2026-01-17 00:46:23", "type": "info", "message": "File \"D:\\Smart_Attendance_System\\train_model.py\", line 83, in <module>"}
+{"timestamp": "2026-01-17 00:46:23", "type": "info", "message": "Traceback (most recent call last):"}
+{"timestamp": "2026-01-17 00:46:23", "type": "info", "message": "print(f\"  \\u2705 Processed {image_count} images for {person_name}\")"}
+{"timestamp": "2026-01-17 00:46:23", "type": "info", "message": "~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"}
+{"timestamp": "2026-01-17 00:46:23", "type": "info", "message": "File \"D:\\Smart_Attendance_System\\train_model.py\", line 83, in <module>"}
+{"timestamp": "2026-01-17 00:46:23", "type": "info", "message": "File \"C:\\Users\\govin\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\encodings\\cp1252.py\", line 19, in encode"}
+{"timestamp": "2026-01-17 00:46:23", "type": "info", "message": "print(f\"  \\u2705 Processed {image_count} images for {person_name}\")"}
+{"timestamp": "2026-01-17 00:46:23", "type": "info", "message": "return codecs.charmap_encode(input,self.errors,encoding_table)[0]"}
+{"timestamp": "2026-01-17 00:46:23", "type": "info", "message": "~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"}
+{"timestamp": "2026-01-17 00:46:23", "type": "info", "message": "~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"}
+{"timestamp": "2026-01-17 00:46:23", "type": "info", "message": "File \"C:\\Users\\govin\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\encodings\\cp1252.py\", line 19, in encode"}
+{"timestamp": "2026-01-17 00:46:23", "type": "info", "message": "UnicodeEncodeError: 'charmap' codec can't encode character '\\u2705' in position 2: character maps to <undefined>"}
+{"timestamp": "2026-01-17 00:46:23", "type": "info", "message": "return codecs.charmap_encode(input,self.errors,encoding_table)[0]"}
+{"timestamp": "2026-01-17 00:46:23", "type": "info", "message": "~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"}
+{"timestamp": "2026-01-17 00:46:23", "type": "info", "message": "UnicodeEncodeError: 'charmap' codec can't encode character '\\u2705' in position 2: character maps to <undefined>"}
+{"timestamp": "2026-01-17 00:53:47", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-01-17 00:53:47", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-01-17 01:03:38", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-01-17 01:03:38", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-01-17 22:49:51", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-01-17 22:49:51", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-01-17 22:49:52", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-01-17 22:49:52", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-01-17 22:50:08", "type": "info", "message": "Web interface accessed"}
+{"timestamp": "2026-01-17 22:51:03", "type": "info", "message": "Attendance taking started"}
+{"timestamp": "2026-01-17 22:51:04", "type": "info", "message": "Web interface accessed"}
+{"timestamp": "2026-01-17 22:51:05", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-01-17 22:51:05", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-01-17 22:51:07", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-01-17 22:51:07", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-01-17 22:51:44", "type": "info", "message": "Attendance taking started"}
+{"timestamp": "2026-01-17 22:51:44", "type": "info", "message": "Web interface accessed"}
+{"timestamp": "2026-01-17 22:51:46", "type": "info", "message": "Traceback (most recent call last):"}
+{"timestamp": "2026-01-17 22:51:46", "type": "info", "message": "File \"D:\\Smart_Attendance_System\\recognize_and_attendance.py\", line 102, in <module>"}
+{"timestamp": "2026-01-17 22:51:46", "type": "info", "message": "print(\"\\U0001f4f8 Attendance taking started! Camera open for 10 seconds...\")"}
+{"timestamp": "2026-01-17 22:51:46", "type": "info", "message": "~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"}
+{"timestamp": "2026-01-17 22:51:46", "type": "info", "message": "File \"C:\\Users\\govin\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\encodings\\cp1252.py\", line 19, in encode"}
+{"timestamp": "2026-01-17 22:51:46", "type": "info", "message": "return codecs.charmap_encode(input,self.errors,encoding_table)[0]"}
+{"timestamp": "2026-01-17 22:51:46", "type": "info", "message": "~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"}
+{"timestamp": "2026-01-17 22:51:46", "type": "info", "message": "UnicodeEncodeError: 'charmap' codec can't encode character '\\U0001f4f8' in position 0: character maps to <undefined>"}
+{"timestamp": "2026-01-17 22:51:47", "type": "info", "message": "Model training started"}
+{"timestamp": "2026-01-17 22:51:47", "type": "info", "message": "Web interface accessed"}
+{"timestamp": "2026-01-17 22:51:47", "type": "info", "message": "Starting model training..."}
+{"timestamp": "2026-01-17 22:51:47", "type": "info", "message": "--------------------------------------------------"}
+{"timestamp": "2026-01-17 22:51:47", "type": "info", "message": "Processing: Abhishek (Label: 0)"}
+{"timestamp": "2026-01-17 22:51:47", "type": "info", "message": "Traceback (most recent call last):"}
+{"timestamp": "2026-01-17 22:51:48", "type": "info", "message": "File \"D:\\Smart_Attendance_System\\train_model.py\", line 83, in <module>"}
+{"timestamp": "2026-01-17 22:51:48", "type": "info", "message": "print(f\"  \\u2705 Processed {image_count} images for {person_name}\")"}
+{"timestamp": "2026-01-17 22:51:48", "type": "info", "message": "~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"}
+{"timestamp": "2026-01-17 22:51:48", "type": "info", "message": "File \"C:\\Users\\govin\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\encodings\\cp1252.py\", line 19, in encode"}
+{"timestamp": "2026-01-17 22:51:48", "type": "info", "message": "return codecs.charmap_encode(input,self.errors,encoding_table)[0]"}
+{"timestamp": "2026-01-17 22:51:48", "type": "info", "message": "~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"}
+{"timestamp": "2026-01-17 22:51:48", "type": "info", "message": "UnicodeEncodeError: 'charmap' codec can't encode character '\\u2705' in position 2: character maps to <undefined>"}
+{"timestamp": "2026-01-17 22:51:50", "type": "info", "message": "Attendance taking started"}
+{"timestamp": "2026-01-17 22:51:50", "type": "info", "message": "Web interface accessed"}
+{"timestamp": "2026-01-17 22:51:51", "type": "info", "message": "Traceback (most recent call last):"}
+{"timestamp": "2026-01-17 22:51:51", "type": "info", "message": "File \"D:\\Smart_Attendance_System\\recognize_and_attendance.py\", line 102, in <module>"}
+{"timestamp": "2026-01-17 22:51:51", "type": "info", "message": "print(\"\\U0001f4f8 Attendance taking started! Camera open for 10 seconds...\")"}
+{"timestamp": "2026-01-17 22:51:51", "type": "info", "message": "~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"}
+{"timestamp": "2026-01-17 22:51:51", "type": "info", "message": "File \"C:\\Users\\govin\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\encodings\\cp1252.py\", line 19, in encode"}
+{"timestamp": "2026-01-17 22:51:51", "type": "info", "message": "return codecs.charmap_encode(input,self.errors,encoding_table)[0]"}
+{"timestamp": "2026-01-17 22:51:51", "type": "info", "message": "~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"}
+{"timestamp": "2026-01-17 22:51:51", "type": "info", "message": "UnicodeEncodeError: 'charmap' codec can't encode character '\\U0001f4f8' in position 0: character maps to <undefined>"}
+{"timestamp": "2026-01-17 22:53:55", "type": "info", "message": "Registration started for student: Manish"}
+{"timestamp": "2026-01-17 22:53:55", "type": "info", "message": "Web interface accessed"}
+{"timestamp": "2026-01-17 22:54:04", "type": "info", "message": "Traceback (most recent call last):"}
+{"timestamp": "2026-01-17 22:54:04", "type": "info", "message": "File \"D:\\Smart_Attendance_System\\dataset_capture.py\", line 148, in <module>"}
+{"timestamp": "2026-01-17 22:54:04", "type": "info", "message": "print(f\"\\u2705 Registration completed for {student_name}\")"}
+{"timestamp": "2026-01-17 22:54:04", "type": "info", "message": "~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"}
+{"timestamp": "2026-01-17 22:54:04", "type": "info", "message": "File \"C:\\Users\\govin\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\encodings\\cp1252.py\", line 19, in encode"}
+{"timestamp": "2026-01-17 22:54:04", "type": "info", "message": "return codecs.charmap_encode(input,self.errors,encoding_table)[0]"}
+{"timestamp": "2026-01-17 22:54:04", "type": "info", "message": "~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"}
+{"timestamp": "2026-01-17 22:54:04", "type": "info", "message": "UnicodeEncodeError: 'charmap' codec can't encode character '\\u2705' in position 0: character maps to <undefined>"}
+{"timestamp": "2026-01-17 22:54:09", "type": "info", "message": "Attendance taking started"}
+{"timestamp": "2026-01-17 22:54:09", "type": "info", "message": "Web interface accessed"}
+{"timestamp": "2026-01-17 22:54:10", "type": "info", "message": "Traceback (most recent call last):"}
+{"timestamp": "2026-01-17 22:54:10", "type": "info", "message": "File \"D:\\Smart_Attendance_System\\recognize_and_attendance.py\", line 102, in <module>"}
+{"timestamp": "2026-01-17 22:54:10", "type": "info", "message": "print(\"\\U0001f4f8 Attendance taking started! Camera open for 10 seconds...\")"}
+{"timestamp": "2026-01-17 22:54:10", "type": "info", "message": "~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"}
+{"timestamp": "2026-01-17 22:54:10", "type": "info", "message": "File \"C:\\Users\\govin\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\encodings\\cp1252.py\", line 19, in encode"}
+{"timestamp": "2026-01-17 22:54:10", "type": "info", "message": "return codecs.charmap_encode(input,self.errors,encoding_table)[0]"}
+{"timestamp": "2026-01-17 22:54:10", "type": "info", "message": "~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"}
+{"timestamp": "2026-01-17 22:54:10", "type": "info", "message": "UnicodeEncodeError: 'charmap' codec can't encode character '\\U0001f4f8' in position 0: character maps to <undefined>"}
+{"timestamp": "2026-01-17 22:54:10", "type": "info", "message": "Model training started"}
+{"timestamp": "2026-01-17 22:54:10", "type": "info", "message": "Web interface accessed"}
+{"timestamp": "2026-01-17 22:54:11", "type": "info", "message": "Starting model training..."}
+{"timestamp": "2026-01-17 22:54:11", "type": "info", "message": "--------------------------------------------------"}
+{"timestamp": "2026-01-17 22:54:11", "type": "info", "message": "Processing: Abhishek (Label: 0)"}
+{"timestamp": "2026-01-17 22:54:11", "type": "info", "message": "Traceback (most recent call last):"}
+{"timestamp": "2026-01-17 22:54:11", "type": "info", "message": "File \"D:\\Smart_Attendance_System\\train_model.py\", line 83, in <module>"}
+{"timestamp": "2026-01-17 22:54:11", "type": "info", "message": "print(f\"  \\u2705 Processed {image_count} images for {person_name}\")"}
+{"timestamp": "2026-01-17 22:54:11", "type": "info", "message": "~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"}
+{"timestamp": "2026-01-17 22:54:11", "type": "info", "message": "File \"C:\\Users\\govin\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\encodings\\cp1252.py\", line 19, in encode"}
+{"timestamp": "2026-01-17 22:54:11", "type": "info", "message": "return codecs.charmap_encode(input,self.errors,encoding_table)[0]"}
+{"timestamp": "2026-01-17 22:54:11", "type": "info", "message": "~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"}
+{"timestamp": "2026-01-17 22:54:11", "type": "info", "message": "UnicodeEncodeError: 'charmap' codec can't encode character '\\u2705' in position 2: character maps to <undefined>"}
+{"timestamp": "2026-01-17 22:54:13", "type": "info", "message": "Attendance taking started"}
+{"timestamp": "2026-01-17 22:54:13", "type": "info", "message": "Web interface accessed"}
+{"timestamp": "2026-01-17 22:54:14", "type": "info", "message": "Traceback (most recent call last):"}
+{"timestamp": "2026-01-17 22:54:14", "type": "info", "message": "File \"D:\\Smart_Attendance_System\\recognize_and_attendance.py\", line 102, in <module>"}
+{"timestamp": "2026-01-17 22:54:14", "type": "info", "message": "print(\"\\U0001f4f8 Attendance taking started! Camera open for 10 seconds...\")"}
+{"timestamp": "2026-01-17 22:54:14", "type": "info", "message": "~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"}
+{"timestamp": "2026-01-17 22:54:14", "type": "info", "message": "File \"C:\\Users\\govin\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\encodings\\cp1252.py\", line 19, in encode"}
+{"timestamp": "2026-01-17 22:54:14", "type": "info", "message": "return codecs.charmap_encode(input,self.errors,encoding_table)[0]"}
+{"timestamp": "2026-01-17 22:54:14", "type": "info", "message": "~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"}
+{"timestamp": "2026-01-17 22:54:14", "type": "info", "message": "UnicodeEncodeError: 'charmap' codec can't encode character '\\U0001f4f8' in position 0: character maps to <undefined>"}
+{"timestamp": "2026-01-17 22:55:01", "type": "info", "message": "Attendance taking started"}
+{"timestamp": "2026-01-17 22:55:01", "type": "info", "message": "Web interface accessed"}
+{"timestamp": "2026-01-17 22:55:02", "type": "info", "message": "Traceback (most recent call last):"}
+{"timestamp": "2026-01-17 22:55:02", "type": "info", "message": "File \"D:\\Smart_Attendance_System\\recognize_and_attendance.py\", line 102, in <module>"}
+{"timestamp": "2026-01-17 22:55:02", "type": "info", "message": "print(\"\\U0001f4f8 Attendance taking started! Camera open for 10 seconds...\")"}
+{"timestamp": "2026-01-17 22:55:02", "type": "info", "message": "~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"}
+{"timestamp": "2026-01-17 22:55:02", "type": "info", "message": "File \"C:\\Users\\govin\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\encodings\\cp1252.py\", line 19, in encode"}
+{"timestamp": "2026-01-17 22:55:02", "type": "info", "message": "return codecs.charmap_encode(input,self.errors,encoding_table)[0]"}
+{"timestamp": "2026-01-17 22:55:02", "type": "info", "message": "~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"}
+{"timestamp": "2026-01-17 22:55:02", "type": "info", "message": "UnicodeEncodeError: 'charmap' codec can't encode character '\\U0001f4f8' in position 0: character maps to <undefined>"}
+{"timestamp": "2026-01-17 22:55:16", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-01-17 22:55:16", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-01-17 22:55:16", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-01-17 22:55:16", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-01-17 23:34:28", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-01-17 23:34:28", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-01-17 23:34:28", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-01-17 23:34:28", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-01-17 23:35:57", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-01-17 23:35:57", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-01-17 23:35:57", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-01-17 23:35:57", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-01-17 23:36:17", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-01-17 23:36:17", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-01-17 23:36:18", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-01-17 23:36:18", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-01-17 23:36:20", "type": "info", "message": "Web interface accessed"}
+{"timestamp": "2026-01-17 23:37:05", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-01-17 23:37:05", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-01-17 23:37:05", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-01-17 23:37:05", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-01-17 23:37:37", "type": "info", "message": "Model training started"}
+{"timestamp": "2026-01-17 23:37:37", "type": "info", "message": "Web interface accessed"}
+{"timestamp": "2026-01-17 23:37:38", "type": "info", "message": "Starting model training..."}
+{"timestamp": "2026-01-17 23:37:38", "type": "info", "message": "--------------------------------------------------"}
+{"timestamp": "2026-01-17 23:37:38", "type": "info", "message": "Processing: Abhishek (Label: 0)"}
+{"timestamp": "2026-01-17 23:37:38", "type": "info", "message": "Traceback (most recent call last):"}
+{"timestamp": "2026-01-17 23:37:38", "type": "info", "message": "File \"D:\\Smart_Attendance_System\\train_model.py\", line 83, in <module>"}
+{"timestamp": "2026-01-17 23:37:38", "type": "info", "message": "print(f\"  \\u2705 Processed {image_count} images for {person_name}\")"}
+{"timestamp": "2026-01-17 23:37:38", "type": "info", "message": "~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"}
+{"timestamp": "2026-01-17 23:37:38", "type": "info", "message": "File \"C:\\Users\\govin\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\encodings\\cp1252.py\", line 19, in encode"}
+{"timestamp": "2026-01-17 23:37:38", "type": "info", "message": "return codecs.charmap_encode(input,self.errors,encoding_table)[0]"}
+{"timestamp": "2026-01-17 23:37:38", "type": "info", "message": "~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"}
+{"timestamp": "2026-01-17 23:37:38", "type": "info", "message": "UnicodeEncodeError: 'charmap' codec can't encode character '\\u2705' in position 2: character maps to <undefined>"}
+{"timestamp": "2026-01-17 23:37:40", "type": "info", "message": "Attendance taking started"}
+{"timestamp": "2026-01-17 23:37:40", "type": "info", "message": "Camera window should open now. Look for 'Smart Attendance System' window."}
+{"timestamp": "2026-01-17 23:37:40", "type": "info", "message": "Web interface accessed"}
+{"timestamp": "2026-01-17 23:37:51", "type": "info", "message": "Attendance taking started"}
+{"timestamp": "2026-01-17 23:37:51", "type": "info", "message": "Camera window should open now. Look for 'Smart Attendance System' window."}
+{"timestamp": "2026-01-17 23:37:51", "type": "info", "message": "Web interface accessed"}
+{"timestamp": "2026-01-17 23:38:03", "type": "info", "message": "Attendance taking started"}
+{"timestamp": "2026-01-17 23:38:03", "type": "info", "message": "Camera window should open now. Look for 'Smart Attendance System' window."}
+{"timestamp": "2026-01-17 23:38:03", "type": "info", "message": "Web interface accessed"}
+{"timestamp": "2026-01-17 23:38:19", "type": "info", "message": "Attendance taking started"}
+{"timestamp": "2026-01-17 23:38:19", "type": "info", "message": "Camera window should open now. Look for 'Smart Attendance System' window."}
+{"timestamp": "2026-01-17 23:38:19", "type": "info", "message": "Web interface accessed"}
+{"timestamp": "2026-01-17 23:38:36", "type": "warning", "message": "Model reset requested"}
+{"timestamp": "2026-01-17 23:38:36", "type": "info", "message": "trainer.yml deleted"}
+{"timestamp": "2026-01-17 23:38:36", "type": "info", "message": "labels.npy deleted"}
+{"timestamp": "2026-01-17 23:38:36", "type": "success", "message": "Model reset completed"}
+{"timestamp": "2026-01-17 23:38:36", "type": "info", "message": "Web interface accessed"}
+{"timestamp": "2026-01-17 23:38:37", "type": "info", "message": "Model training started"}
+{"timestamp": "2026-01-17 23:38:37", "type": "info", "message": "Web interface accessed"}
+{"timestamp": "2026-01-17 23:38:38", "type": "info", "message": "Starting model training..."}
+{"timestamp": "2026-01-17 23:38:38", "type": "info", "message": "--------------------------------------------------"}
+{"timestamp": "2026-01-17 23:38:38", "type": "info", "message": "Processing: Abhishek (Label: 0)"}
+{"timestamp": "2026-01-17 23:38:38", "type": "info", "message": "Traceback (most recent call last):"}
+{"timestamp": "2026-01-17 23:38:38", "type": "info", "message": "File \"D:\\Smart_Attendance_System\\train_model.py\", line 83, in <module>"}
+{"timestamp": "2026-01-17 23:38:38", "type": "info", "message": "print(f\"  \\u2705 Processed {image_count} images for {person_name}\")"}
+{"timestamp": "2026-01-17 23:38:38", "type": "info", "message": "~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"}
+{"timestamp": "2026-01-17 23:38:38", "type": "info", "message": "File \"C:\\Users\\govin\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\encodings\\cp1252.py\", line 19, in encode"}
+{"timestamp": "2026-01-17 23:38:38", "type": "info", "message": "return codecs.charmap_encode(input,self.errors,encoding_table)[0]"}
+{"timestamp": "2026-01-17 23:38:38", "type": "info", "message": "~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"}
+{"timestamp": "2026-01-17 23:38:38", "type": "info", "message": "UnicodeEncodeError: 'charmap' codec can't encode character '\\u2705' in position 2: character maps to <undefined>"}
+{"timestamp": "2026-01-17 23:38:40", "type": "info", "message": "Attendance taking started"}
+{"timestamp": "2026-01-17 23:38:40", "type": "info", "message": "Camera window should open now. Look for 'Smart Attendance System' window."}
+{"timestamp": "2026-01-17 23:38:40", "type": "info", "message": "Web interface accessed"}
+{"timestamp": "2026-01-17 23:38:44", "type": "info", "message": "Attendance taking started"}
+{"timestamp": "2026-01-17 23:38:44", "type": "info", "message": "Camera window should open now. Look for 'Smart Attendance System' window."}
+{"timestamp": "2026-01-17 23:38:44", "type": "info", "message": "Web interface accessed"}
+{"timestamp": "2026-01-17 23:38:45", "type": "info", "message": "Attendance taking started"}
+{"timestamp": "2026-01-17 23:38:45", "type": "info", "message": "Camera window should open now. Look for 'Smart Attendance System' window."}
+{"timestamp": "2026-01-17 23:38:46", "type": "info", "message": "Attendance taking started"}
+{"timestamp": "2026-01-17 23:38:46", "type": "info", "message": "Camera window should open now. Look for 'Smart Attendance System' window."}
+{"timestamp": "2026-01-17 23:38:46", "type": "info", "message": "Web interface accessed"}
+{"timestamp": "2026-01-17 23:38:53", "type": "info", "message": "Attendance taking started"}
+{"timestamp": "2026-01-17 23:38:53", "type": "info", "message": "Camera window should open now. Look for 'Smart Attendance System' window."}
+{"timestamp": "2026-01-17 23:38:53", "type": "info", "message": "Web interface accessed"}
+{"timestamp": "2026-01-17 23:38:55", "type": "info", "message": "Model training started"}
+{"timestamp": "2026-01-17 23:38:55", "type": "info", "message": "Web interface accessed"}
+{"timestamp": "2026-01-17 23:38:56", "type": "info", "message": "Starting model training..."}
+{"timestamp": "2026-01-17 23:38:56", "type": "info", "message": "--------------------------------------------------"}
+{"timestamp": "2026-01-17 23:38:56", "type": "info", "message": "Processing: Abhishek (Label: 0)"}
+{"timestamp": "2026-01-17 23:38:56", "type": "info", "message": "Traceback (most recent call last):"}
+{"timestamp": "2026-01-17 23:38:56", "type": "info", "message": "File \"D:\\Smart_Attendance_System\\train_model.py\", line 83, in <module>"}
+{"timestamp": "2026-01-17 23:38:56", "type": "info", "message": "print(f\"  \\u2705 Processed {image_count} images for {person_name}\")"}
+{"timestamp": "2026-01-17 23:38:56", "type": "info", "message": "~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"}
+{"timestamp": "2026-01-17 23:38:56", "type": "info", "message": "File \"C:\\Users\\govin\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\encodings\\cp1252.py\", line 19, in encode"}
+{"timestamp": "2026-01-17 23:38:56", "type": "info", "message": "return codecs.charmap_encode(input,self.errors,encoding_table)[0]"}
+{"timestamp": "2026-01-17 23:38:56", "type": "info", "message": "~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"}
+{"timestamp": "2026-01-17 23:38:56", "type": "info", "message": "UnicodeEncodeError: 'charmap' codec can't encode character '\\u2705' in position 2: character maps to <undefined>"}
+{"timestamp": "2026-01-17 23:39:00", "type": "info", "message": "Attendance taking started"}
+{"timestamp": "2026-01-17 23:39:00", "type": "info", "message": "Camera window should open now. Look for 'Smart Attendance System' window."}
+{"timestamp": "2026-01-17 23:39:00", "type": "info", "message": "Web interface accessed"}
+{"timestamp": "2026-01-17 23:39:03", "type": "info", "message": "Attendance taking started"}
+{"timestamp": "2026-01-17 23:39:03", "type": "info", "message": "Camera window should open now. Look for 'Smart Attendance System' window."}
+{"timestamp": "2026-01-17 23:39:03", "type": "info", "message": "Web interface accessed"}
+{"timestamp": "2026-01-17 23:39:21", "type": "info", "message": "Attendance taking started"}
+{"timestamp": "2026-01-17 23:39:21", "type": "info", "message": "Camera window should open now. Look for 'Smart Attendance System' window."}
+{"timestamp": "2026-01-17 23:39:21", "type": "info", "message": "Web interface accessed"}
+{"timestamp": "2026-01-17 23:39:26", "type": "info", "message": "Attendance taking started"}
+{"timestamp": "2026-01-17 23:39:26", "type": "info", "message": "Camera window should open now. Look for 'Smart Attendance System' window."}
+{"timestamp": "2026-01-17 23:39:26", "type": "info", "message": "Web interface accessed"}
+{"timestamp": "2026-01-17 23:39:28", "type": "info", "message": "Model training started"}
+{"timestamp": "2026-01-17 23:39:29", "type": "info", "message": "Web interface accessed"}
+{"timestamp": "2026-01-17 23:39:29", "type": "info", "message": "Starting model training..."}
+{"timestamp": "2026-01-17 23:39:29", "type": "info", "message": "--------------------------------------------------"}
+{"timestamp": "2026-01-17 23:39:29", "type": "info", "message": "Processing: Abhishek (Label: 0)"}
+{"timestamp": "2026-01-17 23:39:29", "type": "info", "message": "Traceback (most recent call last):"}
+{"timestamp": "2026-01-17 23:39:29", "type": "info", "message": "File \"D:\\Smart_Attendance_System\\train_model.py\", line 83, in <module>"}
+{"timestamp": "2026-01-17 23:39:29", "type": "info", "message": "print(f\"  \\u2705 Processed {image_count} images for {person_name}\")"}
+{"timestamp": "2026-01-17 23:39:29", "type": "info", "message": "~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"}
+{"timestamp": "2026-01-17 23:39:29", "type": "info", "message": "File \"C:\\Users\\govin\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\encodings\\cp1252.py\", line 19, in encode"}
+{"timestamp": "2026-01-17 23:39:29", "type": "info", "message": "return codecs.charmap_encode(input,self.errors,encoding_table)[0]"}
+{"timestamp": "2026-01-17 23:39:29", "type": "info", "message": "~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"}
+{"timestamp": "2026-01-17 23:39:29", "type": "info", "message": "UnicodeEncodeError: 'charmap' codec can't encode character '\\u2705' in position 2: character maps to <undefined>"}
+{"timestamp": "2026-01-17 23:39:33", "type": "info", "message": "Attendance taking started"}
+{"timestamp": "2026-01-17 23:39:33", "type": "info", "message": "Camera window should open now. Look for 'Smart Attendance System' window."}
+{"timestamp": "2026-01-17 23:39:33", "type": "info", "message": "Web interface accessed"}
+{"timestamp": "2026-01-17 23:39:35", "type": "info", "message": "Attendance taking started"}
+{"timestamp": "2026-01-17 23:39:35", "type": "info", "message": "Camera window should open now. Look for 'Smart Attendance System' window."}
+{"timestamp": "2026-01-17 23:39:35", "type": "info", "message": "Web interface accessed"}
+{"timestamp": "2026-01-17 23:39:41", "type": "info", "message": "Model training started"}
+{"timestamp": "2026-01-17 23:39:41", "type": "info", "message": "Web interface accessed"}
+{"timestamp": "2026-01-17 23:39:42", "type": "info", "message": "Starting model training..."}
+{"timestamp": "2026-01-17 23:39:42", "type": "info", "message": "--------------------------------------------------"}
+{"timestamp": "2026-01-17 23:39:42", "type": "info", "message": "Processing: Abhishek (Label: 0)"}
+{"timestamp": "2026-01-17 23:39:42", "type": "info", "message": "Traceback (most recent call last):"}
+{"timestamp": "2026-01-17 23:39:42", "type": "info", "message": "File \"D:\\Smart_Attendance_System\\train_model.py\", line 83, in <module>"}
+{"timestamp": "2026-01-17 23:39:42", "type": "info", "message": "print(f\"  \\u2705 Processed {image_count} images for {person_name}\")"}
+{"timestamp": "2026-01-17 23:39:42", "type": "info", "message": "~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"}
+{"timestamp": "2026-01-17 23:39:42", "type": "info", "message": "File \"C:\\Users\\govin\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\encodings\\cp1252.py\", line 19, in encode"}
+{"timestamp": "2026-01-17 23:39:42", "type": "info", "message": "return codecs.charmap_encode(input,self.errors,encoding_table)[0]"}
+{"timestamp": "2026-01-17 23:39:42", "type": "info", "message": "~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"}
+{"timestamp": "2026-01-17 23:39:42", "type": "info", "message": "UnicodeEncodeError: 'charmap' codec can't encode character '\\u2705' in position 2: character maps to <undefined>"}
+{"timestamp": "2026-01-17 23:39:47", "type": "info", "message": "Attendance taking started"}
+{"timestamp": "2026-01-17 23:39:47", "type": "info", "message": "Camera window should open now. Look for 'Smart Attendance System' window."}
+{"timestamp": "2026-01-17 23:39:47", "type": "info", "message": "Web interface accessed"}
+{"timestamp": "2026-01-17 23:39:51", "type": "info", "message": "Attendance taking started"}
+{"timestamp": "2026-01-17 23:39:51", "type": "info", "message": "Camera window should open now. Look for 'Smart Attendance System' window."}
+{"timestamp": "2026-01-17 23:39:51", "type": "info", "message": "Web interface accessed"}
+{"timestamp": "2026-01-17 23:39:55", "type": "info", "message": "Attendance taking started"}
+{"timestamp": "2026-01-17 23:39:55", "type": "info", "message": "Camera window should open now. Look for 'Smart Attendance System' window."}
+{"timestamp": "2026-01-17 23:39:55", "type": "info", "message": "Web interface accessed"}
+{"timestamp": "2026-01-17 23:39:58", "type": "info", "message": "Attendance taking started"}
+{"timestamp": "2026-01-17 23:39:58", "type": "info", "message": "Camera window should open now. Look for 'Smart Attendance System' window."}
+{"timestamp": "2026-01-17 23:39:58", "type": "info", "message": "Web interface accessed"}
+{"timestamp": "2026-01-17 23:40:01", "type": "info", "message": "Model training started"}
+{"timestamp": "2026-01-17 23:40:01", "type": "info", "message": "Web interface accessed"}
+{"timestamp": "2026-01-17 23:40:01", "type": "info", "message": "Starting model training..."}
+{"timestamp": "2026-01-17 23:40:01", "type": "info", "message": "--------------------------------------------------"}
+{"timestamp": "2026-01-17 23:40:01", "type": "info", "message": "Processing: Abhishek (Label: 0)"}
+{"timestamp": "2026-01-17 23:40:01", "type": "info", "message": "Traceback (most recent call last):"}
+{"timestamp": "2026-01-17 23:40:01", "type": "info", "message": "File \"D:\\Smart_Attendance_System\\train_model.py\", line 83, in <module>"}
+{"timestamp": "2026-01-17 23:40:01", "type": "info", "message": "print(f\"  \\u2705 Processed {image_count} images for {person_name}\")"}
+{"timestamp": "2026-01-17 23:40:01", "type": "info", "message": "~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"}
+{"timestamp": "2026-01-17 23:40:01", "type": "info", "message": "File \"C:\\Users\\govin\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\encodings\\cp1252.py\", line 19, in encode"}
+{"timestamp": "2026-01-17 23:40:01", "type": "info", "message": "return codecs.charmap_encode(input,self.errors,encoding_table)[0]"}
+{"timestamp": "2026-01-17 23:40:01", "type": "info", "message": "~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"}
+{"timestamp": "2026-01-17 23:40:01", "type": "info", "message": "UnicodeEncodeError: 'charmap' codec can't encode character '\\u2705' in position 2: character maps to <undefined>"}
+{"timestamp": "2026-01-17 23:40:09", "type": "info", "message": "Registration started for student: Sk sahu"}
+{"timestamp": "2026-01-17 23:40:09", "type": "info", "message": "Camera window should open now. Check for 'Smart Attendance System' window."}
+{"timestamp": "2026-01-17 23:40:09", "type": "info", "message": "Web interface accessed"}
+{"timestamp": "2026-01-17 23:40:23", "type": "info", "message": "Attendance taking started"}
+{"timestamp": "2026-01-17 23:40:23", "type": "info", "message": "Camera window should open now. Look for 'Smart Attendance System' window."}
+{"timestamp": "2026-01-17 23:40:23", "type": "info", "message": "Web interface accessed"}
+{"timestamp": "2026-01-17 23:40:25", "type": "info", "message": "Model training started"}
+{"timestamp": "2026-01-17 23:40:25", "type": "info", "message": "Web interface accessed"}
+{"timestamp": "2026-01-17 23:40:26", "type": "info", "message": "Starting model training..."}
+{"timestamp": "2026-01-17 23:40:26", "type": "info", "message": "--------------------------------------------------"}
+{"timestamp": "2026-01-17 23:40:26", "type": "info", "message": "Processing: Abhishek (Label: 0)"}
+{"timestamp": "2026-01-17 23:40:26", "type": "info", "message": "Traceback (most recent call last):"}
+{"timestamp": "2026-01-17 23:40:26", "type": "info", "message": "File \"D:\\Smart_Attendance_System\\train_model.py\", line 83, in <module>"}
+{"timestamp": "2026-01-17 23:40:26", "type": "info", "message": "print(f\"  \\u2705 Processed {image_count} images for {person_name}\")"}
+{"timestamp": "2026-01-17 23:40:26", "type": "info", "message": "~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"}
+{"timestamp": "2026-01-17 23:40:26", "type": "info", "message": "File \"C:\\Users\\govin\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\encodings\\cp1252.py\", line 19, in encode"}
+{"timestamp": "2026-01-17 23:40:26", "type": "info", "message": "return codecs.charmap_encode(input,self.errors,encoding_table)[0]"}
+{"timestamp": "2026-01-17 23:40:26", "type": "info", "message": "~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"}
+{"timestamp": "2026-01-17 23:40:26", "type": "info", "message": "UnicodeEncodeError: 'charmap' codec can't encode character '\\u2705' in position 2: character maps to <undefined>"}
+{"timestamp": "2026-01-17 23:40:28", "type": "info", "message": "Attendance taking started"}
+{"timestamp": "2026-01-17 23:40:28", "type": "info", "message": "Camera window should open now. Look for 'Smart Attendance System' window."}
+{"timestamp": "2026-01-17 23:40:28", "type": "info", "message": "Web interface accessed"}
+{"timestamp": "2026-01-17 23:43:19", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-01-17 23:43:19", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-01-17 23:43:19", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-01-17 23:43:19", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-01-17 23:43:25", "type": "info", "message": "Web interface accessed"}
+{"timestamp": "2026-01-17 23:43:29", "type": "info", "message": "Attendance taking started"}
+{"timestamp": "2026-01-17 23:43:29", "type": "info", "message": "Camera window should open now. Look for 'Smart Attendance System' window."}
+{"timestamp": "2026-01-17 23:43:29", "type": "info", "message": "Attendance taking started"}
+{"timestamp": "2026-01-17 23:43:29", "type": "info", "message": "Camera window should open now. Look for 'Smart Attendance System' window."}
+{"timestamp": "2026-01-17 23:43:29", "type": "info", "message": "Web interface accessed"}
+{"timestamp": "2026-01-17 23:43:33", "type": "info", "message": "Attendance taking started"}
+{"timestamp": "2026-01-17 23:43:34", "type": "info", "message": "Camera window should open now. Look for 'Smart Attendance System' window."}
+{"timestamp": "2026-01-17 23:43:34", "type": "info", "message": "Web interface accessed"}
+{"timestamp": "2026-01-17 23:43:38", "type": "info", "message": "Attendance taking started"}
+{"timestamp": "2026-01-17 23:43:38", "type": "info", "message": "Camera window should open now. Look for 'Smart Attendance System' window."}
+{"timestamp": "2026-01-17 23:43:38", "type": "info", "message": "Web interface accessed"}
+{"timestamp": "2026-01-17 23:46:41", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-01-17 23:46:41", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-01-17 23:46:41", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-01-17 23:46:41", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-01-17 23:46:45", "type": "info", "message": "Model training started"}
+{"timestamp": "2026-01-17 23:46:45", "type": "info", "message": "Web interface accessed"}
+{"timestamp": "2026-01-17 23:46:46", "type": "info", "message": "Starting model training..."}
+{"timestamp": "2026-01-17 23:46:46", "type": "info", "message": "--------------------------------------------------"}
+{"timestamp": "2026-01-17 23:46:46", "type": "info", "message": "Processing: Abhishek (Label: 0)"}
+{"timestamp": "2026-01-17 23:46:46", "type": "info", "message": "Traceback (most recent call last):"}
+{"timestamp": "2026-01-17 23:46:46", "type": "info", "message": "File \"D:\\Smart_Attendance_System\\train_model.py\", line 83, in <module>"}
+{"timestamp": "2026-01-17 23:46:46", "type": "info", "message": "print(f\"  \\u2705 Processed {image_count} images for {person_name}\")"}
+{"timestamp": "2026-01-17 23:46:46", "type": "info", "message": "~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"}
+{"timestamp": "2026-01-17 23:46:46", "type": "info", "message": "File \"C:\\Users\\govin\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\encodings\\cp1252.py\", line 19, in encode"}
+{"timestamp": "2026-01-17 23:46:46", "type": "info", "message": "return codecs.charmap_encode(input,self.errors,encoding_table)[0]"}
+{"timestamp": "2026-01-17 23:46:46", "type": "info", "message": "~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"}
+{"timestamp": "2026-01-17 23:46:46", "type": "info", "message": "UnicodeEncodeError: 'charmap' codec can't encode character '\\u2705' in position 2: character maps to <undefined>"}
+{"timestamp": "2026-01-17 23:46:49", "type": "info", "message": "Attendance taking started"}
+{"timestamp": "2026-01-17 23:46:49", "type": "info", "message": "Camera window should open now. Look for 'Smart Attendance System' window."}
+{"timestamp": "2026-01-17 23:46:49", "type": "info", "message": "Web interface accessed"}
+{"timestamp": "2026-01-17 23:46:55", "type": "info", "message": "Registration started for student: hbh"}
+{"timestamp": "2026-01-17 23:46:55", "type": "info", "message": "Camera window should open now. Check for 'Smart Attendance System' window."}
+{"timestamp": "2026-01-17 23:46:55", "type": "info", "message": "Web interface accessed"}
+{"timestamp": "2026-01-17 23:48:25", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-01-17 23:48:25", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-01-17 23:48:28", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-01-17 23:48:28", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-01-17 23:48:40", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-01-17 23:48:40", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-01-17 23:48:48", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-01-17 23:48:48", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-01-17 23:49:52", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-01-17 23:49:52", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-01-17 23:50:19", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-01-17 23:50:19", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-01-17 23:50:19", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-01-17 23:50:19", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-01-17 23:50:23", "type": "info", "message": "Web interface accessed"}
+{"timestamp": "2026-01-17 23:50:26", "type": "error", "message": "\u274c ERROR: Model not trained yet! Please train the model first."}
+{"timestamp": "2026-01-17 23:50:26", "type": "info", "message": "Web interface accessed"}
+{"timestamp": "2026-01-17 23:50:29", "type": "error", "message": "\u274c ERROR: Model not trained yet! Please train the model first."}
+{"timestamp": "2026-01-17 23:50:29", "type": "info", "message": "Web interface accessed"}
+{"timestamp": "2026-01-17 23:50:33", "type": "info", "message": "Model training started"}
+{"timestamp": "2026-01-17 23:50:33", "type": "info", "message": "Web interface accessed"}
+{"timestamp": "2026-01-17 23:50:33", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-01-17 23:50:33", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-01-17 23:50:34", "type": "error", "message": "\u274c ERROR: Model not trained yet! Please train the model first."}
+{"timestamp": "2026-01-17 23:50:34", "type": "info", "message": "Web interface accessed"}
+{"timestamp": "2026-01-17 23:50:38", "type": "error", "message": "\u274c ERROR: Model not trained yet! Please train the model first."}
+{"timestamp": "2026-01-17 23:50:38", "type": "info", "message": "Web interface accessed"}
+{"timestamp": "2026-01-17 23:50:45", "type": "error", "message": "\u274c ERROR: Model not trained yet! Please train the model first."}
+{"timestamp": "2026-01-17 23:50:45", "type": "info", "message": "Web interface accessed"}
+{"timestamp": "2026-01-17 23:50:48", "type": "warning", "message": "Model reset requested"}
+{"timestamp": "2026-01-17 23:50:50", "type": "success", "message": "Model reset completed. Please train the model before taking attendance."}
+{"timestamp": "2026-01-17 23:50:50", "type": "info", "message": "Web interface accessed"}
+{"timestamp": "2026-01-17 23:50:51", "type": "info", "message": "Model training started"}
+{"timestamp": "2026-01-17 23:50:51", "type": "info", "message": "Web interface accessed"}
+{"timestamp": "2026-01-17 23:50:52", "type": "info", "message": "Starting model training..."}
+{"timestamp": "2026-01-17 23:50:52", "type": "info", "message": "--------------------------------------------------"}
+{"timestamp": "2026-01-17 23:50:52", "type": "info", "message": "Processing: Abhishek (Label: 0)"}
+{"timestamp": "2026-01-17 23:50:52", "type": "info", "message": "Traceback (most recent call last):"}
+{"timestamp": "2026-01-17 23:50:52", "type": "info", "message": "File \"D:\\Smart_Attendance_System\\train_model.py\", line 83, in <module>"}
+{"timestamp": "2026-01-17 23:50:52", "type": "info", "message": "print(f\"  \\u2705 Processed {image_count} images for {person_name}\")"}
+{"timestamp": "2026-01-17 23:50:52", "type": "info", "message": "~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"}
+{"timestamp": "2026-01-17 23:50:52", "type": "info", "message": "File \"C:\\Users\\govin\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\encodings\\cp1252.py\", line 19, in encode"}
+{"timestamp": "2026-01-17 23:50:52", "type": "info", "message": "return codecs.charmap_encode(input,self.errors,encoding_table)[0]"}
+{"timestamp": "2026-01-17 23:50:52", "type": "info", "message": "~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"}
+{"timestamp": "2026-01-17 23:50:52", "type": "info", "message": "UnicodeEncodeError: 'charmap' codec can't encode character '\\u2705' in position 2: character maps to <undefined>"}
+{"timestamp": "2026-01-17 23:50:53", "type": "error", "message": "\u274c ERROR: Model not trained yet! Please train the model first."}
+{"timestamp": "2026-01-17 23:50:53", "type": "info", "message": "Web interface accessed"}
+{"timestamp": "2026-01-17 23:50:55", "type": "error", "message": "\u274c ERROR: Model not trained yet! Please train the model first."}
+{"timestamp": "2026-01-17 23:50:55", "type": "info", "message": "Web interface accessed"}
+{"timestamp": "2026-01-17 23:50:57", "type": "info", "message": "Model training started"}
+{"timestamp": "2026-01-17 23:50:57", "type": "info", "message": "Web interface accessed"}
+{"timestamp": "2026-01-17 23:50:58", "type": "info", "message": "Starting model training..."}
+{"timestamp": "2026-01-17 23:50:58", "type": "info", "message": "--------------------------------------------------"}
+{"timestamp": "2026-01-17 23:50:58", "type": "info", "message": "Processing: Abhishek (Label: 0)"}
+{"timestamp": "2026-01-17 23:50:58", "type": "info", "message": "Traceback (most recent call last):"}
+{"timestamp": "2026-01-17 23:50:58", "type": "info", "message": "File \"D:\\Smart_Attendance_System\\train_model.py\", line 83, in <module>"}
+{"timestamp": "2026-01-17 23:50:58", "type": "info", "message": "print(f\"  \\u2705 Processed {image_count} images for {person_name}\")"}
+{"timestamp": "2026-01-17 23:50:58", "type": "info", "message": "~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"}
+{"timestamp": "2026-01-17 23:50:58", "type": "info", "message": "File \"C:\\Users\\govin\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\encodings\\cp1252.py\", line 19, in encode"}
+{"timestamp": "2026-01-17 23:50:58", "type": "info", "message": "return codecs.charmap_encode(input,self.errors,encoding_table)[0]"}
+{"timestamp": "2026-01-17 23:50:58", "type": "info", "message": "~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"}
+{"timestamp": "2026-01-17 23:50:58", "type": "info", "message": "UnicodeEncodeError: 'charmap' codec can't encode character '\\u2705' in position 2: character maps to <undefined>"}
+{"timestamp": "2026-01-17 23:50:59", "type": "error", "message": "\u274c ERROR: Model not trained yet! Please train the model first."}
+{"timestamp": "2026-01-17 23:50:59", "type": "info", "message": "Web interface accessed"}
+{"timestamp": "2026-01-17 23:51:20", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-01-17 23:51:20", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-01-17 23:51:47", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-01-17 23:51:47", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-01-17 23:51:49", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-01-17 23:51:49", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-01-17 23:51:52", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-01-17 23:51:52", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-01-17 23:52:03", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-01-17 23:52:03", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-01-17 23:52:12", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-01-17 23:52:12", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-01-17 23:52:17", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-01-17 23:52:17", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-01-17 23:52:46", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-01-17 23:52:46", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-01-17 23:52:46", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-01-17 23:52:46", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-01-17 23:52:50", "type": "info", "message": "Web interface accessed"}
+{"timestamp": "2026-01-17 23:52:53", "type": "error", "message": "\u274c ERROR: Model not trained yet! Please train the model first."}
+{"timestamp": "2026-01-17 23:52:53", "type": "info", "message": "Web interface accessed"}
+{"timestamp": "2026-01-17 23:52:56", "type": "error", "message": "\u274c ERROR: Model not trained yet! Please train the model first."}
+{"timestamp": "2026-01-17 23:52:56", "type": "info", "message": "Web interface accessed"}
+{"timestamp": "2026-01-17 23:52:58", "type": "info", "message": "Model training started"}
+{"timestamp": "2026-01-17 23:52:58", "type": "info", "message": "Web interface accessed"}
+{"timestamp": "2026-01-17 23:52:58", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-01-17 23:52:58", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-01-17 23:52:59", "type": "error", "message": "\u274c ERROR: Model not trained yet! Please train the model first."}
+{"timestamp": "2026-01-17 23:52:59", "type": "info", "message": "Web interface accessed"}
+{"timestamp": "2026-01-17 23:53:01", "type": "error", "message": "\u274c ERROR: Model not trained yet! Please train the model first."}
+{"timestamp": "2026-01-17 23:53:01", "type": "info", "message": "Web interface accessed"}
+{"timestamp": "2026-01-17 23:53:48", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-01-17 23:53:48", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-01-17 23:53:51", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-01-17 23:53:51", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-01-17 23:53:52", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-01-17 23:53:52", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-01-17 23:53:54", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-01-17 23:53:54", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-01-17 23:53:56", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-01-17 23:53:56", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-01-17 23:54:07", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-01-17 23:54:07", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-01-17 23:54:17", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-01-17 23:54:17", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-01-17 23:54:39", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-01-17 23:54:39", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-01-17 23:54:39", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-01-17 23:54:39", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-01-17 23:54:43", "type": "info", "message": "Web interface accessed"}
+{"timestamp": "2026-01-17 23:54:47", "type": "error", "message": "\u274c ERROR: Model not trained yet! Please train the model first."}
+{"timestamp": "2026-01-17 23:54:47", "type": "info", "message": "Web interface accessed"}
+{"timestamp": "2026-01-17 23:54:49", "type": "info", "message": "Model training started"}
+{"timestamp": "2026-01-17 23:54:49", "type": "info", "message": "Web interface accessed"}
+{"timestamp": "2026-01-17 23:54:52", "type": "info", "message": "Starting model training..."}
+{"timestamp": "2026-01-17 23:54:52", "type": "info", "message": "--------------------------------------------------"}
+{"timestamp": "2026-01-17 23:54:52", "type": "info", "message": "Processing: Abhishek (Label: 0)"}
+{"timestamp": "2026-01-17 23:54:52", "type": "info", "message": "[OK] Processed 16 images for Abhishek"}
+{"timestamp": "2026-01-17 23:54:52", "type": "info", "message": "Processing: Govind (Label: 1)"}
+{"timestamp": "2026-01-17 23:54:52", "type": "info", "message": "[WARNING] No face detected in: 0.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:52", "type": "info", "message": "[WARNING] No face detected in: 1.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:52", "type": "info", "message": "[WARNING] No face detected in: 10.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:52", "type": "info", "message": "[WARNING] No face detected in: 12.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:52", "type": "info", "message": "[WARNING] No face detected in: 2.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:52", "type": "info", "message": "[WARNING] No face detected in: 3.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:52", "type": "info", "message": "[WARNING] No face detected in: 4.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:52", "type": "info", "message": "[WARNING] No face detected in: 5.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:52", "type": "info", "message": "[WARNING] No face detected in: 6.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:52", "type": "info", "message": "[WARNING] No face detected in: 7.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:52", "type": "info", "message": "[WARNING] No face detected in: 8.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:52", "type": "info", "message": "[OK] Processed 16 images for Govind"}
+{"timestamp": "2026-01-17 23:54:52", "type": "info", "message": "Processing: Manish (Label: 2)"}
+{"timestamp": "2026-01-17 23:54:52", "type": "info", "message": "[WARNING] No face detected in: 0.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:52", "type": "info", "message": "[WARNING] No face detected in: 1.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:52", "type": "info", "message": "[WARNING] No face detected in: 12.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:52", "type": "info", "message": "[WARNING] No face detected in: 13.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:52", "type": "info", "message": "[WARNING] No face detected in: 15.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:52", "type": "info", "message": "[WARNING] No face detected in: 2.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:52", "type": "info", "message": "[WARNING] No face detected in: 8.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:52", "type": "info", "message": "[OK] Processed 16 images for Manish"}
+{"timestamp": "2026-01-17 23:54:52", "type": "info", "message": "Processing: Sk Govind (Label: 3)"}
+{"timestamp": "2026-01-17 23:54:52", "type": "info", "message": "[WARNING] No face detected in: 1.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:52", "type": "info", "message": "[WARNING] No face detected in: 2.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:52", "type": "info", "message": "[WARNING] No face detected in: 3.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:52", "type": "info", "message": "[WARNING] No face detected in: 4.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:52", "type": "info", "message": "[WARNING] No face detected in: 6.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:52", "type": "info", "message": "[WARNING] No face detected in: 7.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:52", "type": "info", "message": "[WARNING] No face detected in: 8.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:52", "type": "info", "message": "[WARNING] No face detected in: 9.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:52", "type": "info", "message": "[OK] Processed 8 images for Sk Govind"}
+{"timestamp": "2026-01-17 23:54:52", "type": "info", "message": "Processing: Sk sahu (Label: 4)"}
+{"timestamp": "2026-01-17 23:54:52", "type": "info", "message": "[WARNING] No face detected in: 0.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:52", "type": "info", "message": "[WARNING] No face detected in: 1.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:52", "type": "info", "message": "[WARNING] No face detected in: 2.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:52", "type": "info", "message": "[WARNING] No face detected in: 3.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:52", "type": "info", "message": "[WARNING] No face detected in: 4.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:52", "type": "info", "message": "[WARNING] No face detected in: 5.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:52", "type": "info", "message": "[WARNING] No face detected in: 6.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:52", "type": "info", "message": "[OK] Processed 16 images for Sk sahu"}
+{"timestamp": "2026-01-17 23:54:52", "type": "info", "message": "Processing: hbh (Label: 5)"}
+{"timestamp": "2026-01-17 23:54:52", "type": "info", "message": "[WARNING] No face detected in: 0.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:52", "type": "info", "message": "[WARNING] No face detected in: 1.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:52", "type": "info", "message": "[WARNING] No face detected in: 10.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:52", "type": "info", "message": "[WARNING] No face detected in: 11.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:52", "type": "info", "message": "[WARNING] No face detected in: 12.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:52", "type": "info", "message": "[WARNING] No face detected in: 13.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:52", "type": "info", "message": "[WARNING] No face detected in: 14.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:52", "type": "info", "message": "[WARNING] No face detected in: 15.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:52", "type": "info", "message": "[WARNING] No face detected in: 2.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:52", "type": "info", "message": "[WARNING] No face detected in: 3.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:52", "type": "info", "message": "[WARNING] No face detected in: 4.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:52", "type": "info", "message": "[WARNING] No face detected in: 5.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:52", "type": "info", "message": "[WARNING] No face detected in: 6.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:52", "type": "info", "message": "[WARNING] No face detected in: 7.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:52", "type": "info", "message": "[WARNING] No face detected in: 8.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:52", "type": "info", "message": "[WARNING] No face detected in: 9.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:52", "type": "info", "message": "[OK] Processed 16 images for hbh"}
+{"timestamp": "2026-01-17 23:54:52", "type": "info", "message": "--------------------------------------------------"}
+{"timestamp": "2026-01-17 23:54:52", "type": "info", "message": "Total persons registered: 6"}
+{"timestamp": "2026-01-17 23:54:52", "type": "info", "message": "Total images processed: 88"}
+{"timestamp": "2026-01-17 23:54:52", "type": "info", "message": "Training model..."}
+{"timestamp": "2026-01-17 23:54:52", "type": "success", "message": "[SUCCESS] MODEL TRAINING COMPLETE"}
+{"timestamp": "2026-01-17 23:54:52", "type": "info", "message": "[SUCCESS] Model saved as: trainer.yml"}
+{"timestamp": "2026-01-17 23:54:52", "type": "info", "message": "[SUCCESS] Labels saved as: labels.npy"}
+{"timestamp": "2026-01-17 23:54:52", "type": "info", "message": "Registered persons:"}
+{"timestamp": "2026-01-17 23:54:52", "type": "info", "message": "Label 0: Abhishek"}
+{"timestamp": "2026-01-17 23:54:52", "type": "info", "message": "Label 1: Govind"}
+{"timestamp": "2026-01-17 23:54:52", "type": "info", "message": "Label 2: Manish"}
+{"timestamp": "2026-01-17 23:54:52", "type": "info", "message": "Label 3: Sk Govind"}
+{"timestamp": "2026-01-17 23:54:52", "type": "info", "message": "Label 4: Sk sahu"}
+{"timestamp": "2026-01-17 23:54:52", "type": "info", "message": "Label 5: hbh"}
+{"timestamp": "2026-01-17 23:54:52", "type": "info", "message": "[SUCCESS] Model files verified and ready to use!"}
+{"timestamp": "2026-01-17 23:54:53", "type": "info", "message": "Model training started"}
+{"timestamp": "2026-01-17 23:54:53", "type": "info", "message": "Web interface accessed"}
+{"timestamp": "2026-01-17 23:54:54", "type": "info", "message": "Model training started"}
+{"timestamp": "2026-01-17 23:54:54", "type": "info", "message": "Web interface accessed"}
+{"timestamp": "2026-01-17 23:54:54", "type": "info", "message": "Model training started"}
+{"timestamp": "2026-01-17 23:54:54", "type": "info", "message": "Web interface accessed"}
+{"timestamp": "2026-01-17 23:54:55", "type": "info", "message": "Starting model training..."}
+{"timestamp": "2026-01-17 23:54:55", "type": "info", "message": "--------------------------------------------------"}
+{"timestamp": "2026-01-17 23:54:55", "type": "info", "message": "Processing: Abhishek (Label: 0)"}
+{"timestamp": "2026-01-17 23:54:55", "type": "info", "message": "[OK] Processed 16 images for Abhishek"}
+{"timestamp": "2026-01-17 23:54:55", "type": "info", "message": "Processing: Govind (Label: 1)"}
+{"timestamp": "2026-01-17 23:54:55", "type": "info", "message": "[WARNING] No face detected in: 0.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:55", "type": "info", "message": "[WARNING] No face detected in: 1.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:55", "type": "info", "message": "[WARNING] No face detected in: 10.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:55", "type": "info", "message": "[WARNING] No face detected in: 12.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:55", "type": "info", "message": "[WARNING] No face detected in: 2.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:55", "type": "info", "message": "[WARNING] No face detected in: 3.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:55", "type": "info", "message": "[WARNING] No face detected in: 4.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:55", "type": "info", "message": "[WARNING] No face detected in: 5.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:55", "type": "info", "message": "[WARNING] No face detected in: 6.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:55", "type": "info", "message": "[WARNING] No face detected in: 7.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:55", "type": "info", "message": "[WARNING] No face detected in: 8.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:55", "type": "info", "message": "[OK] Processed 16 images for Govind"}
+{"timestamp": "2026-01-17 23:54:55", "type": "info", "message": "Processing: Manish (Label: 2)"}
+{"timestamp": "2026-01-17 23:54:55", "type": "info", "message": "[WARNING] No face detected in: 0.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:55", "type": "info", "message": "[WARNING] No face detected in: 1.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:55", "type": "info", "message": "[WARNING] No face detected in: 12.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:55", "type": "info", "message": "[WARNING] No face detected in: 13.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:55", "type": "info", "message": "[WARNING] No face detected in: 15.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:55", "type": "info", "message": "[WARNING] No face detected in: 2.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:55", "type": "info", "message": "[WARNING] No face detected in: 8.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:55", "type": "info", "message": "[OK] Processed 16 images for Manish"}
+{"timestamp": "2026-01-17 23:54:55", "type": "info", "message": "Processing: Sk Govind (Label: 3)"}
+{"timestamp": "2026-01-17 23:54:55", "type": "info", "message": "[WARNING] No face detected in: 1.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:55", "type": "info", "message": "[WARNING] No face detected in: 2.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:55", "type": "info", "message": "[WARNING] No face detected in: 3.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:55", "type": "info", "message": "[WARNING] No face detected in: 4.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:55", "type": "info", "message": "[WARNING] No face detected in: 6.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:55", "type": "info", "message": "[WARNING] No face detected in: 7.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:55", "type": "info", "message": "[WARNING] No face detected in: 8.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:55", "type": "info", "message": "[WARNING] No face detected in: 9.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:55", "type": "info", "message": "[OK] Processed 8 images for Sk Govind"}
+{"timestamp": "2026-01-17 23:54:55", "type": "info", "message": "Processing: Sk sahu (Label: 4)"}
+{"timestamp": "2026-01-17 23:54:55", "type": "info", "message": "[WARNING] No face detected in: 0.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:55", "type": "info", "message": "[WARNING] No face detected in: 1.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:55", "type": "info", "message": "[WARNING] No face detected in: 2.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:55", "type": "info", "message": "[WARNING] No face detected in: 3.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:55", "type": "info", "message": "[WARNING] No face detected in: 4.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:55", "type": "info", "message": "[WARNING] No face detected in: 5.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:55", "type": "info", "message": "[WARNING] No face detected in: 6.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:55", "type": "info", "message": "[OK] Processed 16 images for Sk sahu"}
+{"timestamp": "2026-01-17 23:54:55", "type": "info", "message": "Processing: hbh (Label: 5)"}
+{"timestamp": "2026-01-17 23:54:55", "type": "info", "message": "[WARNING] No face detected in: 0.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:55", "type": "info", "message": "[WARNING] No face detected in: 1.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:55", "type": "info", "message": "[WARNING] No face detected in: 10.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:55", "type": "info", "message": "[WARNING] No face detected in: 11.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:55", "type": "info", "message": "[WARNING] No face detected in: 12.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:55", "type": "info", "message": "[WARNING] No face detected in: 13.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:55", "type": "info", "message": "[WARNING] No face detected in: 14.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:55", "type": "info", "message": "[WARNING] No face detected in: 15.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:55", "type": "info", "message": "[WARNING] No face detected in: 2.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:55", "type": "info", "message": "[WARNING] No face detected in: 3.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:55", "type": "info", "message": "[WARNING] No face detected in: 4.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:55", "type": "info", "message": "[WARNING] No face detected in: 5.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:55", "type": "info", "message": "[WARNING] No face detected in: 6.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:55", "type": "info", "message": "[WARNING] No face detected in: 7.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:55", "type": "info", "message": "[WARNING] No face detected in: 8.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:55", "type": "info", "message": "[WARNING] No face detected in: 9.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:55", "type": "info", "message": "[OK] Processed 16 images for hbh"}
+{"timestamp": "2026-01-17 23:54:55", "type": "info", "message": "--------------------------------------------------"}
+{"timestamp": "2026-01-17 23:54:55", "type": "info", "message": "Total persons registered: 6"}
+{"timestamp": "2026-01-17 23:54:55", "type": "info", "message": "Total images processed: 88"}
+{"timestamp": "2026-01-17 23:54:55", "type": "info", "message": "Training model..."}
+{"timestamp": "2026-01-17 23:54:55", "type": "success", "message": "[SUCCESS] MODEL TRAINING COMPLETE"}
+{"timestamp": "2026-01-17 23:54:55", "type": "info", "message": "[SUCCESS] Model saved as: trainer.yml"}
+{"timestamp": "2026-01-17 23:54:55", "type": "info", "message": "[SUCCESS] Labels saved as: labels.npy"}
+{"timestamp": "2026-01-17 23:54:55", "type": "info", "message": "Registered persons:"}
+{"timestamp": "2026-01-17 23:54:55", "type": "info", "message": "Label 0: Abhishek"}
+{"timestamp": "2026-01-17 23:54:55", "type": "info", "message": "Label 1: Govind"}
+{"timestamp": "2026-01-17 23:54:55", "type": "info", "message": "Label 2: Manish"}
+{"timestamp": "2026-01-17 23:54:55", "type": "info", "message": "Label 3: Sk Govind"}
+{"timestamp": "2026-01-17 23:54:55", "type": "info", "message": "Label 4: Sk sahu"}
+{"timestamp": "2026-01-17 23:54:55", "type": "info", "message": "Label 5: hbh"}
+{"timestamp": "2026-01-17 23:54:55", "type": "info", "message": "[SUCCESS] Model files verified and ready to use!"}
+{"timestamp": "2026-01-17 23:54:55", "type": "info", "message": "Model training started"}
+{"timestamp": "2026-01-17 23:54:55", "type": "info", "message": "Web interface accessed"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "Starting model training..."}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "--------------------------------------------------"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "Processing: Abhishek (Label: 0)"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "[OK] Processed 16 images for Abhishek"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "Processing: Govind (Label: 1)"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "[WARNING] No face detected in: 0.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "[WARNING] No face detected in: 1.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "[WARNING] No face detected in: 10.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "[WARNING] No face detected in: 12.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "[WARNING] No face detected in: 2.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "[WARNING] No face detected in: 3.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "[WARNING] No face detected in: 4.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "[WARNING] No face detected in: 5.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "[WARNING] No face detected in: 6.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "[WARNING] No face detected in: 7.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "[WARNING] No face detected in: 8.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "[OK] Processed 16 images for Govind"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "Processing: Manish (Label: 2)"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "[WARNING] No face detected in: 0.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "[WARNING] No face detected in: 1.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "[WARNING] No face detected in: 12.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "[WARNING] No face detected in: 13.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "[WARNING] No face detected in: 15.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "[WARNING] No face detected in: 2.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "[WARNING] No face detected in: 8.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "[OK] Processed 16 images for Manish"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "Processing: Sk Govind (Label: 3)"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "[WARNING] No face detected in: 1.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "[WARNING] No face detected in: 2.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "[WARNING] No face detected in: 3.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "[WARNING] No face detected in: 4.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "[WARNING] No face detected in: 6.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "[WARNING] No face detected in: 7.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "[WARNING] No face detected in: 8.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "[WARNING] No face detected in: 9.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "[OK] Processed 8 images for Sk Govind"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "Processing: Sk sahu (Label: 4)"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "[WARNING] No face detected in: 0.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "[WARNING] No face detected in: 1.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "[WARNING] No face detected in: 2.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "[WARNING] No face detected in: 3.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "[WARNING] No face detected in: 4.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "[WARNING] No face detected in: 5.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "[WARNING] No face detected in: 6.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "[OK] Processed 16 images for Sk sahu"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "Processing: hbh (Label: 5)"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "[WARNING] No face detected in: 0.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "[WARNING] No face detected in: 1.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "[WARNING] No face detected in: 10.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "[WARNING] No face detected in: 11.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "[WARNING] No face detected in: 12.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "[WARNING] No face detected in: 13.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "[WARNING] No face detected in: 14.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "[WARNING] No face detected in: 15.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "[WARNING] No face detected in: 2.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "[WARNING] No face detected in: 3.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "[WARNING] No face detected in: 4.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "[WARNING] No face detected in: 5.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "[WARNING] No face detected in: 6.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "[WARNING] No face detected in: 7.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "[WARNING] No face detected in: 8.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "[WARNING] No face detected in: 9.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "[OK] Processed 16 images for hbh"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "--------------------------------------------------"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "Total persons registered: 6"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "Total images processed: 88"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "Training model..."}
+{"timestamp": "2026-01-17 23:54:56", "type": "success", "message": "[SUCCESS] MODEL TRAINING COMPLETE"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "[SUCCESS] Model saved as: trainer.yml"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "[SUCCESS] Labels saved as: labels.npy"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "Registered persons:"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "Label 0: Abhishek"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "Label 1: Govind"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "Label 2: Manish"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "Label 3: Sk Govind"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "Label 4: Sk sahu"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "Label 5: hbh"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "[SUCCESS] Model files verified and ready to use!"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "Starting model training..."}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "--------------------------------------------------"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "Processing: Abhishek (Label: 0)"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "[OK] Processed 16 images for Abhishek"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "Processing: Govind (Label: 1)"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "[WARNING] No face detected in: 0.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "[WARNING] No face detected in: 1.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "[WARNING] No face detected in: 10.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "[WARNING] No face detected in: 12.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "[WARNING] No face detected in: 2.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "[WARNING] No face detected in: 3.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "[WARNING] No face detected in: 4.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "[WARNING] No face detected in: 5.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "[WARNING] No face detected in: 6.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "[WARNING] No face detected in: 7.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "[WARNING] No face detected in: 8.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "[OK] Processed 16 images for Govind"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "Processing: Manish (Label: 2)"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "[WARNING] No face detected in: 0.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "[WARNING] No face detected in: 1.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "[WARNING] No face detected in: 12.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "[WARNING] No face detected in: 13.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "[WARNING] No face detected in: 15.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "[WARNING] No face detected in: 2.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "[WARNING] No face detected in: 8.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "[OK] Processed 16 images for Manish"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "Processing: Sk Govind (Label: 3)"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "[WARNING] No face detected in: 1.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "[WARNING] No face detected in: 2.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "[WARNING] No face detected in: 3.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "[WARNING] No face detected in: 4.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "[WARNING] No face detected in: 6.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "[WARNING] No face detected in: 7.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "[WARNING] No face detected in: 8.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "[WARNING] No face detected in: 9.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "[OK] Processed 8 images for Sk Govind"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "Processing: Sk sahu (Label: 4)"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "[WARNING] No face detected in: 0.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "[WARNING] No face detected in: 1.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "[WARNING] No face detected in: 2.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "[WARNING] No face detected in: 3.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "[WARNING] No face detected in: 4.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "[WARNING] No face detected in: 5.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "[WARNING] No face detected in: 6.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "[OK] Processed 16 images for Sk sahu"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "Processing: hbh (Label: 5)"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "[WARNING] No face detected in: 0.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "[WARNING] No face detected in: 1.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "[WARNING] No face detected in: 10.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "[WARNING] No face detected in: 11.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "[WARNING] No face detected in: 12.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "[WARNING] No face detected in: 13.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "[WARNING] No face detected in: 14.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "[WARNING] No face detected in: 15.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "[WARNING] No face detected in: 2.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "[WARNING] No face detected in: 3.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "[WARNING] No face detected in: 4.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "[WARNING] No face detected in: 5.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "[WARNING] No face detected in: 6.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "[WARNING] No face detected in: 7.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "[WARNING] No face detected in: 8.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "[WARNING] No face detected in: 9.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "[OK] Processed 16 images for hbh"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "--------------------------------------------------"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "Total persons registered: 6"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "Total images processed: 88"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "Training model..."}
+{"timestamp": "2026-01-17 23:54:56", "type": "success", "message": "[SUCCESS] MODEL TRAINING COMPLETE"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "[SUCCESS] Model saved as: trainer.yml"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "[SUCCESS] Labels saved as: labels.npy"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "Registered persons:"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "Label 0: Abhishek"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "Label 1: Govind"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "Label 2: Manish"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "Label 3: Sk Govind"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "Label 4: Sk sahu"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "Label 5: hbh"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "[SUCCESS] Model files verified and ready to use!"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "Model training started"}
+{"timestamp": "2026-01-17 23:54:56", "type": "info", "message": "Web interface accessed"}
+{"timestamp": "2026-01-17 23:54:57", "type": "info", "message": "Starting model training..."}
+{"timestamp": "2026-01-17 23:54:57", "type": "info", "message": "--------------------------------------------------"}
+{"timestamp": "2026-01-17 23:54:57", "type": "info", "message": "Processing: Abhishek (Label: 0)"}
+{"timestamp": "2026-01-17 23:54:57", "type": "info", "message": "[OK] Processed 16 images for Abhishek"}
+{"timestamp": "2026-01-17 23:54:57", "type": "info", "message": "Processing: Govind (Label: 1)"}
+{"timestamp": "2026-01-17 23:54:57", "type": "info", "message": "[WARNING] No face detected in: 0.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:57", "type": "info", "message": "[WARNING] No face detected in: 1.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:57", "type": "info", "message": "[WARNING] No face detected in: 10.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:57", "type": "info", "message": "[WARNING] No face detected in: 12.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:57", "type": "info", "message": "[WARNING] No face detected in: 2.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:57", "type": "info", "message": "[WARNING] No face detected in: 3.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:57", "type": "info", "message": "[WARNING] No face detected in: 4.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:57", "type": "info", "message": "[WARNING] No face detected in: 5.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:57", "type": "info", "message": "[WARNING] No face detected in: 6.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:57", "type": "info", "message": "[WARNING] No face detected in: 7.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:57", "type": "info", "message": "[WARNING] No face detected in: 8.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:57", "type": "info", "message": "[OK] Processed 16 images for Govind"}
+{"timestamp": "2026-01-17 23:54:57", "type": "info", "message": "Processing: Manish (Label: 2)"}
+{"timestamp": "2026-01-17 23:54:57", "type": "info", "message": "[WARNING] No face detected in: 0.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:57", "type": "info", "message": "[WARNING] No face detected in: 1.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:57", "type": "info", "message": "[WARNING] No face detected in: 12.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:57", "type": "info", "message": "[WARNING] No face detected in: 13.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:57", "type": "info", "message": "[WARNING] No face detected in: 15.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:57", "type": "info", "message": "[WARNING] No face detected in: 2.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:57", "type": "info", "message": "[WARNING] No face detected in: 8.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:57", "type": "info", "message": "[OK] Processed 16 images for Manish"}
+{"timestamp": "2026-01-17 23:54:57", "type": "info", "message": "Processing: Sk Govind (Label: 3)"}
+{"timestamp": "2026-01-17 23:54:57", "type": "info", "message": "[WARNING] No face detected in: 1.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:57", "type": "info", "message": "[WARNING] No face detected in: 2.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:57", "type": "info", "message": "[WARNING] No face detected in: 3.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:57", "type": "info", "message": "[WARNING] No face detected in: 4.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:57", "type": "info", "message": "[WARNING] No face detected in: 6.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:57", "type": "info", "message": "[WARNING] No face detected in: 7.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:57", "type": "info", "message": "[WARNING] No face detected in: 8.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:57", "type": "info", "message": "[WARNING] No face detected in: 9.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:57", "type": "info", "message": "[OK] Processed 8 images for Sk Govind"}
+{"timestamp": "2026-01-17 23:54:57", "type": "info", "message": "Processing: Sk sahu (Label: 4)"}
+{"timestamp": "2026-01-17 23:54:57", "type": "info", "message": "[WARNING] No face detected in: 0.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:57", "type": "info", "message": "[WARNING] No face detected in: 1.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:57", "type": "info", "message": "[WARNING] No face detected in: 2.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:57", "type": "info", "message": "[WARNING] No face detected in: 3.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:57", "type": "info", "message": "[WARNING] No face detected in: 4.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:57", "type": "info", "message": "[WARNING] No face detected in: 5.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:57", "type": "info", "message": "[WARNING] No face detected in: 6.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:57", "type": "info", "message": "[OK] Processed 16 images for Sk sahu"}
+{"timestamp": "2026-01-17 23:54:57", "type": "info", "message": "Processing: hbh (Label: 5)"}
+{"timestamp": "2026-01-17 23:54:57", "type": "info", "message": "[WARNING] No face detected in: 0.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:57", "type": "info", "message": "[WARNING] No face detected in: 1.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:57", "type": "info", "message": "[WARNING] No face detected in: 10.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:57", "type": "info", "message": "[WARNING] No face detected in: 11.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:57", "type": "info", "message": "[WARNING] No face detected in: 12.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:57", "type": "info", "message": "[WARNING] No face detected in: 13.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:57", "type": "info", "message": "[WARNING] No face detected in: 14.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:57", "type": "info", "message": "[WARNING] No face detected in: 15.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:57", "type": "info", "message": "[WARNING] No face detected in: 2.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:57", "type": "info", "message": "[WARNING] No face detected in: 3.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:57", "type": "info", "message": "[WARNING] No face detected in: 4.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:57", "type": "info", "message": "[WARNING] No face detected in: 5.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:57", "type": "info", "message": "[WARNING] No face detected in: 6.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:57", "type": "info", "message": "[WARNING] No face detected in: 7.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:57", "type": "info", "message": "[WARNING] No face detected in: 8.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:57", "type": "info", "message": "[WARNING] No face detected in: 9.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:57", "type": "info", "message": "[OK] Processed 16 images for hbh"}
+{"timestamp": "2026-01-17 23:54:57", "type": "info", "message": "--------------------------------------------------"}
+{"timestamp": "2026-01-17 23:54:57", "type": "info", "message": "Total persons registered: 6"}
+{"timestamp": "2026-01-17 23:54:57", "type": "info", "message": "Total images processed: 88"}
+{"timestamp": "2026-01-17 23:54:57", "type": "info", "message": "Training model..."}
+{"timestamp": "2026-01-17 23:54:57", "type": "success", "message": "[SUCCESS] MODEL TRAINING COMPLETE"}
+{"timestamp": "2026-01-17 23:54:57", "type": "info", "message": "[SUCCESS] Model saved as: trainer.yml"}
+{"timestamp": "2026-01-17 23:54:57", "type": "info", "message": "[SUCCESS] Labels saved as: labels.npy"}
+{"timestamp": "2026-01-17 23:54:57", "type": "info", "message": "Registered persons:"}
+{"timestamp": "2026-01-17 23:54:57", "type": "info", "message": "Label 0: Abhishek"}
+{"timestamp": "2026-01-17 23:54:57", "type": "info", "message": "Label 1: Govind"}
+{"timestamp": "2026-01-17 23:54:57", "type": "info", "message": "Label 2: Manish"}
+{"timestamp": "2026-01-17 23:54:57", "type": "info", "message": "Label 3: Sk Govind"}
+{"timestamp": "2026-01-17 23:54:57", "type": "info", "message": "Label 4: Sk sahu"}
+{"timestamp": "2026-01-17 23:54:57", "type": "info", "message": "Label 5: hbh"}
+{"timestamp": "2026-01-17 23:54:57", "type": "info", "message": "[SUCCESS] Model files verified and ready to use!"}
+{"timestamp": "2026-01-17 23:54:58", "type": "info", "message": "Starting model training..."}
+{"timestamp": "2026-01-17 23:54:58", "type": "info", "message": "--------------------------------------------------"}
+{"timestamp": "2026-01-17 23:54:58", "type": "info", "message": "Processing: Abhishek (Label: 0)"}
+{"timestamp": "2026-01-17 23:54:58", "type": "info", "message": "[OK] Processed 16 images for Abhishek"}
+{"timestamp": "2026-01-17 23:54:58", "type": "info", "message": "Processing: Govind (Label: 1)"}
+{"timestamp": "2026-01-17 23:54:58", "type": "info", "message": "[WARNING] No face detected in: 0.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:58", "type": "info", "message": "[WARNING] No face detected in: 1.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:58", "type": "info", "message": "[WARNING] No face detected in: 10.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:58", "type": "info", "message": "[WARNING] No face detected in: 12.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:58", "type": "info", "message": "[WARNING] No face detected in: 2.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:58", "type": "info", "message": "[WARNING] No face detected in: 3.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:58", "type": "info", "message": "[WARNING] No face detected in: 4.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:58", "type": "info", "message": "[WARNING] No face detected in: 5.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:58", "type": "info", "message": "[WARNING] No face detected in: 6.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:58", "type": "info", "message": "[WARNING] No face detected in: 7.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:58", "type": "info", "message": "[WARNING] No face detected in: 8.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:58", "type": "info", "message": "[OK] Processed 16 images for Govind"}
+{"timestamp": "2026-01-17 23:54:58", "type": "info", "message": "Processing: Manish (Label: 2)"}
+{"timestamp": "2026-01-17 23:54:58", "type": "info", "message": "[WARNING] No face detected in: 0.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:58", "type": "info", "message": "[WARNING] No face detected in: 1.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:58", "type": "info", "message": "[WARNING] No face detected in: 12.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:58", "type": "info", "message": "[WARNING] No face detected in: 13.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:58", "type": "info", "message": "[WARNING] No face detected in: 15.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:58", "type": "info", "message": "[WARNING] No face detected in: 2.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:58", "type": "info", "message": "[WARNING] No face detected in: 8.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:58", "type": "info", "message": "[OK] Processed 16 images for Manish"}
+{"timestamp": "2026-01-17 23:54:58", "type": "info", "message": "Processing: Sk Govind (Label: 3)"}
+{"timestamp": "2026-01-17 23:54:58", "type": "info", "message": "[WARNING] No face detected in: 1.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:58", "type": "info", "message": "[WARNING] No face detected in: 2.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:58", "type": "info", "message": "[WARNING] No face detected in: 3.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:58", "type": "info", "message": "[WARNING] No face detected in: 4.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:58", "type": "info", "message": "[WARNING] No face detected in: 6.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:58", "type": "info", "message": "[WARNING] No face detected in: 7.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:58", "type": "info", "message": "[WARNING] No face detected in: 8.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:58", "type": "info", "message": "[WARNING] No face detected in: 9.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:58", "type": "info", "message": "[OK] Processed 8 images for Sk Govind"}
+{"timestamp": "2026-01-17 23:54:58", "type": "info", "message": "Processing: Sk sahu (Label: 4)"}
+{"timestamp": "2026-01-17 23:54:58", "type": "info", "message": "[WARNING] No face detected in: 0.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:58", "type": "info", "message": "[WARNING] No face detected in: 1.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:58", "type": "info", "message": "[WARNING] No face detected in: 2.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:58", "type": "info", "message": "[WARNING] No face detected in: 3.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:58", "type": "info", "message": "[WARNING] No face detected in: 4.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:58", "type": "info", "message": "[WARNING] No face detected in: 5.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:58", "type": "info", "message": "[WARNING] No face detected in: 6.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:58", "type": "info", "message": "[OK] Processed 16 images for Sk sahu"}
+{"timestamp": "2026-01-17 23:54:58", "type": "info", "message": "Processing: hbh (Label: 5)"}
+{"timestamp": "2026-01-17 23:54:58", "type": "info", "message": "[WARNING] No face detected in: 0.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:58", "type": "info", "message": "[WARNING] No face detected in: 1.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:58", "type": "info", "message": "[WARNING] No face detected in: 10.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:58", "type": "info", "message": "[WARNING] No face detected in: 11.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:58", "type": "info", "message": "[WARNING] No face detected in: 12.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:58", "type": "info", "message": "[WARNING] No face detected in: 13.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:58", "type": "info", "message": "[WARNING] No face detected in: 14.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:58", "type": "info", "message": "[WARNING] No face detected in: 15.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:58", "type": "info", "message": "[WARNING] No face detected in: 2.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:58", "type": "info", "message": "[WARNING] No face detected in: 3.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:58", "type": "info", "message": "[WARNING] No face detected in: 4.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:58", "type": "info", "message": "[WARNING] No face detected in: 5.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:58", "type": "info", "message": "[WARNING] No face detected in: 6.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:58", "type": "info", "message": "[WARNING] No face detected in: 7.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:58", "type": "info", "message": "[WARNING] No face detected in: 8.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:58", "type": "info", "message": "[WARNING] No face detected in: 9.jpg, using full image"}
+{"timestamp": "2026-01-17 23:54:58", "type": "info", "message": "[OK] Processed 16 images for hbh"}
+{"timestamp": "2026-01-17 23:54:58", "type": "info", "message": "--------------------------------------------------"}
+{"timestamp": "2026-01-17 23:54:58", "type": "info", "message": "Total persons registered: 6"}
+{"timestamp": "2026-01-17 23:54:58", "type": "info", "message": "Total images processed: 88"}
+{"timestamp": "2026-01-17 23:54:58", "type": "info", "message": "Training model..."}
+{"timestamp": "2026-01-17 23:54:58", "type": "success", "message": "[SUCCESS] MODEL TRAINING COMPLETE"}
+{"timestamp": "2026-01-17 23:54:58", "type": "info", "message": "[SUCCESS] Model saved as: trainer.yml"}
+{"timestamp": "2026-01-17 23:54:58", "type": "info", "message": "[SUCCESS] Labels saved as: labels.npy"}
+{"timestamp": "2026-01-17 23:54:58", "type": "info", "message": "Registered persons:"}
+{"timestamp": "2026-01-17 23:54:58", "type": "info", "message": "Label 0: Abhishek"}
+{"timestamp": "2026-01-17 23:54:58", "type": "info", "message": "Label 1: Govind"}
+{"timestamp": "2026-01-17 23:54:58", "type": "info", "message": "Label 2: Manish"}
+{"timestamp": "2026-01-17 23:54:58", "type": "info", "message": "Label 3: Sk Govind"}
+{"timestamp": "2026-01-17 23:54:58", "type": "info", "message": "Label 4: Sk sahu"}
+{"timestamp": "2026-01-17 23:54:58", "type": "info", "message": "Label 5: hbh"}
+{"timestamp": "2026-01-17 23:54:58", "type": "info", "message": "[SUCCESS] Model files verified and ready to use!"}
+{"timestamp": "2026-01-17 23:55:01", "type": "info", "message": "Attendance taking started"}
+{"timestamp": "2026-01-17 23:55:01", "type": "info", "message": "Camera window should open now. Look for 'Smart Attendance System' window."}
+{"timestamp": "2026-01-17 23:55:01", "type": "info", "message": "Web interface accessed"}
+{"timestamp": "2026-01-17 23:55:21", "type": "info", "message": "Registration started for student: Govind"}
+{"timestamp": "2026-01-17 23:55:21", "type": "info", "message": "Camera window should open now. Check for 'Smart Attendance System' window."}
+{"timestamp": "2026-01-17 23:55:21", "type": "info", "message": "Web interface accessed"}
+{"timestamp": "2026-01-17 23:55:32", "type": "info", "message": "Model training started"}
+{"timestamp": "2026-01-17 23:55:32", "type": "info", "message": "Web interface accessed"}
+{"timestamp": "2026-01-17 23:55:34", "type": "info", "message": "Starting model training..."}
+{"timestamp": "2026-01-17 23:55:34", "type": "info", "message": "--------------------------------------------------"}
+{"timestamp": "2026-01-17 23:55:34", "type": "info", "message": "Processing: Abhishek (Label: 0)"}
+{"timestamp": "2026-01-17 23:55:34", "type": "info", "message": "[OK] Processed 16 images for Abhishek"}
+{"timestamp": "2026-01-17 23:55:34", "type": "info", "message": "Processing: Govind (Label: 1)"}
+{"timestamp": "2026-01-17 23:55:34", "type": "info", "message": "[WARNING] No face detected in: 0.jpg, using full image"}
+{"timestamp": "2026-01-17 23:55:34", "type": "info", "message": "[WARNING] No face detected in: 15.jpg, using full image"}
+{"timestamp": "2026-01-17 23:55:34", "type": "info", "message": "[WARNING] No face detected in: 4.jpg, using full image"}
+{"timestamp": "2026-01-17 23:55:34", "type": "info", "message": "[WARNING] No face detected in: 5.jpg, using full image"}
+{"timestamp": "2026-01-17 23:55:34", "type": "info", "message": "[OK] Processed 16 images for Govind"}
+{"timestamp": "2026-01-17 23:55:34", "type": "info", "message": "Processing: Manish (Label: 2)"}
+{"timestamp": "2026-01-17 23:55:34", "type": "info", "message": "[WARNING] No face detected in: 0.jpg, using full image"}
+{"timestamp": "2026-01-17 23:55:34", "type": "info", "message": "[WARNING] No face detected in: 1.jpg, using full image"}
+{"timestamp": "2026-01-17 23:55:34", "type": "info", "message": "[WARNING] No face detected in: 12.jpg, using full image"}
+{"timestamp": "2026-01-17 23:55:34", "type": "info", "message": "[WARNING] No face detected in: 13.jpg, using full image"}
+{"timestamp": "2026-01-17 23:55:34", "type": "info", "message": "[WARNING] No face detected in: 15.jpg, using full image"}
+{"timestamp": "2026-01-17 23:55:34", "type": "info", "message": "[WARNING] No face detected in: 2.jpg, using full image"}
+{"timestamp": "2026-01-17 23:55:34", "type": "info", "message": "[WARNING] No face detected in: 8.jpg, using full image"}
+{"timestamp": "2026-01-17 23:55:34", "type": "info", "message": "[OK] Processed 16 images for Manish"}
+{"timestamp": "2026-01-17 23:55:34", "type": "info", "message": "Processing: Sk Govind (Label: 3)"}
+{"timestamp": "2026-01-17 23:55:34", "type": "info", "message": "[WARNING] No face detected in: 1.jpg, using full image"}
+{"timestamp": "2026-01-17 23:55:34", "type": "info", "message": "[WARNING] No face detected in: 2.jpg, using full image"}
+{"timestamp": "2026-01-17 23:55:34", "type": "info", "message": "[WARNING] No face detected in: 3.jpg, using full image"}
+{"timestamp": "2026-01-17 23:55:34", "type": "info", "message": "[WARNING] No face detected in: 4.jpg, using full image"}
+{"timestamp": "2026-01-17 23:55:34", "type": "info", "message": "[WARNING] No face detected in: 6.jpg, using full image"}
+{"timestamp": "2026-01-17 23:55:34", "type": "info", "message": "[WARNING] No face detected in: 7.jpg, using full image"}
+{"timestamp": "2026-01-17 23:55:34", "type": "info", "message": "[WARNING] No face detected in: 8.jpg, using full image"}
+{"timestamp": "2026-01-17 23:55:34", "type": "info", "message": "[WARNING] No face detected in: 9.jpg, using full image"}
+{"timestamp": "2026-01-17 23:55:34", "type": "info", "message": "[OK] Processed 8 images for Sk Govind"}
+{"timestamp": "2026-01-17 23:55:34", "type": "info", "message": "Processing: Sk sahu (Label: 4)"}
+{"timestamp": "2026-01-17 23:55:34", "type": "info", "message": "[WARNING] No face detected in: 0.jpg, using full image"}
+{"timestamp": "2026-01-17 23:55:34", "type": "info", "message": "[WARNING] No face detected in: 1.jpg, using full image"}
+{"timestamp": "2026-01-17 23:55:34", "type": "info", "message": "[WARNING] No face detected in: 2.jpg, using full image"}
+{"timestamp": "2026-01-17 23:55:34", "type": "info", "message": "[WARNING] No face detected in: 3.jpg, using full image"}
+{"timestamp": "2026-01-17 23:55:34", "type": "info", "message": "[WARNING] No face detected in: 4.jpg, using full image"}
+{"timestamp": "2026-01-17 23:55:34", "type": "info", "message": "[WARNING] No face detected in: 5.jpg, using full image"}
+{"timestamp": "2026-01-17 23:55:34", "type": "info", "message": "[WARNING] No face detected in: 6.jpg, using full image"}
+{"timestamp": "2026-01-17 23:55:34", "type": "info", "message": "[OK] Processed 16 images for Sk sahu"}
+{"timestamp": "2026-01-17 23:55:34", "type": "info", "message": "Processing: hbh (Label: 5)"}
+{"timestamp": "2026-01-17 23:55:34", "type": "info", "message": "[WARNING] No face detected in: 0.jpg, using full image"}
+{"timestamp": "2026-01-17 23:55:34", "type": "info", "message": "[WARNING] No face detected in: 1.jpg, using full image"}
+{"timestamp": "2026-01-17 23:55:34", "type": "info", "message": "[WARNING] No face detected in: 10.jpg, using full image"}
+{"timestamp": "2026-01-17 23:55:34", "type": "info", "message": "[WARNING] No face detected in: 11.jpg, using full image"}
+{"timestamp": "2026-01-17 23:55:34", "type": "info", "message": "[WARNING] No face detected in: 12.jpg, using full image"}
+{"timestamp": "2026-01-17 23:55:34", "type": "info", "message": "[WARNING] No face detected in: 13.jpg, using full image"}
+{"timestamp": "2026-01-17 23:55:34", "type": "info", "message": "[WARNING] No face detected in: 14.jpg, using full image"}
+{"timestamp": "2026-01-17 23:55:34", "type": "info", "message": "[WARNING] No face detected in: 15.jpg, using full image"}
+{"timestamp": "2026-01-17 23:55:34", "type": "info", "message": "[WARNING] No face detected in: 2.jpg, using full image"}
+{"timestamp": "2026-01-17 23:55:34", "type": "info", "message": "[WARNING] No face detected in: 3.jpg, using full image"}
+{"timestamp": "2026-01-17 23:55:34", "type": "info", "message": "[WARNING] No face detected in: 4.jpg, using full image"}
+{"timestamp": "2026-01-17 23:55:34", "type": "info", "message": "[WARNING] No face detected in: 5.jpg, using full image"}
+{"timestamp": "2026-01-17 23:55:34", "type": "info", "message": "[WARNING] No face detected in: 6.jpg, using full image"}
+{"timestamp": "2026-01-17 23:55:34", "type": "info", "message": "[WARNING] No face detected in: 7.jpg, using full image"}
+{"timestamp": "2026-01-17 23:55:34", "type": "info", "message": "[WARNING] No face detected in: 8.jpg, using full image"}
+{"timestamp": "2026-01-17 23:55:34", "type": "info", "message": "[WARNING] No face detected in: 9.jpg, using full image"}
+{"timestamp": "2026-01-17 23:55:34", "type": "info", "message": "[OK] Processed 16 images for hbh"}
+{"timestamp": "2026-01-17 23:55:34", "type": "info", "message": "--------------------------------------------------"}
+{"timestamp": "2026-01-17 23:55:34", "type": "info", "message": "Total persons registered: 6"}
+{"timestamp": "2026-01-17 23:55:34", "type": "info", "message": "Total images processed: 88"}
+{"timestamp": "2026-01-17 23:55:34", "type": "info", "message": "Training model..."}
+{"timestamp": "2026-01-17 23:55:34", "type": "success", "message": "[SUCCESS] MODEL TRAINING COMPLETE"}
+{"timestamp": "2026-01-17 23:55:34", "type": "info", "message": "[SUCCESS] Model saved as: trainer.yml"}
+{"timestamp": "2026-01-17 23:55:34", "type": "info", "message": "[SUCCESS] Labels saved as: labels.npy"}
+{"timestamp": "2026-01-17 23:55:34", "type": "info", "message": "Registered persons:"}
+{"timestamp": "2026-01-17 23:55:34", "type": "info", "message": "Label 0: Abhishek"}
+{"timestamp": "2026-01-17 23:55:34", "type": "info", "message": "Label 1: Govind"}
+{"timestamp": "2026-01-17 23:55:34", "type": "info", "message": "Label 2: Manish"}
+{"timestamp": "2026-01-17 23:55:34", "type": "info", "message": "Label 3: Sk Govind"}
+{"timestamp": "2026-01-17 23:55:34", "type": "info", "message": "Label 4: Sk sahu"}
+{"timestamp": "2026-01-17 23:55:34", "type": "info", "message": "Label 5: hbh"}
+{"timestamp": "2026-01-17 23:55:34", "type": "info", "message": "[SUCCESS] Model files verified and ready to use!"}
+{"timestamp": "2026-01-17 23:55:36", "type": "info", "message": "Attendance taking started"}
+{"timestamp": "2026-01-17 23:55:36", "type": "info", "message": "Camera window should open now. Look for 'Smart Attendance System' window."}
+{"timestamp": "2026-01-17 23:55:36", "type": "info", "message": "Web interface accessed"}
+{"timestamp": "2026-01-17 23:56:12", "type": "info", "message": "Web interface accessed"}
+{"timestamp": "2026-01-18 00:04:17", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-01-18 00:04:17", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-01-18 00:48:59", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-01-18 00:48:59", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-01-18 00:52:18", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-01-18 00:52:18", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-01-18 00:54:22", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-01-18 00:54:22", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-01-18 02:08:25", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-01-18 02:08:25", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-01-21 19:03:46", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-01-21 19:03:46", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-01-21 19:03:46", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-01-21 19:03:46", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-01-21 19:04:05", "type": "info", "message": "Web interface accessed"}
+{"timestamp": "2026-01-21 19:04:05", "type": "info", "message": "Web interface accessed"}
+{"timestamp": "2026-01-21 19:04:05", "type": "info", "message": "Web interface accessed"}
+{"timestamp": "2026-01-21 19:04:05", "type": "info", "message": "Web interface accessed"}
+{"timestamp": "2026-01-21 19:04:30", "type": "info", "message": "Attendance taking started"}
+{"timestamp": "2026-01-21 19:04:30", "type": "info", "message": "Camera window should open now. Look for 'Smart Attendance System' window."}
+{"timestamp": "2026-01-21 19:04:30", "type": "info", "message": "Web interface accessed"}
+{"timestamp": "2026-01-21 19:04:32", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-01-21 19:04:32", "type": "success", "message": "Flask server starting on port 8000"}
