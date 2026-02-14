@@ -1,0 +1,678 @@
+/* ==========================================
+   SMART ATTENDANCE SYSTEM - PROFESSIONAL UI
+   Modern Design with Glassmorphism & Animations
+   ========================================== */
+
+/* ==========================================
+   1. CSS VARIABLES (Theme Colors)
+   ========================================== */
+:root {
+    /* Primary Colors */
+    --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    --success-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    --danger-gradient: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+
+    /* Glassmorphism Colors */
+    --glass-bg: rgba(255, 255, 255, 0.15);
+    --glass-border: rgba(255, 255, 255, 0.25);
+    --glass-shadow: rgba(0, 0, 0, 0.1);
+
+    /* Text Colors */
+    --text-primary: #2d3748;
+    --text-secondary: #4a5568;
+    --text-light: #ffffff;
+
+    /* Background */
+    --bg-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+
+    /* Shadows */
+    --shadow-sm: 0 4px 6px rgba(0, 0, 0, 0.07);
+    --shadow-md: 0 10px 25px rgba(0, 0, 0, 0.15);
+    --shadow-lg: 0 20px 40px rgba(0, 0, 0, 0.2);
+    --shadow-xl: 0 25px 50px rgba(0, 0, 0, 0.25);
+
+    /* Spacing */
+    --spacing-xs: 0.5rem;
+    --spacing-sm: 1rem;
+    --spacing-md: 1.5rem;
+    --spacing-lg: 2rem;
+    --spacing-xl: 3rem;
+
+    /* Border Radius */
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --radius-xl: 20px;
+
+    /* Transitions */
+    --transition-fast: 0.2s ease-in-out;
+    --transition-normal: 0.3s ease-in-out;
+    --transition-slow: 0.5s ease-in-out;
+}
+
+/* ==========================================
+   2. RESET & BASE STYLES
+   ========================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: var(--bg-gradient);
+    background-attachment: fixed;
+    min-height: 100vh;
+    padding: var(--spacing-lg);
+    color: var(--text-primary);
+    overflow-x: hidden;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+    transition: var(--transition-normal);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.5);
+}
+
+/* ==========================================
+   3. CONTAINER & LAYOUT
+   ========================================== */
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    animation: fadeInUp 0.6s ease-out;
+}
+
+/* ==========================================
+   4. HEADER SECTION
+   ========================================== */
+.header {
+    text-align: center;
+    color: var(--text-light);
+    margin-bottom: var(--spacing-xl);
+    padding: var(--spacing-lg);
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: var(--radius-xl);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--shadow-lg);
+    animation: slideDown 0.5s ease-out;
+}
+
+.header h1 {
+    font-size: 3.5em;
+    font-weight: 800;
+    margin-bottom: var(--spacing-sm);
+    text-shadow: 2px 4px 8px rgba(0, 0, 0, 0.3);
+    background: linear-gradient(45deg, #fff, #ffd700);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: -1px;
+}
+
+.header p {
+    font-size: 1.3em;
+    opacity: 0.95;
+    font-weight: 300;
+    letter-spacing: 0.5px;
+    text-shadow: 1px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Animated Icon */
+.header h1::before {
+    content: "🎓";
+    display: inline-block;
+    margin-right: 15px;
+    animation: bounce 2s infinite;
+}
+
+/* ==========================================
+   5. MAIN CONTENT GRID
+   ========================================== */
+.main-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-lg);
+}
+
+@media (max-width: 768px) {
+    .main-content {
+        grid-template-columns: 1fr;
+    }
+
+    .header h1 {
+        font-size: 2.5em;
+    }
+
+    .header p {
+        font-size: 1.1em;
+    }
+}
+
+/* ==========================================
+   6. CARD COMPONENTS
+   ========================================== */
+.card {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: var(--radius-xl);
+    padding: var(--spacing-xl);
+    box-shadow: var(--shadow-lg);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    transition: all var(--transition-normal);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Card Hover Effect */
+.card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transform: rotate(45deg);
+    transition: var(--transition-slow);
+}
+
+.card:hover::before {
+    left: 100%;
+}
+
+.card:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: var(--shadow-xl);
+    border-color: rgba(255, 255, 255, 0.8);
+}
+
+.card h2 {
+    font-size: 1.8em;
+    font-weight: 700;
+    margin-bottom: var(--spacing-md);
+    padding-bottom: var(--spacing-sm);
+    border-bottom: 3px solid transparent;
+    border-image: linear-gradient(90deg, #667eea, #764ba2);
+    border-image-slice: 1;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--text-primary);
+}
+
+/* ==========================================
+   7. FORM ELEMENTS
+   ========================================== */
+.form-group {
+    margin-bottom: var(--spacing-md);
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: var(--spacing-xs);
+    color: var(--text-secondary);
+    font-weight: 600;
+    font-size: 1.05em;
+    letter-spacing: 0.3px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 15px 20px;
+    border: 2px solid #e2e8f0;
+    border-radius: var(--radius-md);
+    font-size: 1em;
+    font-family: inherit;
+    transition: all var(--transition-fast);
+    background: #f7fafc;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #667eea;
+    background: white;
+    box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+    transform: translateY(-2px);
+}
+
+.form-group input::placeholder {
+    color: #a0aec0;
+    font-style: italic;
+}
+
+/* ==========================================
+   8. BUTTONS
+   ========================================== */
+.btn {
+    width: 100%;
+    padding: 16px 32px;
+    border: none;
+    border-radius: var(--radius-md);
+    font-size: 1.1em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition-normal);
+    color: white;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+}
+
+/* Button Ripple Effect */
+.btn::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.btn:active::after {
+    width: 300px;
+    height: 300px;
+}
+
+.btn:hover {
+    transform: translateY(-3px) scale(1.03);
+    box-shadow: var(--shadow-lg);
+}
+
+.btn:active {
+    transform: translateY(-1px) scale(1.01);
+}
+
+/* Button Variants */
+.btn-success {
+    background: var(--success-gradient);
+}
+
+.btn-secondary {
+    background: var(--secondary-gradient);
+}
+
+.btn-danger {
+    background: var(--danger-gradient);
+}
+
+/* Button Group */
+.btn-group {
+    display: grid;
+    gap: 15px;
+}
+
+/* ==========================================
+   9. LOG CONTAINER (Terminal)
+   ========================================== */
+.log-container {
+    background: #1a202c;
+    border-radius: var(--radius-xl);
+    padding: var(--spacing-lg);
+    box-shadow: var(--shadow-xl);
+    grid-column: 1 / -1;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Terminal Header */
+.log-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-md);
+    padding-bottom: var(--spacing-sm);
+    border-bottom: 2px solid #2d3748;
+}
+
+.log-header h2 {
+    color: #00ff00;
+    font-family: 'Courier New', monospace;
+    font-size: 1.5em;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0;
+    border: none;
+}
+
+.log-header h2::before {
+    content: "▶";
+    color: #00ff00;
+    animation: blink 1.5s infinite;
+}
+
+/* Clear Log Button */
+.clear-log-btn {
+    background: linear-gradient(135deg, #ff4444, #cc0000);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    font-size: 0.95em;
+    font-weight: 600;
+    transition: all var(--transition-fast);
+    box-shadow: var(--shadow-sm);
+}
+
+.clear-log-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+/* Terminal Output */
+#terminal-output {
+    background: #0d1117;
+    color: #00ff00;
+    font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+    font-size: 0.95em;
+    line-height: 1.7;
+    padding: var(--spacing-md);
+    border-radius: var(--radius-md);
+    min-height: 400px;
+    max-height: 600px;
+    overflow-y: auto;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.5);
+    border: 1px solid #30363d;
+}
+
+/* Log Entry Styles */
+.log-entry {
+    margin-bottom: 10px;
+    padding: 8px 12px;
+    border-left: 3px solid #00ff00;
+    padding-left: 15px;
+    background: rgba(0, 255, 0, 0.03);
+    border-radius: 4px;
+    transition: var(--transition-fast);
+}
+
+.log-entry:hover {
+    background: rgba(0, 255, 0, 0.08);
+    border-left-width: 5px;
+}
+
+.log-entry.success {
+    color: #00ff00;
+    border-left-color: #00ff00;
+}
+
+.log-entry.info {
+    color: #4facfe;
+    border-left-color: #4facfe;
+    background: rgba(79, 172, 254, 0.03);
+}
+
+.log-entry.warning {
+    color: #fee140;
+    border-left-color: #fee140;
+    background: rgba(254, 225, 64, 0.03);
+}
+
+.log-entry.error {
+    color: #ff4444;
+    border-left-color: #ff4444;
+    background: rgba(255, 68, 68, 0.03);
+}
+
+/* ==========================================
+   10. ALERT MESSAGES
+   ========================================== */
+.alert {
+    padding: 18px 24px;
+    margin-bottom: var(--spacing-md);
+    border-radius: var(--radius-md);
+    border-left: 5px solid;
+    animation: slideInRight 0.4s ease-out;
+    box-shadow: var(--shadow-md);
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.alert::before {
+    font-size: 1.5em;
+}
+
+.alert-success {
+    background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+    border-color: #28a745;
+    color: #155724;
+}
+
+.alert-success::before {
+    content: "✓";
+    color: #28a745;
+}
+
+.alert-info {
+    background: linear-gradient(135deg, #d1ecf1 0%, #bee5eb 100%);
+    border-color: #17a2b8;
+    color: #0c5460;
+}
+
+.alert-info::before {
+    content: "ℹ";
+    color: #17a2b8;
+}
+
+/* ==========================================
+   11. ANIMATIONS
+   ========================================== */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes bounce {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+@keyframes blink {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.3;
+    }
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: -1000px 0;
+    }
+
+    100% {
+        background-position: 1000px 0;
+    }
+}
+
+/* ==========================================
+   12. UTILITY CLASSES
+   ========================================== */
+.text-center {
+    text-align: center;
+}
+
+.mb-0 {
+    margin-bottom: 0;
+}
+
+.mb-1 {
+    margin-bottom: var(--spacing-xs);
+}
+
+.mb-2 {
+    margin-bottom: var(--spacing-sm);
+}
+
+.mb-3 {
+    margin-bottom: var(--spacing-md);
+}
+
+.mt-0 {
+    margin-top: 0;
+}
+
+.mt-1 {
+    margin-top: var(--spacing-xs);
+}
+
+.mt-2 {
+    margin-top: var(--spacing-sm);
+}
+
+.mt-3 {
+    margin-top: var(--spacing-md);
+}
+
+/* ==========================================
+   13. LOADING SPINNER (Bonus)
+   ========================================== */
+.spinner {
+    border: 4px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top: 4px solid white;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    margin: 0 auto;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* ==========================================
+   14. RESPONSIVE DESIGN
+   ========================================== */
+@media (max-width: 992px) {
+    .main-content {
+        grid-template-columns: 1fr;
+    }
+
+    body {
+        padding: var(--spacing-sm);
+    }
+
+    .card {
+        padding: var(--spacing-md);
+    }
+}
+
+@media (max-width: 576px) {
+    .header h1 {
+        font-size: 2em;
+    }
+
+    .header p {
+        font-size: 1em;
+    }
+
+    .card h2 {
+        font-size: 1.4em;
+    }
+
+    .btn {
+        padding: 14px 24px;
+        font-size: 1em;
+    }
+}
+
+/* ==========================================
+   15. PRINT STYLES
+   ========================================== */
+@media print {
+    body {
+        background: white;
+    }
+
+    .card {
+        break-inside: avoid;
+        box-shadow: none;
+        border: 1px solid #ddd;
+    }
+
+    .log-container {
+        display: none;
+    }
+}
