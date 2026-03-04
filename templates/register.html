@@ -1,0 +1,187 @@
+{% extends 'base.html' %}
+{% block title %}Student Face Registration - Smart Attendance System{% endblock %}
+{% block page_title %}Students{% endblock %}
+
+{% block content %}
+<div class="flex-1 w-full max-w-[1280px] mx-auto px-6 py-8">
+    <div class="flex flex-col md:flex-row items-start justify-between gap-6 mb-8">
+        <div>
+            <h2 class="text-3xl font-bold text-text-primary-light dark:text-text-primary-dark tracking-tight mb-2">
+                Student Registration
+            </h2>
+            <p class="text-text-secondary-light dark:text-text-secondary-dark">Add new student details and capture
+                facial data for
+                attendance.</p>
+        </div>
+        <div class="flex items-center gap-3">
+            <button
+                class="flex items-center gap-2 px-4 py-2 text-sm font-medium text-text-secondary-light dark:text-text-secondary-dark bg-surface-light dark:bg-surface-dark border border-border-light dark:border-border-dark rounded-lg hover:bg-background-light dark:hover:bg-background-dark transition-colors">
+                <span class="material-symbols-outlined text-lg">upload_file</span>
+                Bulk Import
+            </button>
+        </div>
+    </div>
+    <div class="mb-6 hidden">
+        <div
+            class="flex items-center gap-3 p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-900/50 rounded-lg text-green-800 dark:text-green-200">
+            <span class="material-symbols-outlined">check_circle</span>
+            <p class="text-sm font-medium">Student registered successfully!</p>
+        </div>
+    </div>
+    <form method="POST" action="{{ url_for('register') }}">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            <div class="lg:col-span-5 flex flex-col gap-6">
+                <div
+                    class="bg-surface-light dark:bg-surface-dark p-6 rounded-xl shadow-sm border border-border-light dark:border-border-dark">
+                    <h3
+                        class="text-lg font-bold text-text-primary-light dark:text-text-primary-dark mb-6 flex items-center gap-2">
+                        <span class="material-symbols-outlined text-primary">person_add</span>
+                        Personal Details
+                    </h3>
+                    <div class="space-y-5">
+                        <div class="space-y-1.5">
+                            <label
+                                class="text-sm font-medium text-text-secondary-light dark:text-text-secondary-dark">Full
+                                Name</label>
+                            <div class="relative">
+                                <span
+                                    class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-text-secondary-light dark:text-text-secondary-dark">badge</span>
+                                <input name="student_name" required
+                                    class="w-full pl-10 pr-4 py-2.5 bg-background-light dark:bg-background-dark border border-border-light dark:border-border-dark rounded-lg text-text-primary-light dark:text-text-primary-dark focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all"
+                                    placeholder="e.g. John Doe" type="text" />
+                            </div>
+                        </div>
+                        <div class="space-y-1.5">
+                            <label
+                                class="text-sm font-medium text-text-secondary-light dark:text-text-secondary-dark">Roll
+                                Number</label>
+                            <div class="relative">
+                                <span
+                                    class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-text-secondary-light dark:text-text-secondary-dark">numbers</span>
+                                <input
+                                    class="w-full pl-10 pr-4 py-2.5 bg-background-light dark:bg-background-dark border border-border-light dark:border-border-dark rounded-lg text-text-primary-light dark:text-text-primary-dark focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all"
+                                    placeholder="e.g. CS-2023-001" type="text" />
+                            </div>
+                        </div>
+                        <div class="space-y-1.5">
+                            <label
+                                class="text-sm font-medium text-text-secondary-light dark:text-text-secondary-dark">Department</label>
+                            <div class="relative">
+                                <span
+                                    class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-text-secondary-light dark:text-text-secondary-dark">school</span>
+                                <select
+                                    class="form-select-arrow w-full pl-10 pr-10 py-2.5 bg-background-light dark:bg-background-dark border border-border-light dark:border-border-dark rounded-lg text-text-primary-light dark:text-text-primary-dark focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary appearance-none transition-all cursor-pointer">
+                                    <option disabled="" selected="" value="">Select Department</option>
+                                    <option value="cs">Computer Science</option>
+                                    <option value="ee">Electrical Engineering</option>
+                                    <option value="me">Mechanical Engineering</option>
+                                    <option value="ce">Civil Engineering</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="space-y-1.5">
+                            <label
+                                class="text-sm font-medium text-text-secondary-light dark:text-text-secondary-dark">Academic
+                                Year</label>
+                            <div class="relative">
+                                <span
+                                    class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-text-secondary-light dark:text-text-secondary-dark">calendar_month</span>
+                                <select
+                                    class="form-select-arrow w-full pl-10 pr-10 py-2.5 bg-background-light dark:bg-background-dark border border-border-light dark:border-border-dark rounded-lg text-text-primary-light dark:text-text-primary-dark focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary appearance-none transition-all cursor-pointer">
+                                    <option disabled="" selected="" value="">Select Year</option>
+                                    <option value="1">1st Year</option>
+                                    <option value="2">2nd Year</option>
+                                    <option value="3">3rd Year</option>
+                                    <option value="4">4th Year</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div
+                    class="p-4 bg-blue-50 dark:bg-blue-900/10 border border-blue-100 dark:border-blue-900/30 rounded-xl flex gap-3 items-start">
+                    <span class="material-symbols-outlined text-primary mt-0.5">info</span>
+                    <div>
+                        <h4 class="text-sm font-bold text-text-primary-light dark:text-text-primary-dark">Guidelines
+                        </h4>
+                        <ul
+                            class="mt-1 text-sm text-text-secondary-light dark:text-text-secondary-dark list-disc list-inside space-y-1">
+                            <li>Ensure good lighting on the face.</li>
+                            <li>Student should remove glasses if possible.</li>
+                            <li>Capture multiple angles for better accuracy.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="lg:col-span-7 flex flex-col gap-6">
+                <div
+                    class="bg-surface-light dark:bg-surface-dark p-6 rounded-xl shadow-sm border border-border-light dark:border-border-dark h-full flex flex-col">
+                    <div class="flex items-center justify-between mb-6">
+                        <h3
+                            class="text-lg font-bold text-text-primary-light dark:text-text-primary-dark flex items-center gap-2">
+                            <span class="material-symbols-outlined text-primary">videocam</span>
+                            Live Camera Preview
+                        </h3>
+                        <div
+                            class="flex items-center gap-2 px-3 py-1 bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 text-xs font-bold uppercase tracking-wider rounded-full border border-red-100 dark:border-red-900/30 animate-pulse">
+                            <span class="w-2 h-2 bg-red-500 rounded-full"></span>
+                            Live
+                        </div>
+                    </div>
+                    <div
+                        class="relative w-full aspect-video bg-slate-900 rounded-lg overflow-hidden border border-border-light dark:border-border-dark shadow-inner group">
+                        <div class="absolute inset-0 z-10 opacity-30 pointer-events-none">
+                            <div class="w-full h-full border-2 border-dashed border-white/50 m-auto relative"
+                                style="width: 50%; height: 70%; top: 15%; border-radius: 50%;"></div>
+                            <div class="absolute top-1/2 left-0 w-full h-[1px] bg-primary/30"></div>
+                            <div class="absolute left-1/2 top-0 h-full w-[1px] bg-primary/30"></div>
+                        </div>
+                        <img alt="Camera Preview" class="w-full h-full object-cover opacity-80"
+                            data-alt="Student face in camera viewfinder"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuAtZrqECRuCUhwhWDyFyLNP6Phf2zsR3cXdfR1wBjxV0dEy5lU1f_l6OF1yD0-nzmJsDvbm6e1-gxfgXWztpEiMUqEs5cxxmPygb24yPMWyD45fFrqhQghfUVNIYn3FxF_6-4CnnLf_WIxSFd0PT5cWhBByhbrWs4j4LXhHTXn2vlyM4L10VvubPmICAK9qe1rwLqPmezdGITxv_xbpqtHwhP1u_m-wSoZarP4PGXrDP2krrXBXwWNwUSsZBToIovyCHdLVAdBMGLA" />
+                        <div class="absolute bottom-4 left-4 right-4 flex justify-between items-end">
+                            <div
+                                class="bg-black/50 backdrop-blur-md px-3 py-1.5 rounded-md text-xs text-white font-mono flex items-center gap-2">
+                                <span class="material-symbols-outlined text-[16px] text-green-400">face</span>
+                                Face Detected: 98%
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-6">
+                        <div class="flex items-center justify-between mb-2">
+                            <span
+                                class="text-sm font-medium text-text-secondary-light dark:text-text-secondary-dark">Capture
+                                Progress</span>
+                            <span class="text-sm font-bold text-primary">4 / 10 images</span>
+                        </div>
+                        <div
+                            class="h-2 w-full bg-background-light dark:bg-background-dark rounded-full overflow-hidden">
+                            <div class="h-full bg-primary w-[40%] rounded-full transition-all duration-500 ease-out">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-8 flex gap-4">
+                        <button
+                            class="flex-1 py-3 px-4 rounded-lg bg-background-light dark:bg-background-dark text-text-primary-light dark:text-text-primary-dark font-medium hover:bg-border-light dark:hover:bg-border-dark transition-colors flex justify-center items-center gap-2">
+                            <span class="material-symbols-outlined">restart_alt</span>
+                            Reset
+                        </button>
+                        <button
+                            class="flex-[2] py-3 px-4 rounded-lg bg-primary hover:bg-blue-600 text-white font-bold shadow-lg shadow-blue-500/20 transition-all active:scale-[0.98] flex justify-center items-center gap-2">
+                            <span class="material-symbols-outlined">camera</span>
+                            Capture Photo
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="flex items-center gap-4 mt-8">
+            <a href="{{ url_for('dashboard') }}"
+                class="px-6 py-2.5 rounded-lg border border-border-light dark:border-border-dark text-text-secondary-light dark:text-text-secondary-dark font-medium hover:bg-background-light dark:hover:bg-background-dark transition-colors">Cancel</a>
+            <button type="submit"
+                class="px-6 py-2.5 rounded-lg bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-bold hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed">Complete
+                Registration</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

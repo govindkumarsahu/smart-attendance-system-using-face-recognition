@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Live Attendance Capture - Smart Attendance System</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Theme Config -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#137fec",
+                        "primary-content": "#ffffff",
+                        "primary-dark": "#0b5ed7",
+                        "primary-light": "#d0e6ff",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                        "surface-light": "#ffffff",
+                        "surface-dark": "#1a2632",
+                        "text-main": "#0f172a",
+                        "text-sub": "#475569",
+                    },
+                    fontFamily: {
+                        "display": ["Lexend", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar for webkit */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+</head>
+<body class="font-display bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen flex flex-col">
+<!-- Top Navigation -->
+<header class="sticky top-0 z-50 bg-surface-light dark:bg-surface-dark border-b border-slate-200 dark:border-slate-800 shadow-sm">
+<div class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex items-center justify-between h-16">
+<!-- Logo & Title -->
+<div class="flex items-center gap-3">
+<div class="flex items-center justify-center size-10 rounded-lg bg-primary/10 text-primary">
+<span class="material-symbols-outlined text-2xl">face</span>
+</div>
+<span class="text-xl font-bold tracking-tight text-slate-900 dark:text-white">Smart Attendance</span>
+</div>
+<!-- Navigation Links -->
+<nav class="hidden md:flex items-center gap-1">
+<a class="px-3 py-2 rounded-lg text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-primary hover:bg-primary/5 transition-colors" href="#">Dashboard</a>
+<a class="px-3 py-2 rounded-lg text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-primary hover:bg-primary/5 transition-colors" href="#">Courses</a>
+<a class="px-3 py-2 rounded-lg text-sm font-medium text-primary bg-primary/10" href="#">Live Capture</a>
+<a class="px-3 py-2 rounded-lg text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-primary hover:bg-primary/5 transition-colors" href="#">Students</a>
+<a class="px-3 py-2 rounded-lg text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-primary hover:bg-primary/5 transition-colors" href="#">Reports</a>
+</nav>
+<!-- User Profile & Actions -->
+<div class="flex items-center gap-4">
+<button class="p-2 rounded-full text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<div class="h-8 w-[1px] bg-slate-200 dark:bg-slate-700"></div>
+<div class="flex items-center gap-3">
+<div class="text-right hidden sm:block">
+<p class="text-sm font-semibold text-slate-900 dark:text-white">Prof. Anderson</p>
+<p class="text-xs text-slate-500 dark:text-slate-400">Computer Science</p>
+</div>
+<div class="size-10 rounded-full bg-slate-200 dark:bg-slate-700 bg-center bg-cover border-2 border-white dark:border-slate-800 shadow-sm" data-alt="Profile picture of Professor Anderson" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDdMpV5PnpJvnd6aOhLbzEVW-31-yTfwLIy7DswlDU6rqrHC2ea3UKbY5PTjnjULljbZOqvHH77zBEXPFXJEJMJgg6d9w-27yJHSZ4JxzGi1OoIzF77A5W-ev_YKnpR-zqYl2AQsmsIa2eFJzbBsXkkdoVAJCos0AeDKkOvtLvlQDdnYTk1ERvmUCMxynwtKvJPPYBlZ3bUqh5KyvuEtKHqohLNlOCEaOPYsXswSVS4PrFgSfc6hnG4R2Ck6_nKtyAvSYYhdS5ODP0");'></div>
+</div>
+</div>
+</div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="flex-1 flex flex-col lg:flex-row overflow-hidden max-w-[1440px] mx-auto w-full p-4 sm:p-6 lg:p-8 gap-6">
+<!-- Left Column: Camera Feed & Controls -->
+<div class="flex-1 flex flex-col gap-6 min-w-0">
+<!-- Header Section -->
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+<div>
+<h1 class="text-2xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">videocam</span>
+                        Live Class Feed
+                    </h1>
+<p class="text-slate-500 dark:text-slate-400 text-sm mt-1">CS101: Introduction to Algorithms • Room 302</p>
+</div>
+<div class="flex items-center gap-3 bg-white dark:bg-surface-dark p-1.5 rounded-lg border border-slate-200 dark:border-slate-700 shadow-sm">
+<span class="px-3 py-1.5 text-xs font-semibold uppercase tracking-wider text-slate-500">Status:</span>
+<div class="flex items-center gap-2 px-3 py-1.5 rounded bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400 border border-emerald-100 dark:border-emerald-800">
+<span class="relative flex h-2.5 w-2.5">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+</span>
+<span class="text-sm font-bold">Active</span>
+</div>
+</div>
+</div>
+<!-- Camera Viewport -->
+<div class="relative w-full bg-black rounded-xl overflow-hidden shadow-lg border border-slate-800 aspect-video group">
+<!-- Simulated Camera Feed Background -->
+<div class="absolute inset-0 bg-cover bg-center opacity-90" data-alt="Classroom full of students taking a test or listening to a lecture" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAvxZ4ScJTo5ecqf5aVmPbMjPSle97Tw73B5iEtJD1qbByYtxknM-iPPXUegTQB6zdgoKfYTkecEuWd7yKIxxUnR6XPbQ_RybXPCpBXskw8u-I19Rn3RaMrfEeMxRmNskpO5gqG566Oss5mpPrrqH7uOYrbI81QZ_to0i40DrrUwISgqA_p_Vak4msH7MyZTpd-f1muBhIf6aYQqYkpCNjpcsS9upruTjOhnZDYfKbhaXC-gQiMjteydenJyNQwrlR0fok0pDX_06k");'></div>
+<!-- Overlay Elements -->
+<div class="absolute top-4 left-4 bg-black/60 backdrop-blur-sm text-white px-3 py-1 rounded text-xs font-mono border border-white/10">
+                    CAM_01 • 1080p • 30fps
+                </div>
+<div class="absolute top-4 right-4 bg-red-600 text-white px-3 py-1 rounded-full text-xs font-bold animate-pulse shadow-lg flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">fiber_manual_record</span>
+                    REC
+                </div>
+<!-- Face Detection Box Overlay (Simulation) -->
+<div class="absolute top-[30%] left-[45%] w-[12%] h-[20%] border-2 border-primary rounded-lg shadow-[0_0_20px_rgba(19,127,236,0.5)]">
+<div class="absolute -top-7 left-1/2 -translate-x-1/2 bg-primary text-white text-[10px] font-bold px-2 py-0.5 rounded shadow-sm whitespace-nowrap">
+                        Detecting...
+                    </div>
+<!-- Corner markers -->
+<div class="absolute -top-0.5 -left-0.5 w-2 h-2 border-t-2 border-l-2 border-white"></div>
+<div class="absolute -top-0.5 -right-0.5 w-2 h-2 border-t-2 border-r-2 border-white"></div>
+<div class="absolute -bottom-0.5 -left-0.5 w-2 h-2 border-b-2 border-l-2 border-white"></div>
+<div class="absolute -bottom-0.5 -right-0.5 w-2 h-2 border-b-2 border-r-2 border-white"></div>
+</div>
+<!-- Controls Overlay (Hover) -->
+<div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex justify-center gap-4">
+<button class="bg-white/10 hover:bg-white/20 backdrop-blur-md text-white rounded-full p-3 transition-all">
+<span class="material-symbols-outlined">fullscreen</span>
+</button>
+<button class="bg-white/10 hover:bg-white/20 backdrop-blur-md text-white rounded-full p-3 transition-all">
+<span class="material-symbols-outlined">settings</span>
+</button>
+</div>
+</div>
+<!-- Action Bar -->
+<div class="flex flex-col sm:flex-row gap-4 p-5 bg-white dark:bg-surface-dark rounded-xl shadow-sm border border-slate-200 dark:border-slate-800">
+<div class="flex-1 flex flex-col justify-center">
+<h3 class="font-bold text-slate-900 dark:text-white">Session Controls</h3>
+<p class="text-sm text-slate-500 dark:text-slate-400">Start the recognition engine to mark attendance.</p>
+</div>
+<div class="flex items-center gap-3">
+<button class="flex items-center gap-2 px-6 py-3 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 font-semibold rounded-lg hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
+<span class="material-symbols-outlined">stop_circle</span>
+                        Stop
+                    </button>
+<button class="flex items-center gap-2 px-6 py-3 bg-primary text-white font-semibold rounded-lg hover:bg-primary-dark transition-all shadow-lg shadow-primary/30">
+<span class="material-symbols-outlined">play_circle</span>
+                        Start Attendance
+                    </button>
+</div>
+</div>
+<!-- Success Message Toast (Static for design) -->
+<div class="bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-200 dark:border-emerald-800 rounded-lg p-4 flex items-start gap-3">
+<span class="material-symbols-outlined text-emerald-600 dark:text-emerald-400 mt-0.5">check_circle</span>
+<div>
+<h4 class="text-sm font-bold text-emerald-800 dark:text-emerald-300">Attendance Marked Successfully</h4>
+<p class="text-xs text-emerald-600 dark:text-emerald-400 mt-0.5">Updated database for 3 students in the last 10 seconds.</p>
+</div>
+<button class="ml-auto text-emerald-500 hover:text-emerald-700 dark:hover:text-emerald-300">
+<span class="material-symbols-outlined text-sm">close</span>
+</button>
+</div>
+</div>
+<!-- Right Column: Recognition Panel -->
+<div class="w-full lg:w-96 flex flex-col bg-white dark:bg-surface-dark rounded-xl shadow-sm border border-slate-200 dark:border-slate-800 overflow-hidden h-[calc(100vh-140px)] sticky top-24">
+<div class="p-5 border-b border-slate-100 dark:border-slate-700 flex justify-between items-center bg-slate-50/50 dark:bg-slate-800/50">
+<h2 class="font-bold text-slate-900 dark:text-white text-lg">Recognized Students</h2>
+<span class="bg-primary/10 text-primary text-xs font-bold px-2 py-1 rounded-full">Live</span>
+</div>
+<!-- List of Recognized Students -->
+<div class="flex-1 overflow-y-auto p-4 space-y-4">
+<!-- Latest Recognition Card (Active/Highlighted) -->
+<div class="relative bg-blue-50 dark:bg-blue-900/10 p-4 rounded-xl border border-primary/30 shadow-sm ring-1 ring-primary/20">
+<div class="absolute -top-2 -right-2 bg-primary text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[10px]">bolt</span>
+                        JUST NOW
+                    </div>
+<div class="flex items-start gap-4">
+<div class="relative">
+<div class="w-16 h-16 rounded-lg bg-cover bg-center border-2 border-white dark:border-slate-700 shadow-md" data-alt="Portrait of Sarah Johnson" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCRihTw3SshziKEmdlzFeEpJFPtBE248MGPjnr_vf5jD9Kkst07Sz9vgwJeykpx_4HixPwgivTHdaZdCXqnaIhiynoa7rXn3mAkfKrM6dpeHZnh52aq7_nDDvnj3s5B2EvVXENIMN1T3JzSBnGMp18obE6ycuVbs169cPDvdV_vP9rAsWWNOFyfzFJGM487X0TOVHVnHDhyI7958qLju4-neZYAI9BfZxKVz78CSFaWZ8uPpwkxc7aGbgXEjNJot0fkvHd0aflegyE");'></div>
+<div class="absolute -bottom-2 -right-2 bg-emerald-500 rounded-full p-1 border-2 border-white dark:border-surface-dark text-white shadow-sm">
+<span class="material-symbols-outlined text-[10px] block">check</span>
+</div>
+</div>
+<div class="flex-1 min-w-0">
+<h3 class="font-bold text-slate-900 dark:text-white truncate">Sarah Johnson</h3>
+<p class="text-xs text-slate-500 dark:text-slate-400 mb-2">Roll No: CS-2023-045</p>
+<div class="flex items-center gap-2">
+<div class="flex-1 h-1.5 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
+<div class="h-full bg-emerald-500 rounded-full" style="width: 98%"></div>
+</div>
+<span class="text-xs font-bold text-emerald-600 dark:text-emerald-400">98%</span>
+</div>
+<p class="text-[10px] text-slate-400 mt-1">Confidence Score</p>
+</div>
+</div>
+</div>
+<!-- Previous Recognition 1 -->
+<div class="flex items-center gap-3 p-3 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors border border-transparent hover:border-slate-100 dark:hover:border-slate-700">
+<div class="w-12 h-12 rounded-lg bg-cover bg-center bg-slate-200" data-alt="Portrait of Michael Chen" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDG1LMG9bh-sEpnSY0cDUomJTDQcz5GqAbXdeBLQCHbmuV7fAfAVIAzTlRbpI_piCAvWnbJ15dZo5YPEVVqfa7peyPGRuUZcLCNlxN0iyEokmiC9Y4z8AdqoKTjdYbWToQE0ZeKaVm8jYBBKO35H_UN1UolScUEu8xYcstNWkO3PmKH6a_d5EzmFwONxOKPWiFxOTxZZCXNZ77iG2GGkJzQYbFSql8AJVdAB_PYNJqan5oGGZzJWcUcj74SRaqEbLoOjjQdu7oXuSc");'></div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-start">
+<h4 class="text-sm font-bold text-slate-900 dark:text-white truncate">Michael Chen</h4>
+<span class="text-[10px] text-slate-400">10:42 AM</span>
+</div>
+<p class="text-xs text-slate-500 dark:text-slate-400">Roll No: CS-2023-012</p>
+</div>
+<div class="flex flex-col items-end">
+<span class="text-xs font-bold text-emerald-600 dark:text-emerald-400">94%</span>
+<span class="material-symbols-outlined text-emerald-500 text-[16px]">verified</span>
+</div>
+</div>
+<!-- Previous Recognition 2 -->
+<div class="flex items-center gap-3 p-3 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors border border-transparent hover:border-slate-100 dark:hover:border-slate-700">
+<div class="w-12 h-12 rounded-lg bg-cover bg-center bg-slate-200" data-alt="Portrait of Emily Davis" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBn4CEh1aqL3XRdmbSmB0qdfHWti27COyfwR8ssSz3Ti-pXg-i6CknRGFtNzISmy3IQNGJLlNFMj5IQO7Heitp7oiSddEcZGeuDJq99xtGLnwRw5qHwHXx7LUdSZ9d67SAG1zb2oA5SnXVkBM0DXJFm4xMFmNjOzUsf0a3lxgjF0Q93Fh7zH1LeLE1AfImX4NxERDxw7aA84LfmbROAm_l8FcJcIUmM4pD3VQmPH4vGR5uc80HLjnuHLhDH7sa-RQSR9-AmmDeDXgM");'></div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-start">
+<h4 class="text-sm font-bold text-slate-900 dark:text-white truncate">Emily Davis</h4>
+<span class="text-[10px] text-slate-400">10:41 AM</span>
+</div>
+<p class="text-xs text-slate-500 dark:text-slate-400">Roll No: CS-2023-089</p>
+</div>
+<div class="flex flex-col items-end">
+<span class="text-xs font-bold text-emerald-600 dark:text-emerald-400">96%</span>
+<span class="material-symbols-outlined text-emerald-500 text-[16px]">verified</span>
+</div>
+</div>
+<!-- Previous Recognition 3 -->
+<div class="flex items-center gap-3 p-3 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors border border-transparent hover:border-slate-100 dark:hover:border-slate-700 opacity-75">
+<div class="w-12 h-12 rounded-lg bg-cover bg-center bg-slate-200" data-alt="Portrait of James Wilson" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCq_lCyn9ghVG2g0xMe--nDjBblnObe548Qbkt43O1nKzLdDnrA8DyeX-y6CxytzlZCpDEEHkhrnRrBDfzLOUXlArFTlsv5Bc1pBQmy7HmOVB1H_ye4FZ7fPfcYsrcSU__PGkqTVrGNC4CtzHTlaS566d5ZjE3o_a5gtk06BNl3IQRUlA6f-x0vitOET2vhqOMZ2tf-Ad7rvmEVna4MCv4MjvIIxbAUAKjxQDp83Kq4d3danZAwk1iJl6aik1lHiH0-RbbiZyBSH6U");'></div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-start">
+<h4 class="text-sm font-bold text-slate-900 dark:text-white truncate">James Wilson</h4>
+<span class="text-[10px] text-slate-400">10:40 AM</span>
+</div>
+<p class="text-xs text-slate-500 dark:text-slate-400">Roll No: CS-2023-022</p>
+</div>
+<div class="flex flex-col items-end">
+<span class="text-xs font-bold text-emerald-600 dark:text-emerald-400">89%</span>
+<span class="material-symbols-outlined text-emerald-500 text-[16px]">verified</span>
+</div>
+</div>
+</div>
+<!-- Panel Footer -->
+<div class="p-4 bg-slate-50 dark:bg-slate-800/50 border-t border-slate-200 dark:border-slate-700">
+<div class="flex justify-between items-center text-sm text-slate-600 dark:text-slate-300">
+<span>Total Present: <span class="font-bold text-slate-900 dark:text-white">4</span></span>
+<a class="text-primary hover:text-primary-dark font-medium text-xs flex items-center gap-1" href="#">
+                        View Full List <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</a>
+</div>
+</div>
+</div>
+</main>
+</body></html>

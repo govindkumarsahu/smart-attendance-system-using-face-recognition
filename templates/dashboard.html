@@ -1,0 +1,241 @@
+{% extends 'base.html' %}
+
+{% block title %}Smart Attendance Dashboard{% endblock %}
+{% block page_title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="flex flex-col gap-6 p-6 lg:p-10">
+    <!-- Metrics Grid -->
+    <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <!-- Card 1 -->
+        <div
+            class="group relative flex flex-col gap-1 overflow-hidden rounded-2xl border border-border-light bg-surface-light p-5 shadow-sm transition-all hover:shadow-md dark:border-border-dark dark:bg-surface-dark">
+            <div class="flex items-center justify-between">
+                <div class="rounded-lg bg-blue-50 p-2 text-primary dark:bg-blue-900/20">
+                    <span class="material-symbols-outlined">school</span>
+                </div>
+                <span class="text-xs font-medium text-green-600 dark:text-green-400">+12%</span>
+            </div>
+            <div class="mt-3">
+                <p class="text-3xl font-bold text-text-primary-light dark:text-text-primary-dark">{{
+                    stats.registered_students }}</p>
+                <p class="text-sm font-medium text-text-secondary-light dark:text-text-secondary-dark">
+                    Registered Students</p>
+            </div>
+            <div
+                class="absolute -right-4 -top-4 h-24 w-24 rounded-full bg-primary/5 transition-transform group-hover:scale-110">
+            </div>
+        </div>
+        <!-- Card 2 -->
+        <div
+            class="group relative flex flex-col gap-1 overflow-hidden rounded-2xl border border-border-light bg-surface-light p-5 shadow-sm transition-all hover:shadow-md dark:border-border-dark dark:bg-surface-dark">
+            <div class="flex items-center justify-between">
+                <div class="rounded-lg bg-green-50 p-2 text-green-600 dark:bg-green-900/20 dark:text-green-400">
+                    <span class="material-symbols-outlined">check_circle</span>
+                </div>
+                <span class="text-xs font-medium text-text-secondary-light dark:text-text-secondary-dark">Today</span>
+            </div>
+            <div class="mt-3">
+                <p class="text-3xl font-bold text-text-primary-light dark:text-text-primary-dark">{{
+                    stats.present_today }}</p>
+                <p class="text-sm font-medium text-text-secondary-light dark:text-text-secondary-dark">Present
+                    Today</p>
+            </div>
+        </div>
+        <!-- Card 3 -->
+        <div
+            class="group relative flex flex-col gap-1 overflow-hidden rounded-2xl border border-border-light bg-surface-light p-5 shadow-sm transition-all hover:shadow-md dark:border-border-dark dark:bg-surface-dark">
+            <div class="flex items-center justify-between">
+                <div class="rounded-lg bg-orange-50 p-2 text-orange-600 dark:bg-orange-900/20 dark:text-orange-400">
+                    <span class="material-symbols-outlined">schedule</span>
+                </div>
+                <span class="text-xs font-medium text-red-500">-5%</span>
+            </div>
+            <div class="mt-3">
+                <p class="text-3xl font-bold text-text-primary-light dark:text-text-primary-dark">{{
+                    stats.absent_late }}</p>
+                <p class="text-sm font-medium text-text-secondary-light dark:text-text-secondary-dark">
+                    Absent/Late</p>
+            </div>
+        </div>
+        <!-- Card 4 -->
+        <div
+            class="group relative flex flex-col gap-1 overflow-hidden rounded-2xl border border-border-light bg-surface-light p-5 shadow-sm transition-all hover:shadow-md dark:border-border-dark dark:bg-surface-dark">
+            <div class="flex items-center justify-between">
+                <div class="rounded-lg bg-purple-50 p-2 text-purple-600 dark:bg-purple-900/20 dark:text-purple-400">
+                    <span class="material-symbols-outlined">smart_toy</span>
+                </div>
+                <span
+                    class="flex items-center gap-1 text-xs font-medium {% if stats.model_active %}text-green-600 dark:text-green-400{% else %}text-red-500{% endif %}">
+                    <span
+                        class="h-1.5 w-1.5 rounded-full {% if stats.model_active %}bg-green-500{% else %}bg-red-500{% endif %}"></span>
+                    {% if stats.model_active %}Active{% else %}Not Trained{% endif %}
+                </span>
+            </div>
+            <div class="mt-3">
+                <p class="text-3xl font-bold text-text-primary-light dark:text-text-primary-dark">{{
+                    stats.model_version }}</p>
+                <p class="text-sm font-medium text-text-secondary-light dark:text-text-secondary-dark">Face
+                    Recognition Model</p>
+            </div>
+        </div>
+    </div>
+    <!-- Main Content Area: Chart and Recent List -->
+    <div class="flex flex-col gap-6 xl:flex-row">
+        <!-- Left Column: Recent Attendance Table -->
+        <div
+            class="flex flex-1 flex-col rounded-2xl border border-border-light bg-surface-light shadow-sm dark:border-border-dark dark:bg-surface-dark">
+            <div class="flex items-center justify-between border-b border-border-light p-5 dark:border-border-dark">
+                <h3 class="text-lg font-bold text-text-primary-light dark:text-text-primary-dark">Live
+                    Attendance Feed</h3>
+                <a href="{{ url_for('reports') }}"
+                    class="flex items-center gap-1 text-sm font-medium text-primary hover:text-blue-600 dark:hover:text-blue-400">
+                    View All
+                    <span class="material-symbols-outlined text-sm">arrow_forward</span>
+                </a>
+            </div>
+            <div class="w-full overflow-x-auto">
+                <table class="w-full min-w-[600px] text-left">
+                    <thead
+                        class="bg-background-light text-xs font-semibold uppercase text-text-secondary-light dark:bg-background-dark dark:text-text-secondary-dark">
+                        <tr>
+                            <th class="px-6 py-4">Student Name</th>
+                            <th class="px-6 py-4">Department</th>
+                            <th class="px-6 py-4">Time In</th>
+                            <th class="px-6 py-4">Confidence</th>
+                            <th class="px-6 py-4">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-border-light dark:divide-border-dark text-sm">
+                        {% if stats.recent_records %}
+                        {% for record in stats.recent_records %}
+                        <tr class="group hover:bg-background-light/50 dark:hover:bg-background-dark/50">
+                            <td class="px-6 py-4">
+                                <div class="flex items-center gap-3">
+                                    <div
+                                        class="h-9 w-9 overflow-hidden rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm font-bold">
+                                        {{ record.name[:2]|upper }}
+                                    </div>
+                                    <div class="flex flex-col">
+                                        <span class="font-medium text-text-primary-light dark:text-text-primary-dark">{{
+                                            record.name }}</span>
+                                        <span class="text-xs text-text-secondary-light dark:text-text-secondary-dark">{{
+                                            record.date }}</span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 text-text-secondary-light dark:text-text-secondary-dark">—</td>
+                            <td class="px-6 py-4 text-text-secondary-light dark:text-text-secondary-dark">{{
+                                record.time }}</td>
+                            <td class="px-6 py-4">
+                                <div class="flex items-center gap-2">
+                                    <div class="h-1.5 w-16 overflow-hidden rounded-full bg-slate-100 dark:bg-slate-700">
+                                        <div class="h-full w-[95%] bg-green-500"></div>
+                                    </div>
+                                    <span
+                                        class="text-xs font-medium text-text-secondary-light dark:text-text-secondary-dark">✓</span>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4">
+                                <span
+                                    class="inline-flex items-center gap-1.5 rounded-full bg-green-100 px-2.5 py-1 text-xs font-medium text-green-700 dark:bg-green-900/30 dark:text-green-400">
+                                    <span class="h-1.5 w-1.5 rounded-full bg-green-500"></span>
+                                    Present
+                                </span>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        {% else %}
+                        <tr>
+                            <td colspan="5"
+                                class="px-6 py-10 text-center text-text-secondary-light dark:text-text-secondary-dark">
+                                <span class="material-symbols-outlined text-4xl mb-2 block opacity-30">event_busy</span>
+                                No attendance records for today yet.
+                            </td>
+                        </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- Right Column: System Status & Quick Actions -->
+        <div class="flex w-full flex-col gap-6 xl:w-80">
+            <!-- Camera Preview (Simulated) -->
+            <div
+                class="flex flex-col overflow-hidden rounded-2xl border border-border-light bg-surface-light shadow-sm dark:border-border-dark dark:bg-surface-dark">
+                <div class="border-b border-border-light p-4 dark:border-border-dark">
+                    <h3 class="font-bold text-text-primary-light dark:text-text-primary-dark">Camera Feed</h3>
+                    <p class="text-xs text-text-secondary-light dark:text-text-secondary-dark">Gate A - Main
+                        Entrance</p>
+                </div>
+                <div class="relative aspect-video w-full bg-slate-900">
+                    <img alt="Blurred background representing camera feed showing students walking"
+                        class="h-full w-full object-cover opacity-60" data-alt="Security camera feed simulation"
+                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuADVnOpGL0qZbCIDUICl1yg1UCLOcYzmGOfHC0YD5clhbsVdlIhuz0Ch7V5318FXGjEjfqQznGR32SSag8EPVhoEhVg5JLKyQUWebHcsH84TVW8IkN2LemRqluSKo4xN53EV0Xa6_6w89NyDZYpP0Vgjqq8bHTMogkpxMQ9JgaJUQz9Nx-ikxJUhAAEsXmp6gaNmPK4Z2zNRO_7eSMUTU3VyGXUNDU23ZAGp0Bpv99JxfWMEQBu__Jk47mnxUHHsXhkyludvSg9FQM" />
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <div
+                            class="absolute right-4 top-4 flex items-center gap-1 rounded bg-black/50 px-2 py-1 text-[10px] text-white backdrop-blur-sm">
+                            <span class="h-1.5 w-1.5 rounded-full bg-red-500 animate-pulse"></span>
+                            LIVE
+                        </div>
+                        <!-- Face Detection Box Simulation -->
+                        <div class="absolute border-2 border-primary/70 h-24 w-24 rounded-lg"></div>
+                        <div
+                            class="absolute border-2 border-green-400/70 h-20 w-20 rounded-lg translate-x-12 -translate-y-8">
+                        </div>
+                    </div>
+                </div>
+                <div class="p-4">
+                    <div class="flex items-center justify-between">
+                        <span
+                            class="text-xs font-medium text-text-secondary-light dark:text-text-secondary-dark">Processing
+                            Speed</span>
+                        <span class="text-xs font-bold text-text-primary-light dark:text-text-primary-dark">24ms</span>
+                    </div>
+                    <div class="mt-2 h-1.5 w-full rounded-full bg-slate-100 dark:bg-slate-700">
+                        <div class="h-full w-[80%] rounded-full bg-primary"></div>
+                    </div>
+                </div>
+            </div>
+            <!-- Quick Department Stats -->
+            <div
+                class="flex flex-col rounded-2xl border border-border-light bg-surface-light p-5 shadow-sm dark:border-border-dark dark:bg-surface-dark">
+                <h3 class="mb-4 font-bold text-text-primary-light dark:text-text-primary-dark">Department
+                    Attendance</h3>
+                <div class="flex flex-col gap-4">
+                    <div class="flex flex-col gap-1">
+                        <div class="flex justify-between text-xs">
+                            <span class="font-medium text-text-secondary-light dark:text-text-secondary-dark">Computer
+                                Science</span>
+                            <span class="font-bold text-text-primary-light dark:text-text-primary-dark">92%</span>
+                        </div>
+                        <div class="h-2 w-full rounded-full bg-slate-100 dark:bg-slate-700">
+                            <div class="h-full w-[92%] rounded-full bg-primary"></div>
+                        </div>
+                    </div>
+                    <div class="flex flex-col gap-1">
+                        <div class="flex justify-between text-xs">
+                            <span class="font-medium text-text-secondary-light dark:text-text-secondary-dark">Electrical
+                                Eng.</span>
+                            <span class="font-bold text-text-primary-light dark:text-text-primary-dark">85%</span>
+                        </div>
+                        <div class="h-2 w-full rounded-full bg-slate-100 dark:bg-slate-700">
+                            <div class="h-full w-[85%] rounded-full bg-blue-400"></div>
+                        </div>
+                    </div>
+                    <div class="flex flex-col gap-1">
+                        <div class="flex justify-between text-xs">
+                            <span class="font-medium text-text-secondary-light dark:text-text-secondary-dark">Mechanical
+                                Eng.</span>
+                            <span class="font-bold text-text-primary-light dark:text-text-primary-dark">78%</span>
+                        </div>
+                        <div class="h-2 w-full rounded-full bg-slate-100 dark:bg-slate-700">
+                            <div class="h-full w-[78%] rounded-full bg-blue-300"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

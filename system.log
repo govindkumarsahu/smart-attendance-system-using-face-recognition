@@ -2345,3 +2345,297 @@
 {"timestamp": "2026-02-09 16:13:34", "type": "info", "message": "Attendance taking started"}
 {"timestamp": "2026-02-09 16:13:34", "type": "info", "message": "Camera window should open now. Look for 'Smart Attendance System' window."}
 {"timestamp": "2026-02-09 16:13:34", "type": "info", "message": "Web interface accessed"}
+{"timestamp": "2026-02-16 17:07:13", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-02-16 17:07:13", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-02-16 17:07:14", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-02-16 17:07:14", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-02-16 17:07:18", "type": "info", "message": "Web interface accessed"}
+{"timestamp": "2026-02-16 17:07:23", "type": "info", "message": "Attendance taking started"}
+{"timestamp": "2026-02-16 17:07:23", "type": "info", "message": "Camera window should open now. Look for 'Smart Attendance System' window."}
+{"timestamp": "2026-02-16 17:07:23", "type": "info", "message": "Web interface accessed"}
+{"timestamp": "2026-02-16 17:07:24", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-02-16 17:07:24", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-02-16 17:07:25", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-02-16 17:07:25", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-02-16 17:08:49", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-02-16 17:08:49", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-02-16 17:09:36", "type": "info", "message": "Web interface accessed"}
+{"timestamp": "2026-02-16 17:09:46", "type": "info", "message": "Attendance taking started"}
+{"timestamp": "2026-02-16 17:09:46", "type": "info", "message": "Camera window should open now. Look for 'Smart Attendance System' window."}
+{"timestamp": "2026-02-16 17:09:46", "type": "info", "message": "Web interface accessed"}
+{"timestamp": "2026-03-03 10:57:01", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-03-03 10:57:01", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-03-03 10:57:02", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-03-03 10:57:02", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-03-03 10:57:06", "type": "info", "message": "Web interface accessed"}
+{"timestamp": "2026-03-03 11:19:48", "type": "info", "message": "Web interface accessed"}
+{"timestamp": "2026-03-03 11:19:53", "type": "info", "message": "Attendance taking started"}
+{"timestamp": "2026-03-03 11:19:53", "type": "info", "message": "Camera window should open now. Look for 'Smart Attendance System' window."}
+{"timestamp": "2026-03-03 11:19:53", "type": "info", "message": "Web interface accessed"}
+{"timestamp": "2026-03-03 11:19:54", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-03-03 11:19:54", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-03-03 11:19:55", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-03-03 11:19:55", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-03-03 11:20:32", "type": "info", "message": "Attendance taking started"}
+{"timestamp": "2026-03-03 11:20:32", "type": "info", "message": "Camera window should open now. Look for 'Smart Attendance System' window."}
+{"timestamp": "2026-03-03 11:20:32", "type": "info", "message": "Web interface accessed"}
+{"timestamp": "2026-03-03 11:21:23", "type": "info", "message": "Registration started for student: Govind"}
+{"timestamp": "2026-03-03 11:21:23", "type": "info", "message": "Camera window should open now. Check for 'Smart Attendance System' window."}
+{"timestamp": "2026-03-03 11:21:23", "type": "info", "message": "Web interface accessed"}
+{"timestamp": "2026-03-03 11:21:23", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-03-03 11:21:23", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-03-03 11:21:38", "type": "info", "message": "Model training started"}
+{"timestamp": "2026-03-03 11:21:38", "type": "info", "message": "Web interface accessed"}
+{"timestamp": "2026-03-03 11:21:38", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-03-03 11:21:38", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-03-03 11:21:44", "type": "info", "message": "Web interface accessed"}
+{"timestamp": "2026-03-03 11:21:46", "type": "info", "message": "Model training started"}
+{"timestamp": "2026-03-03 11:21:46", "type": "info", "message": "Web interface accessed"}
+{"timestamp": "2026-03-03 11:21:47", "type": "info", "message": "Starting model training..."}
+{"timestamp": "2026-03-03 11:21:47", "type": "info", "message": "--------------------------------------------------"}
+{"timestamp": "2026-03-03 11:21:47", "type": "info", "message": "Processing: Abhishek (Label: 0)"}
+{"timestamp": "2026-03-03 11:21:47", "type": "info", "message": "[OK] Processed 16 images for Abhishek"}
+{"timestamp": "2026-03-03 11:21:47", "type": "info", "message": "Processing: Govind (Label: 1)"}
+{"timestamp": "2026-03-03 11:21:47", "type": "info", "message": "[WARNING] No face detected in: 7.jpg, using full image"}
+{"timestamp": "2026-03-03 11:21:47", "type": "info", "message": "[WARNING] No face detected in: 8.jpg, using full image"}
+{"timestamp": "2026-03-03 11:21:47", "type": "info", "message": "[OK] Processed 16 images for Govind"}
+{"timestamp": "2026-03-03 11:21:47", "type": "info", "message": "Processing: Rahul Kumar (Label: 2)"}
+{"timestamp": "2026-03-03 11:21:47", "type": "info", "message": "[OK] Processed 16 images for Rahul Kumar"}
+{"timestamp": "2026-03-03 11:21:47", "type": "info", "message": "Processing: Sk Govind (Label: 3)"}
+{"timestamp": "2026-03-03 11:21:47", "type": "info", "message": "[WARNING] No face detected in: 1.jpg, using full image"}
+{"timestamp": "2026-03-03 11:21:47", "type": "info", "message": "[WARNING] No face detected in: 2.jpg, using full image"}
+{"timestamp": "2026-03-03 11:21:47", "type": "info", "message": "[WARNING] No face detected in: 3.jpg, using full image"}
+{"timestamp": "2026-03-03 11:21:47", "type": "info", "message": "[WARNING] No face detected in: 4.jpg, using full image"}
+{"timestamp": "2026-03-03 11:21:47", "type": "info", "message": "[WARNING] No face detected in: 6.jpg, using full image"}
+{"timestamp": "2026-03-03 11:21:47", "type": "info", "message": "[WARNING] No face detected in: 7.jpg, using full image"}
+{"timestamp": "2026-03-03 11:21:47", "type": "info", "message": "[WARNING] No face detected in: 8.jpg, using full image"}
+{"timestamp": "2026-03-03 11:21:47", "type": "info", "message": "[WARNING] No face detected in: 9.jpg, using full image"}
+{"timestamp": "2026-03-03 11:21:47", "type": "info", "message": "[OK] Processed 8 images for Sk Govind"}
+{"timestamp": "2026-03-03 11:21:47", "type": "info", "message": "Processing: pravin kumar (Label: 4)"}
+{"timestamp": "2026-03-03 11:21:47", "type": "info", "message": "[WARNING] No face detected in: 0.jpg, using full image"}
+{"timestamp": "2026-03-03 11:21:47", "type": "info", "message": "[WARNING] No face detected in: 1.jpg, using full image"}
+{"timestamp": "2026-03-03 11:21:47", "type": "info", "message": "[WARNING] No face detected in: 13.jpg, using full image"}
+{"timestamp": "2026-03-03 11:21:47", "type": "info", "message": "[WARNING] No face detected in: 14.jpg, using full image"}
+{"timestamp": "2026-03-03 11:21:47", "type": "info", "message": "[WARNING] No face detected in: 8.jpg, using full image"}
+{"timestamp": "2026-03-03 11:21:47", "type": "info", "message": "[WARNING] No face detected in: 9.jpg, using full image"}
+{"timestamp": "2026-03-03 11:21:47", "type": "info", "message": "[OK] Processed 16 images for pravin kumar"}
+{"timestamp": "2026-03-03 11:21:47", "type": "info", "message": "--------------------------------------------------"}
+{"timestamp": "2026-03-03 11:21:47", "type": "info", "message": "Total persons registered: 5"}
+{"timestamp": "2026-03-03 11:21:47", "type": "info", "message": "Total images processed: 72"}
+{"timestamp": "2026-03-03 11:21:47", "type": "info", "message": "Training model..."}
+{"timestamp": "2026-03-03 11:21:47", "type": "success", "message": "[SUCCESS] MODEL TRAINING COMPLETE"}
+{"timestamp": "2026-03-03 11:21:47", "type": "info", "message": "[SUCCESS] Model saved as: trainer.yml"}
+{"timestamp": "2026-03-03 11:21:47", "type": "info", "message": "[SUCCESS] Labels saved as: labels.npy"}
+{"timestamp": "2026-03-03 11:21:47", "type": "info", "message": "Registered persons:"}
+{"timestamp": "2026-03-03 11:21:47", "type": "info", "message": "Label 0: Abhishek"}
+{"timestamp": "2026-03-03 11:21:47", "type": "info", "message": "Label 1: Govind"}
+{"timestamp": "2026-03-03 11:21:47", "type": "info", "message": "Label 2: Rahul Kumar"}
+{"timestamp": "2026-03-03 11:21:47", "type": "info", "message": "Label 3: Sk Govind"}
+{"timestamp": "2026-03-03 11:21:47", "type": "info", "message": "Label 4: pravin kumar"}
+{"timestamp": "2026-03-03 11:21:47", "type": "info", "message": "[SUCCESS] Model files verified and ready to use!"}
+{"timestamp": "2026-03-03 11:21:51", "type": "info", "message": "Attendance taking started"}
+{"timestamp": "2026-03-03 11:21:51", "type": "info", "message": "Camera window should open now. Look for 'Smart Attendance System' window."}
+{"timestamp": "2026-03-03 11:21:51", "type": "info", "message": "Web interface accessed"}
+{"timestamp": "2026-03-03 11:25:13", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-03-03 11:25:13", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-03-03 11:25:14", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-03-03 11:25:14", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-03-03 11:25:14", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-03-03 11:25:14", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-03-03 12:15:27", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-03-03 12:15:27", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-03-03 12:15:28", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-03-03 12:15:28", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-03-03 12:15:30", "type": "info", "message": "Web interface accessed"}
+{"timestamp": "2026-03-03 12:19:52", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-03-03 12:19:52", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-03-03 12:24:20", "type": "info", "message": "Web interface accessed"}
+{"timestamp": "2026-03-03 12:35:00", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-03-03 12:35:00", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-03-03 12:35:12", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-03-03 12:35:12", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-03-03 12:46:52", "type": "info", "message": "Web interface accessed"}
+{"timestamp": "2026-03-03 12:47:10", "type": "info", "message": "Web interface accessed"}
+{"timestamp": "2026-03-03 12:47:24", "type": "info", "message": "Web interface accessed"}
+{"timestamp": "2026-03-03 12:50:04", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-03-03 12:50:04", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-03-03 13:02:47", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-03-03 13:02:47", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-03-03 13:03:13", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-03-03 13:03:13", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-03-03 13:28:39", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-03-03 13:28:39", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-03-03 13:28:49", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-03-03 13:28:49", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-03-03 13:31:22", "type": "info", "message": "Dashboard accessed"}
+{"timestamp": "2026-03-03 13:31:24", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-03-03 13:31:24", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-03-03 13:31:25", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-03-03 13:31:25", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-03-03 13:33:28", "type": "info", "message": "Dashboard accessed"}
+{"timestamp": "2026-03-03 13:51:26", "type": "info", "message": "Dashboard accessed"}
+{"timestamp": "2026-03-03 13:51:45", "type": "info", "message": "Attendance taking started"}
+{"timestamp": "2026-03-03 13:51:46", "type": "info", "message": "Camera window opened for attendance."}
+{"timestamp": "2026-03-03 13:51:53", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-03-03 13:51:53", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-03-03 13:51:53", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-03-03 13:51:53", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-03-03 13:52:24", "type": "info", "message": "Dashboard accessed"}
+{"timestamp": "2026-03-03 13:52:32", "type": "info", "message": "Dashboard accessed"}
+{"timestamp": "2026-03-03 13:52:49", "type": "info", "message": "Dashboard accessed"}
+{"timestamp": "2026-03-03 13:52:53", "type": "info", "message": "Dashboard accessed"}
+{"timestamp": "2026-03-03 13:53:41", "type": "info", "message": "Dashboard accessed"}
+{"timestamp": "2026-03-03 14:20:47", "type": "info", "message": "Model training started"}
+{"timestamp": "2026-03-03 14:20:48", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-03-03 14:20:48", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-03-03 14:20:57", "type": "info", "message": "Dashboard accessed"}
+{"timestamp": "2026-03-03 14:35:34", "type": "info", "message": "Dashboard accessed"}
+{"timestamp": "2026-03-03 14:35:54", "type": "info", "message": "Dashboard accessed"}
+{"timestamp": "2026-03-03 16:38:21", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-03-03 16:38:21", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-03-03 16:38:22", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-03-03 16:38:22", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-03-03 16:38:29", "type": "info", "message": "Dashboard accessed"}
+{"timestamp": "2026-03-03 16:38:38", "type": "info", "message": "Dashboard accessed"}
+{"timestamp": "2026-03-03 16:40:29", "type": "info", "message": "Dashboard accessed"}
+{"timestamp": "2026-03-03 16:41:42", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-03-03 16:41:42", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-03-03 16:42:10", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-03-03 16:42:10", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-03-03 16:42:22", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-03-03 16:42:22", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-03-03 16:44:24", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-03-03 16:44:24", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-03-03 16:44:24", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-03-03 16:44:24", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-03-03 16:44:28", "type": "info", "message": "Dashboard accessed"}
+{"timestamp": "2026-03-03 16:58:40", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-03-03 16:58:40", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-03-03 16:58:40", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-03-03 16:58:40", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-03-03 16:58:41", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-03-03 16:58:41", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-03-03 16:58:41", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-03-03 16:58:41", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-03-03 16:58:42", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-03-03 16:58:42", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-03-03 16:58:42", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-03-03 16:58:42", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-03-03 16:58:43", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-03-03 16:58:43", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-03-03 16:58:43", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-03-03 16:58:43", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-03-03 16:58:44", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-03-03 16:58:44", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-03-03 16:58:44", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-03-03 16:58:44", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-03-03 16:58:45", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-03-03 16:58:45", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-03-03 16:58:45", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-03-03 16:58:45", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-03-03 16:58:46", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-03-03 16:58:46", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-03-03 16:58:46", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-03-03 16:58:46", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-03-03 16:58:47", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-03-03 16:58:47", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-03-03 16:58:47", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-03-03 16:58:47", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-03-03 16:58:48", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-03-03 16:58:48", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-03-03 16:58:48", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-03-03 16:58:48", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-03-03 16:58:49", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-03-03 16:58:49", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-03-03 16:58:49", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-03-03 16:58:49", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-03-03 16:58:50", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-03-03 16:58:50", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-03-03 17:10:51", "type": "info", "message": "Dashboard accessed"}
+{"timestamp": "2026-03-03 17:11:06", "type": "info", "message": "Dashboard accessed"}
+{"timestamp": "2026-03-03 17:28:57", "type": "info", "message": "Dashboard accessed"}
+{"timestamp": "2026-03-03 17:32:47", "type": "info", "message": "Dashboard accessed"}
+{"timestamp": "2026-03-03 17:41:28", "type": "info", "message": "Dashboard accessed"}
+{"timestamp": "2026-03-03 17:41:30", "type": "info", "message": "Dashboard accessed"}
+{"timestamp": "2026-03-03 17:41:30", "type": "info", "message": "Dashboard accessed"}
+{"timestamp": "2026-03-03 17:41:32", "type": "info", "message": "Dashboard accessed"}
+{"timestamp": "2026-03-03 17:42:39", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-03-03 17:42:39", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-03-03 17:42:39", "type": "info", "message": "Dashboard accessed"}
+{"timestamp": "2026-03-03 17:43:25", "type": "info", "message": "Attendance taking started"}
+{"timestamp": "2026-03-03 17:43:26", "type": "info", "message": "Camera window opened for attendance."}
+{"timestamp": "2026-03-03 17:43:33", "type": "info", "message": "Attendance taking started"}
+{"timestamp": "2026-03-03 17:43:33", "type": "info", "message": "Camera window opened for attendance."}
+{"timestamp": "2026-03-03 17:43:36", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-03-03 17:43:36", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-03-03 17:43:53", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-03-03 17:43:53", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-03-03 17:43:53", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-03-03 17:43:53", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-03-03 17:43:58", "type": "info", "message": "Dashboard accessed"}
+{"timestamp": "2026-03-03 17:43:58", "type": "info", "message": "Dashboard accessed"}
+{"timestamp": "2026-03-03 17:44:07", "type": "info", "message": "Attendance taking started"}
+{"timestamp": "2026-03-03 17:44:07", "type": "info", "message": "Camera window opened for attendance."}
+{"timestamp": "2026-03-03 17:44:26", "type": "info", "message": "Dashboard accessed"}
+{"timestamp": "2026-03-03 17:45:23", "type": "info", "message": "Dashboard accessed"}
+{"timestamp": "2026-03-03 17:47:06", "type": "info", "message": "Dashboard accessed"}
+{"timestamp": "2026-03-03 17:47:32", "type": "info", "message": "Dashboard accessed"}
+{"timestamp": "2026-03-03 17:48:22", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-03-03 17:48:22", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-03-03 17:48:22", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-03-03 17:48:22", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-03-03 17:49:47", "type": "info", "message": "Dashboard accessed"}
+{"timestamp": "2026-03-03 17:52:59", "type": "info", "message": "Dashboard accessed"}
+{"timestamp": "2026-03-03 17:53:12", "type": "info", "message": "Dashboard accessed"}
+{"timestamp": "2026-03-03 18:41:49", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-03-03 18:41:49", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-03-03 18:41:50", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-03-03 18:41:50", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-03-03 18:41:53", "type": "info", "message": "Dashboard accessed"}
+{"timestamp": "2026-03-03 18:44:23", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-03-03 18:44:23", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-03-03 18:44:24", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-03-03 18:44:24", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-03-03 18:44:24", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-03-03 18:44:24", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-03-03 18:44:25", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-03-03 18:44:25", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-03-03 18:44:26", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-03-03 18:44:26", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-03-03 18:44:27", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-03-03 18:44:27", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-03-03 18:44:28", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-03-03 18:44:28", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-03-03 18:54:26", "type": "info", "message": "Dashboard accessed"}
+{"timestamp": "2026-03-03 18:55:40", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-03-03 18:55:40", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-03-03 18:55:51", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-03-03 18:55:51", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-03-03 18:56:07", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-03-03 18:56:07", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-03-03 18:58:08", "type": "info", "message": "Attendance taking started"}
+{"timestamp": "2026-03-03 18:58:10", "type": "info", "message": "Camera window opened for attendance."}
+{"timestamp": "2026-03-03 18:58:13", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-03-03 18:58:13", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-03-03 18:58:47", "type": "info", "message": "Dashboard accessed"}
+{"timestamp": "2026-03-03 18:58:48", "type": "info", "message": "Dashboard accessed"}
+{"timestamp": "2026-03-03 18:58:49", "type": "info", "message": "Dashboard accessed"}
+{"timestamp": "2026-03-03 18:58:50", "type": "info", "message": "Dashboard accessed"}
+{"timestamp": "2026-03-03 18:58:51", "type": "info", "message": "Dashboard accessed"}
+{"timestamp": "2026-03-03 18:58:52", "type": "info", "message": "Dashboard accessed"}
+{"timestamp": "2026-03-03 18:59:19", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-03-03 18:59:19", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-03-03 18:59:19", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-03-03 18:59:19", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-03-03 18:59:28", "type": "info", "message": "Dashboard accessed"}
+{"timestamp": "2026-03-03 18:59:36", "type": "info", "message": "Dashboard accessed"}
+{"timestamp": "2026-03-03 18:59:47", "type": "info", "message": "Dashboard accessed"}
+{"timestamp": "2026-03-03 18:59:52", "type": "info", "message": "Dashboard accessed"}
+{"timestamp": "2026-03-03 19:09:57", "type": "info", "message": "Dashboard accessed"}
+{"timestamp": "2026-03-03 19:13:49", "type": "info", "message": "Dashboard accessed"}
+{"timestamp": "2026-03-03 19:15:23", "type": "info", "message": "Registration started for student: Afjal Ansari"}
+{"timestamp": "2026-03-03 19:15:23", "type": "info", "message": "Camera window should open now."}
+{"timestamp": "2026-03-03 19:15:50", "type": "info", "message": "Attendance taking started"}
+{"timestamp": "2026-03-03 19:15:50", "type": "info", "message": "Camera window opened for attendance."}
+{"timestamp": "2026-03-03 19:16:10", "type": "info", "message": "Dashboard accessed"}
+{"timestamp": "2026-03-03 19:16:31", "type": "info", "message": "Dashboard accessed"}
