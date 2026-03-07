@@ -80,6 +80,19 @@ def get_registered_students():
     """Get list of registered student folders from dataset/ enriched with SQLite metadata"""
     students = database.get_all_students()
     
+    # Auto-sync: add any student folders from dataset/ that are missing from the database
+    db_names_lower = {s['name'].lower() for s in students}
+    if os.path.isdir(DATASET_DIR):
+        for folder_name in os.listdir(DATASET_DIR):
+            folder_path = os.path.join(DATASET_DIR, folder_name)
+            if os.path.isdir(folder_path) and folder_name.lower() not in db_names_lower:
+                # This student exists in dataset but not in DB – auto-register them
+                result = database.add_student(folder_name, "", "", "")
+                if result is not None:
+                    write_log(f"Auto-synced student '{folder_name}' from dataset folder to database.", "info")
+        # Re-fetch after sync
+        students = database.get_all_students()
+
     # Add image count dynamically and verify profile picture existence
     for student in students:
         student['images'] = 0
@@ -91,8 +104,6 @@ def get_registered_students():
             if '1.jpg' in images:
                 student['has_profile_pic'] = True
             elif len(images) > 0:
-                # Assuming the first image available is the profile picture if 1.jpg doesn't exist
-                # but we'll stick to 1.jpg for simplicity in the UI right now.
                 student['has_profile_pic'] = True
     return students
 

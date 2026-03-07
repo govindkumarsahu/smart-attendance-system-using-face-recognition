@@ -3680,3 +3680,186 @@
 {"timestamp": "2026-03-08 01:36:38", "type": "info", "message": "Camera window opened for attendance."}
 {"timestamp": "2026-03-08 01:36:57", "type": "info", "message": "Dashboard accessed"}
 {"timestamp": "2026-03-08 01:37:29", "type": "info", "message": "Exporting 2 attendance records to CSV."}
+{"timestamp": "2026-03-08 02:01:51", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-03-08 02:01:51", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-03-08 02:01:51", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-03-08 02:01:51", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-03-08 02:02:35", "type": "success", "message": "Faculty logged in successfully (Demo)"}
+{"timestamp": "2026-03-08 02:02:35", "type": "info", "message": "Dashboard accessed"}
+{"timestamp": "2026-03-08 02:03:01", "type": "info", "message": "Dashboard accessed"}
+{"timestamp": "2026-03-08 02:03:19", "type": "info", "message": "Exporting 2 attendance records to CSV."}
+{"timestamp": "2026-03-08 02:05:06", "type": "info", "message": "Dashboard accessed"}
+{"timestamp": "2026-03-08 02:06:18", "type": "info", "message": "Dashboard accessed"}
+{"timestamp": "2026-03-08 02:11:37", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-03-08 02:11:37", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-03-08 02:14:07", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-03-08 02:14:07", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-03-08 02:15:55", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-03-08 02:15:55", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-03-08 02:18:35", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-03-08 02:18:35", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-03-08 02:18:35", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-03-08 02:18:35", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-03-08 02:18:42", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-03-08 02:18:42", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-03-08 02:18:42", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-03-08 02:18:42", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-03-08 02:18:58", "type": "info", "message": "Dashboard accessed"}
+{"timestamp": "2026-03-08 02:18:58", "type": "info", "message": "Auto-synced student 'Abhishek' from dataset folder to database."}
+{"timestamp": "2026-03-08 02:18:58", "type": "info", "message": "Auto-synced student 'Govind' from dataset folder to database."}
+{"timestamp": "2026-03-08 02:18:58", "type": "info", "message": "Auto-synced student 'pravin kumar' from dataset folder to database."}
+{"timestamp": "2026-03-08 02:18:58", "type": "info", "message": "Auto-synced student 'Sk Govind' from dataset folder to database."}
+{"timestamp": "2026-03-08 02:20:14", "type": "info", "message": "Attendance taking started"}
+{"timestamp": "2026-03-08 02:20:14", "type": "info", "message": "Camera window opened for attendance."}
+{"timestamp": "2026-03-08 02:20:45", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-03-08 02:20:45", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-03-08 02:21:03", "type": "info", "message": "Attendance taking started"}
+{"timestamp": "2026-03-08 02:21:04", "type": "info", "message": "Camera window opened for attendance."}
+{"timestamp": "2026-03-08 02:21:18", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-03-08 02:21:18", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-03-08 02:21:33", "type": "info", "message": "Attendance taking started"}
+{"timestamp": "2026-03-08 02:21:33", "type": "info", "message": "Camera window opened for attendance."}
+{"timestamp": "2026-03-08 02:22:09", "type": "info", "message": "Attendance taking started"}
+{"timestamp": "2026-03-08 02:22:09", "type": "info", "message": "Camera window opened for attendance."}
+{"timestamp": "2026-03-08 02:23:35", "type": "success", "message": "Faculty logged in successfully (Demo)"}
+{"timestamp": "2026-03-08 02:23:35", "type": "info", "message": "Dashboard accessed"}
+{"timestamp": "2026-03-08 02:23:52", "type": "info", "message": "Attendance taking started"}
+{"timestamp": "2026-03-08 02:23:52", "type": "info", "message": "Camera window opened for attendance."}
+{"timestamp": "2026-03-08 02:24:27", "type": "info", "message": "Dashboard accessed"}
+{"timestamp": "2026-03-08 02:24:42", "type": "info", "message": "Model training started"}
+{"timestamp": "2026-03-08 02:24:51", "type": "info", "message": "Attendance taking started"}
+{"timestamp": "2026-03-08 02:24:51", "type": "info", "message": "Camera window opened for attendance."}
+{"timestamp": "2026-03-08 02:24:54", "type": "info", "message": "Starting model training..."}
+{"timestamp": "2026-03-08 02:24:54", "type": "info", "message": "--------------------------------------------------"}
+{"timestamp": "2026-03-08 02:24:54", "type": "info", "message": "Processing: Abhishek (Label: 0)"}
+{"timestamp": "2026-03-08 02:24:54", "type": "info", "message": "[OK] Processed 16 images for Abhishek"}
+{"timestamp": "2026-03-08 02:24:54", "type": "info", "message": "Processing: Govind (Label: 1)"}
+{"timestamp": "2026-03-08 02:24:54", "type": "info", "message": "[WARNING] No face detected in: 7.jpg, using full image"}
+{"timestamp": "2026-03-08 02:24:54", "type": "info", "message": "[WARNING] No face detected in: 8.jpg, using full image"}
+{"timestamp": "2026-03-08 02:24:54", "type": "info", "message": "[OK] Processed 16 images for Govind"}
+{"timestamp": "2026-03-08 02:24:54", "type": "info", "message": "Processing: Rahul Kumar (Label: 2)"}
+{"timestamp": "2026-03-08 02:24:54", "type": "info", "message": "[WARNING] No face detected in: 10.jpg, using full image"}
+{"timestamp": "2026-03-08 02:24:54", "type": "info", "message": "[WARNING] No face detected in: 11.jpg, using full image"}
+{"timestamp": "2026-03-08 02:24:55", "type": "info", "message": "[WARNING] No face detected in: 12.jpg, using full image"}
+{"timestamp": "2026-03-08 02:24:55", "type": "info", "message": "[WARNING] No face detected in: 2.jpg, using full image"}
+{"timestamp": "2026-03-08 02:24:55", "type": "info", "message": "[WARNING] No face detected in: 7.jpg, using full image"}
+{"timestamp": "2026-03-08 02:24:55", "type": "info", "message": "[OK] Processed 16 images for Rahul Kumar"}
+{"timestamp": "2026-03-08 02:24:55", "type": "info", "message": "Processing: Sk Govind (Label: 3)"}
+{"timestamp": "2026-03-08 02:24:55", "type": "info", "message": "[WARNING] No face detected in: 1.jpg, using full image"}
+{"timestamp": "2026-03-08 02:24:55", "type": "info", "message": "[WARNING] No face detected in: 2.jpg, using full image"}
+{"timestamp": "2026-03-08 02:24:55", "type": "info", "message": "[WARNING] No face detected in: 3.jpg, using full image"}
+{"timestamp": "2026-03-08 02:24:55", "type": "info", "message": "[WARNING] No face detected in: 4.jpg, using full image"}
+{"timestamp": "2026-03-08 02:24:55", "type": "info", "message": "[WARNING] No face detected in: 6.jpg, using full image"}
+{"timestamp": "2026-03-08 02:24:55", "type": "info", "message": "[WARNING] No face detected in: 7.jpg, using full image"}
+{"timestamp": "2026-03-08 02:24:55", "type": "info", "message": "[WARNING] No face detected in: 8.jpg, using full image"}
+{"timestamp": "2026-03-08 02:24:55", "type": "info", "message": "[WARNING] No face detected in: 9.jpg, using full image"}
+{"timestamp": "2026-03-08 02:24:55", "type": "info", "message": "[OK] Processed 8 images for Sk Govind"}
+{"timestamp": "2026-03-08 02:24:55", "type": "info", "message": "Processing: pravin kumar (Label: 4)"}
+{"timestamp": "2026-03-08 02:24:55", "type": "info", "message": "[WARNING] No face detected in: 0.jpg, using full image"}
+{"timestamp": "2026-03-08 02:24:55", "type": "info", "message": "[WARNING] No face detected in: 1.jpg, using full image"}
+{"timestamp": "2026-03-08 02:24:55", "type": "info", "message": "[WARNING] No face detected in: 13.jpg, using full image"}
+{"timestamp": "2026-03-08 02:24:55", "type": "info", "message": "[WARNING] No face detected in: 14.jpg, using full image"}
+{"timestamp": "2026-03-08 02:24:55", "type": "info", "message": "[WARNING] No face detected in: 8.jpg, using full image"}
+{"timestamp": "2026-03-08 02:24:55", "type": "info", "message": "[WARNING] No face detected in: 9.jpg, using full image"}
+{"timestamp": "2026-03-08 02:24:55", "type": "info", "message": "[OK] Processed 16 images for pravin kumar"}
+{"timestamp": "2026-03-08 02:24:55", "type": "info", "message": "--------------------------------------------------"}
+{"timestamp": "2026-03-08 02:24:55", "type": "info", "message": "Total persons registered: 5"}
+{"timestamp": "2026-03-08 02:24:55", "type": "info", "message": "Total images processed: 72"}
+{"timestamp": "2026-03-08 02:24:55", "type": "info", "message": "Training model..."}
+{"timestamp": "2026-03-08 02:24:55", "type": "success", "message": "[SUCCESS] MODEL TRAINING COMPLETE"}
+{"timestamp": "2026-03-08 02:24:55", "type": "info", "message": "[SUCCESS] Model saved as: trainer.yml"}
+{"timestamp": "2026-03-08 02:24:55", "type": "info", "message": "[SUCCESS] Labels saved as: labels.npy"}
+{"timestamp": "2026-03-08 02:24:55", "type": "info", "message": "Registered persons:"}
+{"timestamp": "2026-03-08 02:24:55", "type": "info", "message": "Label 0: Abhishek"}
+{"timestamp": "2026-03-08 02:24:55", "type": "info", "message": "Label 1: Govind"}
+{"timestamp": "2026-03-08 02:24:55", "type": "info", "message": "Label 2: Rahul Kumar"}
+{"timestamp": "2026-03-08 02:24:55", "type": "info", "message": "Label 3: Sk Govind"}
+{"timestamp": "2026-03-08 02:24:55", "type": "info", "message": "Label 4: pravin kumar"}
+{"timestamp": "2026-03-08 02:24:55", "type": "info", "message": "[SUCCESS] Model files verified and ready to use!"}
+{"timestamp": "2026-03-08 02:25:37", "type": "info", "message": "Registration started for student: Govind Sahu"}
+{"timestamp": "2026-03-08 02:25:37", "type": "info", "message": "Camera window should open now."}
+{"timestamp": "2026-03-08 02:25:54", "type": "info", "message": "Model training started"}
+{"timestamp": "2026-03-08 02:25:57", "type": "info", "message": "Starting model training..."}
+{"timestamp": "2026-03-08 02:25:57", "type": "info", "message": "--------------------------------------------------"}
+{"timestamp": "2026-03-08 02:25:57", "type": "info", "message": "Processing: Abhishek (Label: 0)"}
+{"timestamp": "2026-03-08 02:25:57", "type": "info", "message": "[OK] Processed 16 images for Abhishek"}
+{"timestamp": "2026-03-08 02:25:57", "type": "info", "message": "Processing: Govind (Label: 1)"}
+{"timestamp": "2026-03-08 02:25:57", "type": "info", "message": "[WARNING] No face detected in: 7.jpg, using full image"}
+{"timestamp": "2026-03-08 02:25:57", "type": "info", "message": "[WARNING] No face detected in: 8.jpg, using full image"}
+{"timestamp": "2026-03-08 02:25:57", "type": "info", "message": "[OK] Processed 16 images for Govind"}
+{"timestamp": "2026-03-08 02:25:57", "type": "info", "message": "Processing: Govind Sahu (Label: 2)"}
+{"timestamp": "2026-03-08 02:25:57", "type": "info", "message": "[WARNING] No face detected in: 0.jpg, using full image"}
+{"timestamp": "2026-03-08 02:25:58", "type": "info", "message": "[WARNING] No face detected in: 10.jpg, using full image"}
+{"timestamp": "2026-03-08 02:25:58", "type": "info", "message": "[WARNING] No face detected in: 11.jpg, using full image"}
+{"timestamp": "2026-03-08 02:25:58", "type": "info", "message": "[WARNING] No face detected in: 12.jpg, using full image"}
+{"timestamp": "2026-03-08 02:25:58", "type": "info", "message": "[WARNING] No face detected in: 13.jpg, using full image"}
+{"timestamp": "2026-03-08 02:25:58", "type": "info", "message": "[WARNING] No face detected in: 14.jpg, using full image"}
+{"timestamp": "2026-03-08 02:25:58", "type": "info", "message": "[WARNING] No face detected in: 15.jpg, using full image"}
+{"timestamp": "2026-03-08 02:25:58", "type": "info", "message": "[WARNING] No face detected in: 2.jpg, using full image"}
+{"timestamp": "2026-03-08 02:25:58", "type": "info", "message": "[WARNING] No face detected in: 3.jpg, using full image"}
+{"timestamp": "2026-03-08 02:25:58", "type": "info", "message": "[WARNING] No face detected in: 8.jpg, using full image"}
+{"timestamp": "2026-03-08 02:25:58", "type": "info", "message": "[OK] Processed 16 images for Govind Sahu"}
+{"timestamp": "2026-03-08 02:25:58", "type": "info", "message": "Processing: Rahul Kumar (Label: 3)"}
+{"timestamp": "2026-03-08 02:25:58", "type": "info", "message": "[WARNING] No face detected in: 10.jpg, using full image"}
+{"timestamp": "2026-03-08 02:25:58", "type": "info", "message": "[WARNING] No face detected in: 11.jpg, using full image"}
+{"timestamp": "2026-03-08 02:25:58", "type": "info", "message": "[WARNING] No face detected in: 12.jpg, using full image"}
+{"timestamp": "2026-03-08 02:25:58", "type": "info", "message": "[WARNING] No face detected in: 2.jpg, using full image"}
+{"timestamp": "2026-03-08 02:25:58", "type": "info", "message": "[WARNING] No face detected in: 7.jpg, using full image"}
+{"timestamp": "2026-03-08 02:25:58", "type": "info", "message": "[OK] Processed 16 images for Rahul Kumar"}
+{"timestamp": "2026-03-08 02:25:58", "type": "info", "message": "Processing: Sk Govind (Label: 4)"}
+{"timestamp": "2026-03-08 02:25:58", "type": "info", "message": "[WARNING] No face detected in: 1.jpg, using full image"}
+{"timestamp": "2026-03-08 02:25:58", "type": "info", "message": "[WARNING] No face detected in: 2.jpg, using full image"}
+{"timestamp": "2026-03-08 02:25:58", "type": "info", "message": "[WARNING] No face detected in: 3.jpg, using full image"}
+{"timestamp": "2026-03-08 02:25:58", "type": "info", "message": "[WARNING] No face detected in: 4.jpg, using full image"}
+{"timestamp": "2026-03-08 02:25:58", "type": "info", "message": "[WARNING] No face detected in: 6.jpg, using full image"}
+{"timestamp": "2026-03-08 02:25:58", "type": "info", "message": "[WARNING] No face detected in: 7.jpg, using full image"}
+{"timestamp": "2026-03-08 02:25:58", "type": "info", "message": "[WARNING] No face detected in: 8.jpg, using full image"}
+{"timestamp": "2026-03-08 02:25:58", "type": "info", "message": "[WARNING] No face detected in: 9.jpg, using full image"}
+{"timestamp": "2026-03-08 02:25:58", "type": "info", "message": "[OK] Processed 8 images for Sk Govind"}
+{"timestamp": "2026-03-08 02:25:58", "type": "info", "message": "Processing: pravin kumar (Label: 5)"}
+{"timestamp": "2026-03-08 02:25:58", "type": "info", "message": "[WARNING] No face detected in: 0.jpg, using full image"}
+{"timestamp": "2026-03-08 02:25:58", "type": "info", "message": "[WARNING] No face detected in: 1.jpg, using full image"}
+{"timestamp": "2026-03-08 02:25:58", "type": "info", "message": "[WARNING] No face detected in: 13.jpg, using full image"}
+{"timestamp": "2026-03-08 02:25:58", "type": "info", "message": "[WARNING] No face detected in: 14.jpg, using full image"}
+{"timestamp": "2026-03-08 02:25:58", "type": "info", "message": "[WARNING] No face detected in: 8.jpg, using full image"}
+{"timestamp": "2026-03-08 02:25:58", "type": "info", "message": "[WARNING] No face detected in: 9.jpg, using full image"}
+{"timestamp": "2026-03-08 02:25:58", "type": "info", "message": "[OK] Processed 16 images for pravin kumar"}
+{"timestamp": "2026-03-08 02:25:58", "type": "info", "message": "--------------------------------------------------"}
+{"timestamp": "2026-03-08 02:25:58", "type": "info", "message": "Total persons registered: 6"}
+{"timestamp": "2026-03-08 02:25:58", "type": "info", "message": "Total images processed: 88"}
+{"timestamp": "2026-03-08 02:25:58", "type": "info", "message": "Training model..."}
+{"timestamp": "2026-03-08 02:25:58", "type": "success", "message": "[SUCCESS] MODEL TRAINING COMPLETE"}
+{"timestamp": "2026-03-08 02:25:58", "type": "info", "message": "[SUCCESS] Model saved as: trainer.yml"}
+{"timestamp": "2026-03-08 02:25:58", "type": "info", "message": "[SUCCESS] Labels saved as: labels.npy"}
+{"timestamp": "2026-03-08 02:25:58", "type": "info", "message": "Registered persons:"}
+{"timestamp": "2026-03-08 02:25:58", "type": "info", "message": "Label 0: Abhishek"}
+{"timestamp": "2026-03-08 02:25:58", "type": "info", "message": "Label 1: Govind"}
+{"timestamp": "2026-03-08 02:25:58", "type": "info", "message": "Label 2: Govind Sahu"}
+{"timestamp": "2026-03-08 02:25:58", "type": "info", "message": "Label 3: Rahul Kumar"}
+{"timestamp": "2026-03-08 02:25:58", "type": "info", "message": "Label 4: Sk Govind"}
+{"timestamp": "2026-03-08 02:25:58", "type": "info", "message": "Label 5: pravin kumar"}
+{"timestamp": "2026-03-08 02:25:58", "type": "info", "message": "[SUCCESS] Model files verified and ready to use!"}
+{"timestamp": "2026-03-08 02:26:01", "type": "info", "message": "Attendance taking started"}
+{"timestamp": "2026-03-08 02:26:01", "type": "info", "message": "Camera window opened for attendance."}
+{"timestamp": "2026-03-08 02:48:16", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-03-08 02:48:16", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-03-08 02:53:14", "type": "info", "message": "Dashboard accessed"}
+{"timestamp": "2026-03-08 03:14:30", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-03-08 03:14:30", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-03-08 03:14:31", "type": "info", "message": "Dashboard accessed"}
+{"timestamp": "2026-03-08 03:14:53", "type": "info", "message": "Dashboard accessed"}
+{"timestamp": "2026-03-08 03:35:19", "type": "info", "message": "Dashboard accessed"}
+{"timestamp": "2026-03-08 03:36:51", "type": "info", "message": "Dashboard accessed"}
+{"timestamp": "2026-03-08 03:37:46", "type": "info", "message": "Model training started"}
+{"timestamp": "2026-03-08 03:37:47", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-03-08 03:37:47", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-03-08 03:42:32", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-03-08 03:42:32", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-03-08 03:42:35", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-03-08 03:42:35", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-03-08 03:42:36", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-03-08 03:42:36", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-03-08 03:42:37", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-03-08 03:42:37", "type": "success", "message": "Flask server starting on port 8000"}
+{"timestamp": "2026-03-08 03:42:38", "type": "success", "message": "Smart Attendance System started"}
+{"timestamp": "2026-03-08 03:42:38", "type": "success", "message": "Flask server starting on port 8000"}

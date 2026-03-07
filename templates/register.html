@@ -31,7 +31,9 @@
     <form method="POST" action="{{ url_for('register') }}">
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
             <div class="lg:col-span-5 flex flex-col gap-6 relative">
-                <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-primary/5 blur-[80px] rounded-full pointer-events-none"></div>
+                <div
+                    class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-primary/5 blur-[80px] rounded-full pointer-events-none">
+                </div>
                 <div
                     class="bg-surface-light/90 dark:bg-surface-dark/90 p-8 rounded-[20px] shadow-sm border border-border-light/60 dark:border-border-dark/60 backdrop-blur-md relative z-10 transition-shadow hover:shadow-md">
                     <h3
@@ -49,19 +51,19 @@
                                     class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-text-secondary-light dark:text-text-secondary-dark">badge</span>
                                 <input name="student_name" required
                                     class="w-full pl-10 pr-4 py-2.5 bg-background-light dark:bg-background-dark border border-border-light dark:border-border-dark rounded-lg text-text-primary-light dark:text-text-primary-dark focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all"
-                                    placeholder="e.g. John Doe" type="text" />
+                                    placeholder="e.g. Student Name" type="text" />
                             </div>
                         </div>
                         <div class="space-y-1.5">
                             <label
-                                class="text-sm font-medium text-text-secondary-light dark:text-text-secondary-dark">Roll
+                                class="text-sm font-medium text-text-secondary-light dark:text-text-secondary-dark">Registration
                                 Number</label>
                             <div class="relative">
                                 <span
                                     class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-text-secondary-light dark:text-text-secondary-dark">numbers</span>
                                 <input name="roll_number"
                                     class="w-full pl-10 pr-4 py-2.5 bg-background-light dark:bg-background-dark border border-border-light dark:border-border-dark rounded-lg text-text-primary-light dark:text-text-primary-dark focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all"
-                                    placeholder="e.g. CS-2023-001" type="text" />
+                                    placeholder="e.g. 22151131..." type="text" />
                             </div>
                         </div>
                         <div class="space-y-1.5">
@@ -73,7 +75,9 @@
                                 <select name="department"
                                     class="form-select-arrow w-full pl-10 pr-10 py-2.5 bg-background-light dark:bg-background-dark border border-border-light dark:border-border-dark rounded-lg text-text-primary-light dark:text-text-primary-dark focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary appearance-none transition-all cursor-pointer">
                                     <option disabled="" selected="" value="">Select Department</option>
-                                    <option value="cs">Computer Science</option>
+                                    <option value="cse">Computer Science & Engineering</option>
+                                    <option value="cse-ai">Computer Science & Engineering (AI)</option>
+                                    <option value="ece">Electronics and Communication Engineering</option>
                                     <option value="ee">Electrical Engineering</option>
                                     <option value="me">Mechanical Engineering</option>
                                     <option value="ce">Civil Engineering</option>
@@ -137,7 +141,7 @@
                             <div class="absolute top-1/2 left-0 w-full h-[1px] bg-primary/40"></div>
                             <div class="absolute left-1/2 top-0 h-full w-[1px] bg-primary/40"></div>
                         </div>
-                        <img alt="Camera Preview" class="w-full h-full object-cover opacity-80 mix-blend-luminosity"
+                        <img alt="Camera Preview" class="w-full h-full object-cover"
                             data-alt="Student face in camera viewfinder"
                             src="https://lh3.googleusercontent.com/aida-public/AB6AXuAtZrqECRuCUhwhWDyFyLNP6Phf2zsR3cXdfR1wBjxV0dEy5lU1f_l6OF1yD0-nzmJsDvbm6e1-gxfgXWztpEiMUqEs5cxxmPygb24yPMWyD45fFrqhQghfUVNIYn3FxF_6-4CnnLf_WIxSFd0PT5cWhBByhbrWs4j4LXhHTXn2vlyM4L10VvubPmICAK9qe1rwLqPmezdGITxv_xbpqtHwhP1u_m-wSoZarP4PGXrDP2krrXBXwWNwUSsZBToIovyCHdLVAdBMGLA" />
                         <div class="absolute bottom-5 left-5 right-5 flex justify-between items-end">
@@ -176,15 +180,16 @@
                 </div>
             </div>
         </div>
-        </div>
-        <div class="flex items-center gap-4 mt-8 bg-surface-light border-t border-border-light/60 dark:bg-surface-dark dark:border-border-dark/60 p-6 rounded-[20px] shadow-sm">
-            <a href="{{ url_for('dashboard') }}"
-                class="px-6 py-3 rounded-xl border border-border-light dark:border-border-dark text-text-secondary-light dark:text-text-secondary-dark font-bold hover:bg-background-light dark:hover:bg-background-dark transition-colors">Cancel</a>
-            <button type="submit"
-                class="px-8 py-3 rounded-xl bg-gradient-to-r from-primary to-primary-dark text-white font-bold transition-all duration-300 shadow-glow hover:shadow-[0_0_25px_rgba(99,102,241,0.6)] hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed ml-auto">
-                <span class="material-symbols-outlined align-middle mr-2">person_add</span> Enrol & Capture Face
-            </button>
-        </div>
-    </form>
-    
+</div>
+<div
+    class="flex items-center gap-4 mt-8 bg-surface-light border-t border-border-light/60 dark:bg-surface-dark dark:border-border-dark/60 p-6 rounded-[20px] shadow-sm">
+    <a href="{{ url_for('dashboard') }}"
+        class="px-6 py-3 rounded-xl border border-border-light dark:border-border-dark text-text-secondary-light dark:text-text-secondary-dark font-bold hover:bg-background-light dark:hover:bg-background-dark transition-colors">Cancel</a>
+    <button type="submit"
+        class="px-8 py-3 rounded-xl bg-gradient-to-r from-primary to-primary-dark text-white font-bold transition-all duration-300 shadow-glow hover:shadow-[0_0_25px_rgba(99,102,241,0.6)] hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed ml-auto">
+        <span class="material-symbols-outlined align-middle mr-2">person_add</span> Enrol & Capture Face
+    </button>
+</div>
+</form>
+
 {% endblock %}
