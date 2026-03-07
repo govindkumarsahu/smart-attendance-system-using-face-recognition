@@ -5,6 +5,14 @@ from datetime import datetime
 import os
 import time
 import sys
+import json
+
+# Add project root to path so we can import database
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+import database
+
+# Initialize DB in case it hasn't been yet
+database.init_db()
 
 # Check if model files exist
 if not os.path.exists("trainer.yml"):
@@ -46,22 +54,37 @@ face_cascade = cv2.CascadeClassifier(
     "haarcascade_frontalface_default.xml"
 )
 
-attendance_file = "attendance.csv"
+LOG_FILE = "system.log"
 
-if not os.path.exists(attendance_file):
-    with open(attendance_file, "w", newline="") as f:
-        writer = csv.writer(f)
-        writer.writerow(["Name", "Date", "Time"])
+def write_log(message, log_type="info"):
+    """Write log entry to file to be picked up by the UI toast system"""
+    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    log_entry = {
+        "timestamp": timestamp,
+        "type": log_type,
+        "message": message
+    }
+    try:
+        with open(LOG_FILE, "a", encoding="utf-8") as f:
+            f.write(json.dumps(log_entry) + "\n")
+    except Exception as e:
+        pass
 
 def mark_attendance(name):
-    today = datetime.now().strftime("%Y-%m-%d")
-    time_now = datetime.now().strftime("%H:%M:%S")
-
-    with open(attendance_file, "a", newline="") as f:
-        writer = csv.writer(f)
-        writer.writerow([name, today, time_now])
-
-    print(f"Attendance marked for {name}")
+    # Route the request through SQLite logic
+    result = database.mark_attendance(name)
+    
+    if result == 'success':
+        print(f"Attendance marked for {name}")
+        write_log(f"Attendance recorded for {name}", "success")
+        return True
+    elif result == 'duplicate':
+        print(f"Duplicate attendance detected for {name}")
+        write_log(f"Attendance already recorded today for {name}", "warning")
+        return False
+    else:
+        print(f"Failed to find {name} in Student Registry")
+        return False
 
 def filter_overlapping_faces(faces, overlap_threshold=0.3):
     """Remove overlapping face detections, keep the largest one"""
@@ -197,9 +220,12 @@ while True:
                 
                 # Mark attendance if not already marked (process all in this frame)
                 if name not in marked_students:
-                    mark_attendance(name)
+                    was_marked = mark_attendance(name)
                     marked_students.add(name)
-                    print(f"✅ Attendance marked: {name} (Confidence: {confidence:.1f})")
+                    if was_marked:
+                        print(f"✅ Attendance marked: {name} (Confidence: {confidence:.1f})")
+                    else:
+                        print(f"⚠️  Existing attendance locked: {name} (Confidence: {confidence:.1f})")
                 
                 color = (0, 255, 0)  # Green for recognized
             else:

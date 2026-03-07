@@ -1,4 +1,5 @@
-from flask import Flask, render_template, request, redirect, url_for, flash, jsonify, Response
+from flask import Flask, render_template, request, redirect, url_for, flash, jsonify, Response, session
+from functools import wraps
 import subprocess
 import sys
 import os
@@ -6,21 +7,34 @@ import time
 import json
 import csv
 import numpy as np
+import shutil
 from datetime import datetime
+import database
 
 app = Flask(__name__)
 app.secret_key = "attendance_secret_key"
 
+# Initialize database
+database.init_db()
+
 # File paths
 LOG_FILE = "system.log"
-ATTENDANCE_FILE = "attendance.csv"
 DATASET_DIR = "dataset"
 TRAINER_FILE = "trainer.yml"
 LABELS_FILE = "labels.npy"
 
 # ============================================================
-# UTILITY FUNCTIONS
+# UTILITY FUNCTIONS & DECORATORS
 # ============================================================
+
+def login_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if "user" not in session:
+            flash("Please login first.", "warning")
+            return redirect(url_for("login"))
+        return f(*args, **kwargs)
+    return decorated_function
 
 def write_log(message, log_type="info"):
     """Write log entry to file and console"""
@@ -63,45 +77,44 @@ def init_log():
 # ============================================================
 
 def get_registered_students():
-    """Get list of registered student folders from dataset/"""
-    students = []
-    if os.path.exists(DATASET_DIR):
-        for name in sorted(os.listdir(DATASET_DIR)):
-            folder = os.path.join(DATASET_DIR, name)
-            if os.path.isdir(folder):
-                img_count = len([f for f in os.listdir(folder) if f.endswith(('.jpg', '.png', '.jpeg'))])
-                students.append({"name": name, "images": img_count})
+    """Get list of registered student folders from dataset/ enriched with SQLite metadata"""
+    students = database.get_all_students()
+    
+    # Add image count dynamically and verify profile picture existence
+    for student in students:
+        student['images'] = 0
+        student['has_profile_pic'] = False
+        folder = os.path.join(DATASET_DIR, student['name'])
+        if os.path.isdir(folder):
+            images = [f for f in os.listdir(folder) if f.endswith(('.jpg', '.png', '.jpeg'))]
+            student['images'] = len(images)
+            if '1.jpg' in images:
+                student['has_profile_pic'] = True
+            elif len(images) > 0:
+                # Assuming the first image available is the profile picture if 1.jpg doesn't exist
+                # but we'll stick to 1.jpg for simplicity in the UI right now.
+                student['has_profile_pic'] = True
     return students
 
 def get_attendance_records():
-    """Read all attendance records from CSV"""
-    records = []
-    if os.path.exists(ATTENDANCE_FILE):
-        try:
-            with open(ATTENDANCE_FILE, "r", encoding="utf-8") as f:
-                reader = csv.DictReader(f)
-                for row in reader:
-                    if row.get("Name") and row.get("Date") and row.get("Time"):
-                        records.append({
-                            "name": row["Name"].strip(),
-                            "date": row["Date"].strip(),
-                            "time": row["Time"].strip()
-                        })
-        except Exception as e:
-            print(f"Error reading attendance CSV: {e}")
-    return records
+    """Read all attendance records from SQLite"""
+    records = database.get_attendance_records()
+    results = []
+    for r in records:
+        results.append({
+            "name": r["name"],
+            "date": r["date"],
+            "time": r["time"],
+            "roll_number": r["roll_number"],
+            "department": r["department"],
+            "academic_year": r["academic_year"]
+        })
+    return results
 
 def get_today_records():
-    """Get attendance records for today only (deduplicated — first entry per student)"""
-    today = datetime.now().strftime("%Y-%m-%d")
-    all_records = get_attendance_records()
-    seen = set()
-    today_records = []
-    for r in all_records:
-        if r["date"] == today and r["name"] not in seen:
-            seen.add(r["name"])
-            today_records.append(r)
-    return today_records
+    """Get attendance records for today only with full student details"""
+    records = database.get_today_records()
+    return records
 
 def get_model_info():
     """Get model status information"""
@@ -166,6 +179,32 @@ def get_dashboard_stats():
         "all_today": today_records,
         "total_records": len(all_records)
     }
+
+@app.route("/api/attendance/today")
+@login_required
+def api_today_attendance():
+    """API endpoint for real-time dashboard updates"""
+    if session.get("role") != "faculty":
+        return jsonify({"success": False, "message": "Unauthorized"}), 403
+    stats = get_dashboard_stats()
+    return jsonify(stats)
+
+@app.route("/student_image/<name>")
+@login_required
+def student_image(name):
+    """Serve a student's photo from the dataset directory"""
+    # Security: prevent path traversal
+    name = os.path.basename(name)
+    folder = os.path.join(DATASET_DIR, name)
+    if not os.path.exists(folder):
+        return abort(404)
+    
+    # Get the first image in the folder
+    images = [f for f in os.listdir(folder) if f.lower().endswith(('.png', '.jpg', '.jpeg'))]
+    if not images:
+        return abort(404)
+    
+    return send_from_directory(folder, images[0])
 
 def get_recent_activity_logs():
     """Get recent activity from system logs for model page"""
@@ -232,7 +271,7 @@ def kill_camera_processes():
 @app.route("/api/logs")
 def api_logs():
     logs = read_logs(50)
-    return jsonify({"logs": logs})
+    return jsonify(logs)
 
 @app.route("/api/stats")
 def api_stats():
@@ -252,24 +291,133 @@ def landing():
 def old_home():
     return render_template("Index.html")
 
+# ============================================================
+# AUTHENTICATION
+# ============================================================
+
+def login_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if not session.get("logged_in"):
+            flash("🔒 Please log in to access this page.", "error")
+            return redirect(url_for("login", next=request.url))
+        return f(*args, **kwargs)
+    return decorated_function
+
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    if request.method == "POST":
+        username = request.form.get("username", "").strip()
+        password = request.form.get("password", "").strip()
+        
+        # 1. Faculty Login (Demo Credentials)
+        if username.lower() == "faculty" and password == "1234":
+            session["logged_in"] = True
+            session["username"] = "Faculty"
+            session["role"] = "faculty"
+            write_log("Faculty logged in successfully (Demo)", "success")
+            flash("👋 Welcome back, Faculty member!")
+            return redirect(url_for("dashboard"))
+            
+        # 2. Student Login (Registration Number)
+        # For demo: search by roll_number in the database
+        conn = database.get_connection()
+        cursor = conn.cursor()
+        cursor.execute("SELECT * FROM students WHERE roll_number = ?", (username,))
+        student = cursor.fetchone()
+        conn.close()
+        
+        if student:
+            session["logged_in"] = True
+            session["username"] = student["name"]
+            session["roll_number"] = student["roll_number"]
+            session["role"] = "student"
+            session["student_id"] = student["id"]
+            
+            write_log(f"Student '{student['name']}' logged in via Roll Number", "success")
+            flash(f"👋 Welcome, {student['name']}!")
+            return redirect(url_for("student_dashboard"))
+        
+        # 3. Handle Failure
+        write_log(f"Failed login attempt for identification '{username}'", "warning")
+        flash("❌ Invalid credentials or Registration Number. Hint: Use faculty/1234", "error")
+            
+    return render_template("login.html")
+
+@app.route("/student/dashboard")
+@login_required
+def student_dashboard():
+    if session.get("role") != "student":
+        return redirect(url_for("dashboard"))
+        
+    student_id = session.get("student_id")
+    # Get student record
+    conn = database.get_connection()
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM students WHERE id = ?", (student_id,))
+    student = cursor.fetchone()
+    
+    # Get attendance history for this student
+    cursor.execute("""
+        SELECT date, time, status 
+        FROM attendance 
+        WHERE student_id = ? 
+        ORDER BY date DESC, time DESC
+    """, (student_id,))
+    records = cursor.fetchall()
+    conn.close()
+    
+    return render_template("student_dashboard.html", student=student, records=records, active='dashboard')
+
+@app.route("/logout")
+def logout():
+    username = session.get("username", "Unknown user")
+    session.clear()
+    write_log(f"User '{username}' logged out", "info")
+    flash("👋 Successfully logged out.")
+    return redirect(url_for("landing"))
+
 @app.route("/dashboard")
+@login_required
 def dashboard():
+    if session.get("role") == "student":
+        return redirect(url_for("student_dashboard"))
     write_log("Dashboard accessed", "info")
     stats = get_dashboard_stats()
     return render_template("dashboard.html", stats=stats)
 
 @app.route("/register-page")
+@login_required
 def register_page():
+    if session.get("role") != "faculty":
+        flash("🚫 Access denied. Faculty only.", "error")
+        return redirect(url_for("student_dashboard"))
+    return render_template("register.html", active='register_page')
+
+@app.route("/students")
+@login_required
+def students_page():
+    if session.get("role") != "faculty":
+        flash("🚫 Access denied. Faculty only.", "error")
+        return redirect(url_for("student_dashboard"))
     students = get_registered_students()
-    return render_template("register.html", students=students)
+    return render_template("students.html", students=students, active='students_page')
 
 @app.route("/attendance-page")
+@login_required
 def attendance_page():
+    if session.get("role") != "faculty":
+        flash("🚫 Access denied. Faculty only.", "error")
+        return redirect(url_for("student_dashboard"))
     today_records = get_today_records()
     return render_template("attendance.html", today_records=today_records, total_present=len(today_records))
 
 @app.route("/reports")
+@login_required
 def reports():
+    if session.get("role") != "faculty":
+        flash("🚫 Access denied. Faculty only.", "error")
+        return redirect(url_for("student_dashboard"))
     # Get filter params
     search_q = request.args.get("q", "").strip()
     status_filter = request.args.get("status", "all").lower()
@@ -278,20 +426,11 @@ def reports():
     page = int(request.args.get("page", 1))
     per_page = 10
 
-    all_records = get_attendance_records()
-    # Reverse so newest first
-    all_records = list(reversed(all_records))
-
-    # Apply filters
-    filtered = []
-    for r in all_records:
-        if search_q and search_q.lower() not in r["name"].lower():
-            continue
-        if date_from and r["date"] < date_from:
-            continue
-        if date_to and r["date"] > date_to:
-            continue
-        filtered.append(r)
+    # Get records from SQLite (filtered directly at DB level if applicable)
+    filtered = database.get_attendance_records(date_from, date_to, search_q)
+    
+    # We still need all records for some stats calculations or we can fetch stats directly
+    all_records = database.get_attendance_records()
 
     # Stats for today
     today = datetime.now().strftime("%Y-%m-%d")
@@ -341,7 +480,11 @@ def reports():
     )
 
 @app.route("/export-csv")
+@login_required
 def export_csv():
+    if session.get("role") != "faculty":
+        flash("🚫 Access denied. Faculty only.", "error")
+        return redirect(url_for("student_dashboard"))
     """Export filtered attendance records as a downloadable CSV file"""
     search_q = request.args.get("q", "").strip()
     date_from = request.args.get("date_from", "")
@@ -360,17 +503,34 @@ def export_csv():
             continue
         filtered.append(r)
 
+    write_log(f"Exporting {len(filtered)} attendance records to CSV.", "info")
+    
     import io
+    import csv
+    if not filtered:
+        flash("❌ No attendance data available to export.")
+        return redirect(url_for("reports"))
+
     output = io.StringIO()
+    output.write('\ufeff')  # UTF-8 BOM for proper Excel compatibility
     writer = csv.writer(output)
-    writer.writerow(["Student Name", "Date", "Time", "Status"])
+    writer.writerow(["Student Name", "Roll Number", "Department", "Date", "Time", "Status"])
+    
     for r in filtered:
-        writer.writerow([r["name"], r["date"], r["time"], "Present"])
+        writer.writerow([
+            r.get("name", "Unknown"),
+            (r.get("roll_number") or "N/A"),
+            (r.get("department") or "N/A").upper(),
+            r.get("date", ""),
+            r.get("time", ""),
+            "Present"
+        ])
 
     csv_data = output.getvalue()
     output.close()
 
     filename = f"attendance_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv"
+    flash("✅ Report downloaded successfully!")
     return Response(
         csv_data,
         mimetype="text/csv",
@@ -379,21 +539,36 @@ def export_csv():
 
 
 @app.route("/model")
+@login_required
 def model_page():
     model = get_model_info()
     students = get_registered_students()
     activity = get_recent_activity_logs()
-    return render_template("model.html", model_info=model, students=students, activity=activity)
+    return render_template("model.html", model_info=model, students=students, activity=activity, active='model')
 
 # ============================================================
 # ACTION ROUTES
 # ============================================================
 
 @app.route("/register", methods=["POST"])
+@login_required
 def register():
+    if session.get("role") != "faculty":
+        return jsonify({"success": False, "message": "Unauthorized"}), 403
     name = request.form.get("student_name", "").strip()
+    roll_number = request.form.get("roll_number", "").strip()
+    department = request.form.get("department", "").strip()
+    academic_year = request.form.get("academic_year", "").strip()
+    
     if not name:
         flash("❌ Please enter a student name.")
+        return redirect(url_for("register_page"))
+
+    # Attempt to insert into SQLite
+    result = database.add_student(name, roll_number, department, academic_year)
+    if result is None: # Name was not unique
+        write_log(f"Registration failed: Student {name} already exists", "error")
+        flash(f"❌ A student with the name {name} already exists in the registry!")
         return redirect(url_for("register_page"))
 
     kill_camera_processes()
@@ -408,8 +583,77 @@ def register():
     write_log("Camera window should open now.", "info")
     return redirect(url_for("register_page"))
 
+# ----------- CRITICAL NEW ENDPOINTS -------------
+@app.route("/delete_student/<int:id>", methods=["POST"])
+@login_required
+def delete_student(id):
+    if session.get("role") != "faculty":
+        return jsonify({"success": False, "message": "Unauthorized"}), 403
+    # Determine the student name from the database before deletion
+    students = database.get_all_students()
+    student = next((s for s in students if s['id'] == id), None)
+    
+    if not student:
+        flash("❌ Error: Student not found in the database.")
+        write_log(f"Failed to delete student ID {id}: Not found", "error")
+        return redirect(url_for("students_page"))
+    
+    name = student['name']
+    
+    # Remove from SQLite
+    database.delete_student(id)
+    write_log(f"Student '{name}' and associated attendance logs purged from DB.", "success")
+    
+    # Remove image dataset manually
+    folder = os.path.join(DATASET_DIR, name)
+    if os.path.exists(folder):
+        try:
+            shutil.rmtree(folder)
+            write_log(f"Dataset images for '{name}' deleted.", "info")
+        except Exception as e:
+            write_log(f"Error purging dataset images for '{name}': {e}", "warning")
+            
+    # Invalidate trainer.yml to enforce retraining on next attendance session
+    if os.path.exists(TRAINER_FILE):
+        try:
+            os.remove(TRAINER_FILE)
+            write_log("trainer.yml explicitly invalidated due to student deletion.", "warning")
+        except:
+            pass
+        
+    flash(f"✅ Successfully deleted {name} and their dataset.")
+    return redirect(url_for("students_page"))
+
+@app.route("/edit_student/<int:id>", methods=["POST"])
+@login_required
+def edit_student(id):
+    if session.get("role") != "faculty":
+        return jsonify({"success": False, "message": "Unauthorized"}), 403
+    name = request.form.get("student_name", "").strip()
+    roll_number = request.form.get("roll_number", "").strip()
+    department = request.form.get("department", "").strip()
+    academic_year = request.form.get("academic_year", "").strip()
+    
+    if not name:
+        flash("❌ Student name cannot be empty.")
+        return redirect(url_for("students_page"))
+        
+    success = database.update_student(id, name, roll_number, department, academic_year)
+    if success:
+        flash(f"📝 Successfully updated details for {name}.")
+        write_log(f"Student ID {id} ({name}) profile updated.", "info")
+    else:
+        flash(f"❌ Could not update student. Name '{name}' might already be taken.")
+        write_log(f"Failed to update Student ID {id}: Integrity error", "error")
+        
+    return redirect(url_for("students_page"))
+
 @app.route("/train")
+@login_required
 def train():
+    if session.get("role") != "faculty":
+        flash("🚫 Access denied. Faculty only.", "error")
+        return redirect(url_for("student_dashboard"))
     write_log("Model training started", "info")
     flash("⚙️ Model training started... Please wait.")
 
@@ -438,7 +682,11 @@ def train():
     return redirect(url_for("model_page"))
 
 @app.route("/attendance")
+@login_required
 def attendance():
+    if session.get("role") != "faculty":
+        flash("🚫 Access denied. Faculty only.", "error")
+        return redirect(url_for("student_dashboard"))
     if not os.path.exists(TRAINER_FILE) or not os.path.exists(LABELS_FILE):
         write_log("❌ ERROR: Model not trained yet!", "error")
         flash("❌ Model not trained yet! Please train the model first.")
@@ -453,12 +701,12 @@ def attendance():
     try:
         if sys.platform == 'win32':
             process = subprocess.Popen(
-                [sys.executable, "recognize_and_attendance.py"],
+                [sys.executable, "recognize_and_attendance_improved.py"],
                 creationflags=subprocess.CREATE_NEW_CONSOLE
             )
         else:
             process = subprocess.Popen(
-                [sys.executable, "recognize_and_attendance.py"]
+                [sys.executable, "recognize_and_attendance_improved.py"]
             )
         write_log("Camera window opened for attendance.", "info")
     except Exception as e:
@@ -468,7 +716,11 @@ def attendance():
     return redirect(url_for("attendance_page"))
 
 @app.route("/reset")
+@login_required
 def reset_model():
+    if session.get("role") != "faculty":
+        flash("🚫 Access denied. Faculty only.", "error")
+        return redirect(url_for("student_dashboard"))
     write_log("Model reset requested", "warning")
     kill_camera_processes()
     time.sleep(0.5)

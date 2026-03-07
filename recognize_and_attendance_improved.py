@@ -56,48 +56,40 @@ face_cascade = cv2.CascadeClassifier(
     "haarcascade_frontalface_default.xml"
 )
 
-attendance_file = "attendance.csv"
+import database
+import json
 
-if not os.path.exists(attendance_file):
-    with open(attendance_file, "w", newline="") as f:
-        writer = csv.writer(f)
-        writer.writerow(["Name", "Date", "Time"])
+LOG_FILE = "system_logs.jsonl"
 
-def is_already_marked_today(name):
-    """Check if student already marked attendance today"""
-    today = datetime.now().strftime("%Y-%m-%d")
-    
-    if not os.path.exists(attendance_file):
-        return False
-    
+def write_log(message, log_type="info"):
+    """Write log entry to file to be picked up by the UI toast system"""
+    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    log_entry = {
+        "timestamp": timestamp,
+        "type": log_type,
+        "message": message
+    }
     try:
-        with open(attendance_file, "r", newline="") as f:
-            reader = csv.reader(f)
-            next(reader)  # Skip header
-            for row in reader:
-                if len(row) >= 2 and row[0] == name and row[1] == today:
-                    return True
+        with open(LOG_FILE, "a", encoding="utf-8") as f:
+            f.write(json.dumps(log_entry) + "\n")
     except Exception as e:
-        print(f"Warning: Could not check attendance file: {e}")
-    
-    return False
+        pass
 
 def mark_attendance(name):
-    """Mark attendance with duplicate prevention"""
-    # Check if already marked today
-    if is_already_marked_today(name):
-        print(f"ℹ️  {name} already marked today - skipping duplicate entry")
-        return False
+    """Mark attendance with duplicate prevention via SQLite"""
+    result = database.mark_attendance(name)
     
-    today = datetime.now().strftime("%Y-%m-%d")
-    time_now = datetime.now().strftime("%H:%M:%S")
-
-    with open(attendance_file, "a", newline="") as f:
-        writer = csv.writer(f)
-        writer.writerow([name, today, time_now])
-
-    print(f"✅ Attendance marked for {name}")
-    return True
+    if result == 'success':
+        print(f"✅ Attendance marked for {name}")
+        write_log(f"Attendance recorded for {name}", "success")
+        return True
+    elif result == 'duplicate':
+        print(f"ℹ️  {name} already marked today - skipping duplicate entry")
+        write_log(f"Attendance already recorded today for {name}", "warning")
+        return False
+    else:
+        print(f"Failed to find {name} in Student Registry")
+        return False
 
 def filter_overlapping_faces(faces, overlap_threshold=0.3):
     """Remove overlapping face detections, keep the largest one"""

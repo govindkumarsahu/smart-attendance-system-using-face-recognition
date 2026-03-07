@@ -32,12 +32,12 @@
                 </div>
                 <div class="flex gap-3">
                     <button onclick="window.print()"
-                        class="flex items-center gap-2 px-4 py-2.5 bg-surface-light dark:bg-surface-dark border border-border-light dark:border-border-dark rounded-lg text-text-primary-light dark:text-text-primary-dark font-medium hover:bg-background-light dark:hover:bg-background-dark transition-colors shadow-sm">
+                        class="flex items-center gap-2 px-6 py-3 bg-surface-light dark:bg-surface-dark border border-border-light/60 dark:border-border-dark/60 rounded-xl text-text-primary-light dark:text-text-primary-dark font-bold hover:bg-background-light dark:hover:bg-background-dark transition-all duration-300 shadow-sm hover:shadow-md hover:-translate-y-0.5 backdrop-blur-md">
                         <span class="material-symbols-outlined text-[20px]">print</span>
                         <span>Print</span>
                     </button>
                     <a href="{{ url_for('export_csv', q=search_q, date_from=date_from, date_to=date_to) }}"
-                        class="flex items-center gap-2 px-4 py-2.5 bg-primary text-white rounded-lg font-medium hover:bg-blue-600 transition-colors shadow-md shadow-primary/20">
+                        class="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-primary to-primary-dark text-white rounded-xl font-bold transition-all duration-300 shadow-glow hover:shadow-[0_0_25px_rgba(99,102,241,0.6)] hover:-translate-y-0.5">
                         <span class="material-symbols-outlined text-[20px]">download</span>
                         <span>Download CSV</span>
                     </a>
@@ -45,105 +45,109 @@
             </div>
         </div>
         <form method="GET" action="{{ url_for('reports') }}"
-            class="grid grid-cols-1 lg:grid-cols-12 gap-4 bg-surface-light dark:bg-surface-dark p-4 rounded-xl shadow-sm border border-border-light dark:border-border-dark">
+            class="grid grid-cols-1 lg:grid-cols-12 gap-4 bg-surface-light/80 dark:bg-surface-dark/90 p-5 rounded-[20px] shadow-sm border border-border-light/60 dark:border-border-dark/60 backdrop-blur-md transition-shadow hover:shadow-md">
             <div class="lg:col-span-5 relative">
-                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                     <span
-                        class="material-symbols-outlined text-text-secondary-light dark:text-text-secondary-dark">search</span>
+                        class="material-symbols-outlined text-text-secondary-light dark:text-text-secondary-dark text-[20px]">search</span>
                 </div>
                 <input name="q" value="{{ search_q }}"
-                    class="block w-full pl-10 pr-3 py-2.5 border border-border-light dark:border-border-dark rounded-lg leading-5 bg-background-light dark:bg-background-dark placeholder-text-secondary-light dark:placeholder-text-secondary-dark text-text-primary-light dark:text-text-primary-dark focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary sm:text-sm"
+                    class="block w-full pl-12 pr-4 py-3 border border-border-light/60 dark:border-border-dark/60 rounded-xl leading-5 bg-background-light/50 dark:bg-background-dark/50 placeholder-text-secondary-light dark:placeholder-text-secondary-dark text-text-primary-light dark:text-text-primary-dark focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary sm:text-sm transition-all shadow-inner"
                     placeholder="Search by name..." type="text" />
             </div>
-            <div class="lg:col-span-4 relative flex items-center gap-2">
+            <div class="lg:col-span-4 relative flex items-center gap-3">
                 <div class="relative flex-1">
                     <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                         <span
-                            class="material-symbols-outlined text-text-secondary-light dark:text-text-secondary-dark text-[20px]">calendar_today</span>
+                            class="material-symbols-outlined text-text-secondary-light dark:text-text-secondary-dark text-[18px]">calendar_today</span>
                     </div>
                     <input name="date_from" value="{{ date_from }}"
-                        class="block w-full pl-10 pr-3 py-2.5 border border-border-light dark:border-border-dark rounded-lg leading-5 bg-background-light dark:bg-background-dark text-text-secondary-light dark:text-text-secondary-dark focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary sm:text-sm"
+                        class="block w-full pl-10 pr-3 py-3 border border-border-light/60 dark:border-border-dark/60 rounded-xl leading-5 bg-background-light/50 dark:bg-background-dark/50 text-text-secondary-light dark:text-text-secondary-dark focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary sm:text-sm transition-all shadow-inner"
                         type="date" />
                 </div>
-                <span class="text-text-secondary-light dark:text-text-secondary-dark">-</span>
+                <span class="text-text-secondary-light dark:text-text-secondary-dark font-medium">—</span>
                 <div class="relative flex-1">
                     <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                         <span
-                            class="material-symbols-outlined text-text-secondary-light dark:text-text-secondary-dark text-[20px]">calendar_today</span>
+                            class="material-symbols-outlined text-text-secondary-light dark:text-text-secondary-dark text-[18px]">calendar_today</span>
                     </div>
                     <input name="date_to" value="{{ date_to }}"
-                        class="block w-full pl-10 pr-3 py-2.5 border border-border-light dark:border-border-dark rounded-lg leading-5 bg-background-light dark:bg-background-dark text-text-secondary-light dark:text-text-secondary-dark focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary sm:text-sm"
+                        class="block w-full pl-10 pr-3 py-3 border border-border-light/60 dark:border-border-dark/60 rounded-xl leading-5 bg-background-light/50 dark:bg-background-dark/50 text-text-secondary-light dark:text-text-secondary-dark focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary sm:text-sm transition-all shadow-inner"
                         type="date" />
                 </div>
             </div>
             <div class="lg:col-span-3 flex">
                 <button type="submit"
-                    class="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-primary text-white rounded-lg font-medium hover:bg-blue-600 transition-colors">
+                    class="w-full flex items-center justify-center gap-2 px-6 py-3 bg-slate-900 border border-slate-800 text-white rounded-xl font-bold hover:bg-slate-800 transition-colors shadow-sm dark:bg-slate-700 dark:border-slate-600 dark:hover:bg-slate-600">
                     <span class="material-symbols-outlined text-[20px]">filter_list</span>
                     Apply Filters
                 </button>
             </div>
         </form>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
             <div
-                class="bg-surface-light dark:bg-surface-dark p-4 rounded-xl border border-border-light dark:border-border-dark shadow-sm flex items-center gap-4">
+                class="group bg-surface-light dark:bg-surface-dark/90 p-5 rounded-[20px] border border-border-light/60 dark:border-border-dark/60 shadow-sm backdrop-blur-md flex items-center gap-4 transition-all duration-300 hover:-translate-y-1 hover:shadow-premium relative overflow-hidden">
+                <div class="absolute -right-6 -top-6 w-24 h-24 bg-green-500/10 rounded-full blur-xl group-hover:scale-150 transition-transform duration-500"></div>
                 <div
-                    class="size-12 rounded-full bg-green-100 dark:bg-green-900/20 text-green-600 dark:text-green-400 flex items-center justify-center">
-                    <span class="material-symbols-outlined">check_circle</span>
+                    class="size-14 rounded-[14px] bg-green-50 dark:bg-green-900/30 text-green-600 dark:text-green-400 flex items-center justify-center border border-green-100 dark:border-green-800/50 shadow-sm relative z-10 transition-transform group-hover:scale-110 duration-300">
+                    <span class="material-symbols-outlined text-[26px]">check_circle</span>
                 </div>
-                <div>
+                <div class="relative z-10">
                     <p
-                        class="text-text-secondary-light dark:text-text-secondary-dark text-xs font-medium uppercase tracking-wider">
+                        class="text-text-secondary-light dark:text-text-secondary-dark text-[11px] font-bold uppercase tracking-wider">
                         Present Today</p>
-                    <p class="text-text-primary-light dark:text-text-primary-dark text-xl font-bold">{{
+                    <p class="text-text-primary-light dark:text-text-primary-dark text-2xl font-black mt-0.5 tracking-tight">{{
                         stats.present_today }}</p>
                 </div>
             </div>
             <div
-                class="bg-surface-light dark:bg-surface-dark p-4 rounded-xl border border-border-light dark:border-border-dark shadow-sm flex items-center gap-4">
+                class="group bg-surface-light dark:bg-surface-dark/90 p-5 rounded-[20px] border border-border-light/60 dark:border-border-dark/60 shadow-sm backdrop-blur-md flex items-center gap-4 transition-all duration-300 hover:-translate-y-1 hover:shadow-premium relative overflow-hidden">
+                <div class="absolute -right-6 -top-6 w-24 h-24 bg-red-500/10 rounded-full blur-xl group-hover:scale-150 transition-transform duration-500"></div>
                 <div
-                    class="size-12 rounded-full bg-red-100 dark:bg-red-900/20 text-red-600 dark:text-red-400 flex items-center justify-center">
-                    <span class="material-symbols-outlined">cancel</span>
+                    class="size-14 rounded-[14px] bg-red-50 dark:bg-red-900/30 text-red-600 dark:text-red-400 flex items-center justify-center border border-red-100 dark:border-red-800/50 shadow-sm relative z-10 transition-transform group-hover:scale-110 duration-300">
+                    <span class="material-symbols-outlined text-[26px]">cancel</span>
                 </div>
-                <div>
+                <div class="relative z-10">
                     <p
-                        class="text-text-secondary-light dark:text-text-secondary-dark text-xs font-medium uppercase tracking-wider">
+                        class="text-text-secondary-light dark:text-text-secondary-dark text-[11px] font-bold uppercase tracking-wider">
                         Absent Today</p>
-                    <p class="text-text-primary-light dark:text-text-primary-dark text-xl font-bold">{{
+                    <p class="text-text-primary-light dark:text-text-primary-dark text-2xl font-black mt-0.5 tracking-tight">{{
                         stats.absent_today }}</p>
                 </div>
             </div>
             <div
-                class="bg-surface-light dark:bg-surface-dark p-4 rounded-xl border border-border-light dark:border-border-dark shadow-sm flex items-center gap-4">
+                class="group bg-surface-light dark:bg-surface-dark/90 p-5 rounded-[20px] border border-border-light/60 dark:border-border-dark/60 shadow-sm backdrop-blur-md flex items-center gap-4 transition-all duration-300 hover:-translate-y-1 hover:shadow-premium relative overflow-hidden">
+                <div class="absolute -right-6 -top-6 w-24 h-24 bg-amber-500/10 rounded-full blur-xl group-hover:scale-150 transition-transform duration-500"></div>
                 <div
-                    class="size-12 rounded-full bg-yellow-100 dark:bg-yellow-900/20 text-yellow-600 dark:text-yellow-400 flex items-center justify-center">
-                    <span class="material-symbols-outlined">schedule</span>
+                    class="size-14 rounded-[14px] bg-amber-50 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400 flex items-center justify-center border border-amber-100 dark:border-amber-800/50 shadow-sm relative z-10 transition-transform group-hover:scale-110 duration-300">
+                    <span class="material-symbols-outlined text-[26px]">schedule</span>
                 </div>
-                <div>
+                <div class="relative z-10">
                     <p
-                        class="text-text-secondary-light dark:text-text-secondary-dark text-xs font-medium uppercase tracking-wider">
+                        class="text-text-secondary-light dark:text-text-secondary-dark text-[11px] font-bold uppercase tracking-wider">
                         Total Records</p>
-                    <p class="text-text-primary-light dark:text-text-primary-dark text-xl font-bold">{{ total_records }}
+                    <p class="text-text-primary-light dark:text-text-primary-dark text-2xl font-black mt-0.5 tracking-tight">{{ total_records }}
                     </p>
                 </div>
             </div>
             <div
-                class="bg-surface-light dark:bg-surface-dark p-4 rounded-xl border border-border-light dark:border-border-dark shadow-sm flex items-center gap-4">
+                class="group bg-surface-light dark:bg-surface-dark/90 p-5 rounded-[20px] border border-border-light/60 dark:border-border-dark/60 shadow-sm backdrop-blur-md flex items-center gap-4 transition-all duration-300 hover:-translate-y-1 hover:shadow-premium relative overflow-hidden">
+                <div class="absolute -right-6 -top-6 w-24 h-24 bg-primary/10 rounded-full blur-xl group-hover:scale-150 transition-transform duration-500"></div>
                 <div
-                    class="size-12 rounded-full bg-blue-100 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 flex items-center justify-center">
-                    <span class="material-symbols-outlined">person_search</span>
+                    class="size-14 rounded-[14px] bg-primary/10 dark:bg-primary/20 text-primary dark:text-primary-light flex items-center justify-center border border-primary/20 dark:border-primary/30 shadow-sm relative z-10 transition-transform group-hover:scale-110 duration-300">
+                    <span class="material-symbols-outlined text-[26px]">person_search</span>
                 </div>
-                <div>
+                <div class="relative z-10">
                     <p
-                        class="text-text-secondary-light dark:text-text-secondary-dark text-xs font-medium uppercase tracking-wider">
+                        class="text-text-secondary-light dark:text-text-secondary-dark text-[11px] font-bold uppercase tracking-wider">
                         Avg Attendance</p>
-                    <p class="text-text-primary-light dark:text-text-primary-dark text-xl font-bold">{{
+                    <p class="text-text-primary-light dark:text-text-primary-dark text-2xl font-black mt-0.5 tracking-tight">{{
                         stats.avg_attendance }}</p>
                 </div>
             </div>
         </div>
         <div
-            class="bg-surface-light dark:bg-surface-dark rounded-xl border border-border-light dark:border-border-dark shadow-sm overflow-hidden">
+            class="bg-surface-light/90 dark:bg-surface-dark/90 rounded-[20px] border border-border-light/60 dark:border-border-dark/60 shadow-sm backdrop-blur-md overflow-hidden transition-shadow hover:shadow-md">
             <div class="overflow-x-auto">
                 <table class="w-full text-left border-collapse">
                     <thead>
@@ -182,10 +186,12 @@
                             <td class="p-4">
                                 <div class="flex items-center gap-3">
                                     <div
-                                        class="size-9 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm font-bold">
-                                        {{ record.name[:2]|upper }}</div>
+                                        class="size-9 rounded-full overflow-hidden bg-primary/10 text-primary flex items-center justify-center text-sm font-bold border-2 border-white dark:border-slate-700 shadow-sm relative group">
+                                        {{ record.name[:2]|upper }}
+                                        <div class="absolute inset-0 bg-primary/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                                    </div>
                                     <div>
-                                        <p class="font-medium text-text-primary-light dark:text-text-primary-dark">{{
+                                        <p class="font-bold text-text-primary-light dark:text-text-primary-dark text-sm">{{
                                             record.name }}</p>
                                     </div>
                                 </div>
