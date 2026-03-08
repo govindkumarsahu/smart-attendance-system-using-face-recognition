@@ -318,33 +318,39 @@ while True:
             cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 255, 255), 2
         )
     
-    # Display header information
-    header_y = 30
-    cv2.rectangle(frame, (0, 0), (900, 180), (0, 0, 0), -1)  # Black background for header
+    # Display header information (compact, semi-transparent overlay)
+    frame_h, frame_w = frame.shape[:2]
+    header_y = 25
+    header_height = 40  # Compact single-line header
     
-    # Timer
+    # Semi-transparent header overlay (only covers top strip)
+    overlay = frame.copy()
+    cv2.rectangle(overlay, (0, 0), (frame_w, header_height), (0, 0, 0), -1)
+    cv2.addWeighted(overlay, 0.6, frame, 0.4, 0, frame)
+    
+    # Timer on left
     timer_text = f"Time: {remaining_time:.1f}s / {ATTENDANCE_DURATION}s"
-    cv2.putText(frame, timer_text, (10, header_y), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 255), 2)
+    cv2.putText(frame, timer_text, (10, header_y), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 255), 2)
     
-    # Marked count
+    # Marked count on right
     marked_count = len(marked_students)
     count_text = f"Marked: {marked_count}"
-    cv2.putText(frame, count_text, (10, header_y + 35), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 0), 2)
+    cv2.putText(frame, count_text, (frame_w - 200, header_y), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)
     
-    # Display marked students
+    # Display marked students as a compact bottom bar
     if marked_students:
-        y_offset = header_y + 70
-        cv2.putText(frame, "Confirmed Students:", (10, y_offset), 
-                   cv2.FONT_HERSHEY_SIMPLEX, 0.6, (255, 255, 255), 2)
-        
         student_list = sorted(list(marked_students))
-        for idx, student in enumerate(student_list[:3]):  # Show up to 3
-            cv2.putText(frame, f"  {idx+1}. {student}", (10, y_offset + 25 * (idx + 1)),
-                       cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 1)
+        students_text = "Confirmed: " + ", ".join(student_list[:5])
+        bar_y = frame_h - 35
+        overlay2 = frame.copy()
+        cv2.rectangle(overlay2, (0, bar_y - 5), (frame_w, frame_h), (0, 0, 0), -1)
+        cv2.addWeighted(overlay2, 0.6, frame, 0.4, 0, frame)
+        cv2.putText(frame, students_text, (10, bar_y + 15),
+                   cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 1)
     
-    # Show instructions
-    cv2.putText(frame, "Legend: GREEN=Confirmed | ORANGE=Pending | RED=Unknown",
-               (10, frame.shape[0] - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (200, 200, 200), 1)
+    # Show instructions at bottom
+    cv2.putText(frame, "GREEN=Confirmed | ORANGE=Pending | RED=Unknown",
+               (10, frame_h - 8), cv2.FONT_HERSHEY_SIMPLEX, 0.4, (200, 200, 200), 1)
 
     cv2.imshow(WINDOW_NAME, frame)
 
