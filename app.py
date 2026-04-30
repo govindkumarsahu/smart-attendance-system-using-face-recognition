@@ -30,9 +30,9 @@ LABELS_FILE = "labels.npy"
 def login_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
-        if "user" not in session:
-            flash("Please login first.", "warning")
-            return redirect(url_for("login"))
+        if not session.get("logged_in"):
+            flash("🔒 Please log in to access this page.", "error")
+            return redirect(url_for("login", next=request.url))
         return f(*args, **kwargs)
     return decorated_function
 
@@ -118,7 +118,11 @@ def get_attendance_records():
             "time": r["time"],
             "roll_number": r["roll_number"],
             "department": r["department"],
-            "academic_year": r["academic_year"]
+            "academic_year": r["academic_year"],
+            "subject_code": r.get("subject_code", ""),
+            "subject_name": r.get("subject_name", ""),
+            "period": r.get("period", ""),
+            "faculty_name": r.get("faculty_name", "")
         })
     return results
 
@@ -290,6 +294,383 @@ def api_stats():
     stats = get_dashboard_stats()
     return jsonify(stats)
 
+@app.route("/api/session")
+def api_session():
+    """API endpoint to get current user session state"""
+    if "logged_in" in session and session["logged_in"]:
+        data = {
+            "logged_in": True,
+            "username": session.get("username"),
+            "role": session.get("role"),
+            "roll_number": session.get("roll_number"),
+        }
+        # Include faculty-specific details
+        if session.get("role") == "faculty":
+            data["faculty_id"] = session.get("faculty_id")
+            data["designation"] = session.get("designation", "")
+            data["department"] = session.get("department", "")
+        return jsonify(data)
+    return jsonify({"logged_in": False})
+
+@app.route("/api/students")
+@login_required
+def api_students():
+    """API endpoint to get all registered students"""
+    if session.get("role") != "faculty":
+        return jsonify({"success": False, "message": "Unauthorized"}), 403
+    students = get_registered_students()
+    return jsonify(students)
+
+@app.route("/api/model-info")
+@login_required
+def api_model_info():
+    """API endpoint to get model status and training data"""
+    model = get_model_info()
+    activity = get_recent_activity_logs()
+    students = get_registered_students()
+    return jsonify({
+        "model_info": model,
+        "activity": activity,
+        "students": students
+    })
+
+# ============================================================
+# SUBJECT & LECTURE SESSION APIs
+# ============================================================
+
+@app.route("/api/subjects")
+@login_required
+def api_subjects():
+    """API endpoint to get all subjects"""
+    subjects = database.get_all_subjects()
+    return jsonify(subjects)
+
+@app.route("/api/subjects", methods=["POST"])
+@login_required
+def api_add_subject():
+    """API endpoint to add a new subject"""
+    if session.get("role") != "faculty":
+        return jsonify({"success": False, "message": "Unauthorized"}), 403
+    data = request.get_json()
+    code = data.get("code", "").strip()
+    name = data.get("name", "").strip()
+    department = data.get("department", "").strip()
+    semester = data.get("semester", "").strip()
+    if not code or not name:
+        return jsonify({"success": False, "message": "Subject code and name are required."}), 400
+    result = database.add_subject(code, name, department, semester)
+    if result is None:
+        return jsonify({"success": False, "message": f"Subject with code '{code}' already exists."}), 400
+    write_log(f"New subject added: {code} - {name}", "success")
+    return jsonify({"success": True, "message": f"Subject '{name}' added successfully."})
+
+@app.route("/api/subjects/<int:subject_id>", methods=["DELETE"])
+@login_required
+def api_delete_subject(subject_id):
+    """API endpoint to delete a subject"""
+    if session.get("role") != "faculty":
+        return jsonify({"success": False, "message": "Unauthorized"}), 403
+    database.delete_subject(subject_id)
+    write_log(f"Subject ID {subject_id} deleted.", "warning")
+    return jsonify({"success": True, "message": "Subject deleted."})
+
+@app.route("/api/lecture-sessions")
+@login_required
+def api_lecture_sessions():
+    """API endpoint to get lecture sessions"""
+    sessions = database.get_today_sessions()
+    return jsonify(sessions)
+
+# ============================================================
+# FACULTY MANAGEMENT & ATTENDANCE APIs
+# ============================================================
+
+@app.route("/api/faculty")
+@login_required
+def api_faculty():
+    """API endpoint to get all faculty members"""
+    if session.get("role") != "faculty":
+        return jsonify({"success": False, "message": "Unauthorized"}), 403
+    faculty = database.get_all_faculty()
+    return jsonify(faculty)
+
+@app.route("/api/faculty/register", methods=["POST"])
+@login_required
+def api_register_faculty():
+    """Register a new faculty member"""
+    if session.get("role") != "faculty":
+        return jsonify({"success": False, "message": "Unauthorized"}), 403
+
+    data = request.get_json()
+    username = data.get("username", "").strip()
+    password = data.get("password", "").strip()
+    full_name = data.get("full_name", "").strip()
+    employee_id = data.get("employee_id", "").strip()
+    department = data.get("department", "").strip()
+    designation = data.get("designation", "Assistant Professor").strip()
+    email = data.get("email", "").strip()
+    phone = data.get("phone", "").strip()
+
+    if not username or not password or not full_name:
+        return jsonify({"success": False, "message": "Username, password, and full name are required."}), 400
+
+    result = database.add_faculty(username, password, full_name, employee_id, department, designation, email, phone)
+    if result is None:
+        return jsonify({"success": False, "message": f"Faculty with username '{username}' or employee ID '{employee_id}' already exists."}), 400
+
+    write_log(f"New faculty registered: {full_name} (EMP: {employee_id})", "success")
+    return jsonify({"success": True, "message": f"Faculty '{full_name}' registered successfully."})
+
+@app.route("/api/faculty/<int:faculty_id>", methods=["PUT"])
+@login_required
+def api_update_faculty(faculty_id):
+    """Update faculty details"""
+    if session.get("role") != "faculty":
+        return jsonify({"success": False, "message": "Unauthorized"}), 403
+
+    data = request.get_json()
+    full_name = data.get("full_name", "").strip()
+    employee_id = data.get("employee_id", "").strip()
+    department = data.get("department", "").strip()
+    designation = data.get("designation", "").strip()
+    email = data.get("email", "").strip()
+    phone = data.get("phone", "").strip()
+
+    if not full_name:
+        return jsonify({"success": False, "message": "Full name is required."}), 400
+
+    success = database.update_faculty(faculty_id, full_name, employee_id, department, designation, email, phone)
+    if success:
+        write_log(f"Faculty ID {faculty_id} ({full_name}) profile updated.", "info")
+        return jsonify({"success": True, "message": f"Faculty '{full_name}' updated successfully."})
+    else:
+        return jsonify({"success": False, "message": "Update failed. Employee ID might already be taken."}), 400
+
+@app.route("/api/faculty/<int:faculty_id>", methods=["DELETE"])
+@login_required
+def api_delete_faculty(faculty_id):
+    """Delete a faculty member"""
+    if session.get("role") != "faculty":
+        return jsonify({"success": False, "message": "Unauthorized"}), 403
+
+    faculty = database.get_faculty_by_id(faculty_id)
+    if not faculty:
+        return jsonify({"success": False, "message": "Faculty not found."}), 404
+
+    database.delete_faculty(faculty_id)
+    write_log(f"Faculty '{faculty['full_name']}' deleted.", "warning")
+    return jsonify({"success": True, "message": f"Faculty '{faculty['full_name']}' deleted successfully."})
+
+@app.route("/api/faculty-attendance/today")
+@login_required
+def api_faculty_attendance_today():
+    """Get today's faculty attendance summary"""
+    if session.get("role") != "faculty":
+        return jsonify({"success": False, "message": "Unauthorized"}), 403
+    summary = database.get_faculty_today_summary()
+    return jsonify(summary)
+
+@app.route("/api/faculty-attendance/history")
+@login_required
+def api_faculty_attendance_history():
+    """Get faculty attendance history with optional filters"""
+    if session.get("role") != "faculty":
+        return jsonify({"success": False, "message": "Unauthorized"}), 403
+    date_from = request.args.get("date_from", "")
+    date_to = request.args.get("date_to", "")
+    fid = request.args.get("faculty_id", "")
+    records = database.get_faculty_attendance(
+        date_from=date_from or None,
+        date_to=date_to or None,
+        faculty_id=int(fid) if fid else None
+    )
+    return jsonify(records)
+
+@app.route("/api/faculty-attendance/mark", methods=["POST"])
+@login_required
+def api_mark_faculty_attendance():
+    """Mark faculty check-in"""
+    if session.get("role") != "faculty":
+        return jsonify({"success": False, "message": "Unauthorized"}), 403
+
+    data = request.get_json()
+    faculty_id = data.get("faculty_id")
+    status = data.get("status", "Present").strip()
+    remarks = data.get("remarks", "").strip()
+    marked_by = session.get("username", "System")
+
+    if not faculty_id:
+        return jsonify({"success": False, "message": "Faculty ID is required."}), 400
+
+    result = database.mark_faculty_attendance(int(faculty_id), status, remarks, marked_by)
+    if result == 'success':
+        faculty = database.get_faculty_by_id(int(faculty_id))
+        fname = faculty['full_name'] if faculty else f"ID {faculty_id}"
+        write_log(f"Faculty check-in: {fname} ({status})", "success")
+        return jsonify({"success": True, "message": f"Check-in marked for {fname}."})
+    elif result == 'duplicate':
+        return jsonify({"success": False, "message": "Attendance already marked for today."}), 400
+    else:
+        return jsonify({"success": False, "message": "Faculty not found."}), 404
+
+@app.route("/api/faculty-attendance/checkout", methods=["POST"])
+@login_required
+def api_checkout_faculty():
+    """Mark faculty check-out"""
+    if session.get("role") != "faculty":
+        return jsonify({"success": False, "message": "Unauthorized"}), 403
+
+    data = request.get_json()
+    faculty_id = data.get("faculty_id")
+
+    if not faculty_id:
+        return jsonify({"success": False, "message": "Faculty ID is required."}), 400
+
+    result = database.checkout_faculty(int(faculty_id))
+    if result == 'success':
+        faculty = database.get_faculty_by_id(int(faculty_id))
+        fname = faculty['full_name'] if faculty else f"ID {faculty_id}"
+        write_log(f"Faculty check-out: {fname}", "info")
+        return jsonify({"success": True, "message": f"Check-out recorded for {fname}."})
+    elif result == 'no_checkin':
+        return jsonify({"success": False, "message": "No check-in found for today. Please check-in first."}), 400
+    elif result == 'already_checkout':
+        return jsonify({"success": False, "message": "Already checked out for today."}), 400
+    else:
+        return jsonify({"success": False, "message": "Error processing check-out."}), 500
+
+@app.route("/api/faculty-attendance/export-csv")
+@login_required
+def api_export_faculty_csv():
+    """Export faculty attendance records as CSV"""
+    if session.get("role") != "faculty":
+        return jsonify({"success": False, "message": "Unauthorized"}), 403
+
+    date_from = request.args.get("date_from", "")
+    date_to = request.args.get("date_to", "")
+
+    records = database.get_faculty_attendance(
+        date_from=date_from or None,
+        date_to=date_to or None
+    )
+
+    write_log(f"Exporting {len(records)} faculty attendance records to CSV.", "info")
+
+    import io
+    if not records:
+        return jsonify({"success": False, "message": "No faculty attendance data to export."}), 400
+
+    output = io.StringIO()
+    output.write('\ufeff')  # UTF-8 BOM
+    writer = csv.writer(output)
+    writer.writerow(["Faculty Name", "Employee ID", "Department", "Designation", "Date", "Check-In", "Check-Out", "Work Hours", "Status", "Remarks"])
+
+    for r in records:
+        writer.writerow([
+            r.get("full_name", ""),
+            r.get("employee_id", "N/A"),
+            r.get("department", "N/A"),
+            r.get("designation", ""),
+            r.get("date", ""),
+            r.get("check_in", "—"),
+            r.get("check_out", "—"),
+            f"{r.get('work_hours', 0):.2f}" if r.get('work_hours') else "—",
+            r.get("status", ""),
+            r.get("remarks", "")
+        ])
+
+    csv_data = output.getvalue()
+    output.close()
+
+    filename = f"faculty_attendance_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv"
+    return Response(
+        csv_data,
+        mimetype="text/csv",
+        headers={"Content-Disposition": f"attachment; filename={filename}"}
+    )
+
+
+@app.route("/api/attendance/start", methods=["POST"])
+@login_required
+def api_start_attendance():
+    """Start attendance camera with subject, period, and faculty context"""
+    if session.get("role") != "faculty":
+        return jsonify({"success": False, "message": "Unauthorized"}), 403
+
+    data = request.get_json()
+    subject_code = data.get("subject_code", "").strip()
+    subject_name = data.get("subject_name", "").strip()
+    period = data.get("period", "").strip()
+    faculty_name = session.get("username", "Faculty")
+
+    if not subject_code or not period:
+        return jsonify({"success": False, "message": "Please select a subject and period."}), 400
+
+    if not os.path.exists(TRAINER_FILE) or not os.path.exists(LABELS_FILE):
+        return jsonify({"success": False, "message": "Model not trained yet! Please train the model first."}), 400
+
+    # Create a lecture session in the database
+    session_id = database.create_lecture_session(subject_code, subject_name, period, faculty_name)
+    if not session_id:
+        return jsonify({"success": False, "message": "Failed to create lecture session."}), 500
+
+    kill_camera_processes()
+    time.sleep(0.3)
+
+    write_log(f"Attendance started: {subject_name} ({subject_code}) | {period} | Faculty: {faculty_name}", "info")
+
+    try:
+        cmd_args = [
+            sys.executable, "recognize_and_attendance_improved.py",
+            subject_code, subject_name, period, faculty_name, str(session_id)
+        ]
+        if sys.platform == 'win32':
+            process = subprocess.Popen(cmd_args, creationflags=subprocess.CREATE_NEW_CONSOLE)
+        else:
+            process = subprocess.Popen(cmd_args)
+        write_log("Camera window opened for attendance.", "info")
+    except Exception as e:
+        write_log(f"ERROR: Failed to start attendance: {str(e)}", "error")
+        return jsonify({"success": False, "message": f"Error starting camera: {str(e)}"}), 500
+
+    return jsonify({
+        "success": True,
+        "message": f"Attendance started for {subject_name} - {period}.",
+        "session_id": session_id
+    })
+
+@app.route("/api/register", methods=["POST"])
+@login_required
+def api_register():
+    if session.get("role") != "faculty":
+        return jsonify({"success": False, "message": "Unauthorized"}), 403
+    
+    data = request.get_json()
+    name = data.get("student_name", "").strip()
+    roll_number = data.get("roll_number", "").strip()
+    department = data.get("department", "").strip()
+    academic_year = data.get("academic_year", "").strip()
+    
+    if not name:
+        return jsonify({"success": False, "message": "Please enter a student name."}), 400
+
+    # Attempt to insert into SQLite
+    result = database.add_student(name, roll_number, department, academic_year)
+    if result is None: # Name was not unique
+        write_log(f"Registration failed: Student {name} already exists", "error")
+        return jsonify({"success": False, "message": f"A student with the name {name} already exists!"}), 400
+
+    kill_camera_processes()
+    write_log(f"Registration started for student: {name}", "info")
+
+    process = subprocess.Popen(
+        [sys.executable, "dataset_capture.py", name],
+        creationflags=subprocess.CREATE_NEW_CONSOLE if sys.platform == 'win32' else 0
+    )
+
+    write_log("Camera window should open now.", "info")
+    return jsonify({"success": True, "message": f"Registration started for {name}. Check camera window."})
+
 # ============================================================
 # PAGE ROUTES
 # ============================================================
@@ -306,14 +687,7 @@ def old_home():
 # AUTHENTICATION
 # ============================================================
 
-def login_required(f):
-    @wraps(f)
-    def decorated_function(*args, **kwargs):
-        if not session.get("logged_in"):
-            flash("🔒 Please log in to access this page.", "error")
-            return redirect(url_for("login", next=request.url))
-        return f(*args, **kwargs)
-    return decorated_function
+
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -321,17 +695,21 @@ def login():
         username = request.form.get("username", "").strip()
         password = request.form.get("password", "").strip()
         
-        # 1. Faculty Login (Demo Credentials)
-        if username.lower() == "faculty" and password == "1234":
+        # 1. Faculty Login — authenticate from faculty table in database
+        faculty = database.authenticate_faculty(username, password)
+        if faculty:
             session["logged_in"] = True
-            session["username"] = "Faculty"
+            session["username"] = faculty["full_name"]
+            session["faculty_id"] = faculty["id"]
+            session["faculty_username"] = faculty["username"]
+            session["department"] = faculty.get("department", "")
+            session["designation"] = faculty.get("designation", "")
             session["role"] = "faculty"
-            write_log("Faculty logged in successfully (Demo)", "success")
-            flash("👋 Welcome back, Faculty member!")
+            write_log(f"Faculty '{faculty['full_name']}' ({faculty['designation']}) logged in", "success")
+            flash(f"👋 Welcome, {faculty['full_name']}!")
             return redirect(url_for("dashboard"))
             
         # 2. Student Login (Registration Number)
-        # For demo: search by roll_number in the database
         conn = database.get_connection()
         cursor = conn.cursor()
         cursor.execute("SELECT * FROM students WHERE roll_number = ?", (username,))
@@ -351,7 +729,7 @@ def login():
         
         # 3. Handle Failure
         write_log(f"Failed login attempt for identification '{username}'", "warning")
-        flash("❌ Invalid credentials or Registration Number. Hint: Use faculty/1234", "error")
+        flash("❌ Invalid credentials. Use your Faculty username & password.", "error")
             
     return render_template("login.html")
 

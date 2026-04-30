@@ -8,6 +8,25 @@ import sys
 from collections import defaultdict
 
 # ==========================================
+# PARSE COMMAND-LINE ARGUMENTS
+# ==========================================
+# Usage: python recognize_and_attendance_improved.py <subject_code> <subject_name> <period> <faculty_name> <session_id>
+SUBJECT_CODE = sys.argv[1] if len(sys.argv) > 1 else ""
+SUBJECT_NAME = sys.argv[2] if len(sys.argv) > 2 else ""
+PERIOD = sys.argv[3] if len(sys.argv) > 3 else ""
+FACULTY_NAME = sys.argv[4] if len(sys.argv) > 4 else ""
+SESSION_ID = int(sys.argv[5]) if len(sys.argv) > 5 and sys.argv[5].isdigit() else None
+
+print(f"\n{'='*60}")
+print(f"  LECTURE DETAILS")
+print(f"{'='*60}")
+print(f"  Subject : {SUBJECT_NAME} ({SUBJECT_CODE})")
+print(f"  Period  : {PERIOD}")
+print(f"  Faculty : {FACULTY_NAME}")
+print(f"  Session : #{SESSION_ID}")
+print(f"{'='*60}\n")
+
+# ==========================================
 # IMPROVED CONFIGURATION PARAMETERS
 # ==========================================
 CONFIDENCE_THRESHOLD_INITIAL = 60  # Initial filter (stricter than before)
@@ -76,16 +95,23 @@ def write_log(message, log_type="info"):
         pass
 
 def mark_attendance(name):
-    """Mark attendance with duplicate prevention via SQLite"""
-    result = database.mark_attendance(name)
+    """Mark attendance with duplicate prevention via SQLite, now with subject/period context"""
+    result = database.mark_attendance(
+        name,
+        subject_code=SUBJECT_CODE,
+        subject_name=SUBJECT_NAME,
+        period=PERIOD,
+        faculty_name=FACULTY_NAME,
+        session_id=SESSION_ID
+    )
     
     if result == 'success':
-        print(f"✅ Attendance marked for {name}")
-        write_log(f"Attendance recorded for {name}", "success")
+        print(f"✅ Attendance marked for {name} | {SUBJECT_NAME} | {PERIOD}")
+        write_log(f"Attendance recorded for {name} in {SUBJECT_NAME} ({PERIOD})", "success")
         return True
     elif result == 'duplicate':
-        print(f"ℹ️  {name} already marked today - skipping duplicate entry")
-        write_log(f"Attendance already recorded today for {name}", "warning")
+        print(f"ℹ️  {name} already marked for {SUBJECT_NAME} ({PERIOD}) today")
+        write_log(f"Attendance already recorded for {name} in {SUBJECT_NAME}", "warning")
         return False
     else:
         print(f"Failed to find {name} in Student Registry")
@@ -171,7 +197,10 @@ def is_confirmed_recognition(name):
     return False, len(recognitions)
 
 # Use consistent window name for all camera operations
-WINDOW_NAME = "Smart Attendance System - IMPROVED"
+if SUBJECT_NAME:
+    WINDOW_NAME = f"Attendance: {SUBJECT_NAME} | {PERIOD} | Faculty: {FACULTY_NAME}"
+else:
+    WINDOW_NAME = "Smart Attendance System - IMPROVED"
 
 # Destroy any existing windows first to ensure single window
 try:
@@ -215,6 +244,10 @@ marked_students = set()
 print("=" * 60)
 print("📸 IMPROVED ATTENDANCE SYSTEM STARTED")
 print("=" * 60)
+if SUBJECT_NAME:
+    print(f"📚 Subject: {SUBJECT_NAME} ({SUBJECT_CODE})")
+    print(f"🕐 Period: {PERIOD}")
+    print(f"👨‍🏫 Faculty: {FACULTY_NAME}")
 print(f"⏱️  Duration: {ATTENDANCE_DURATION} seconds")
 print(f"🎯 Confidence threshold: {CONFIDENCE_THRESHOLD_FINAL} (average)")
 print(f"🔄 Minimum confirmations: {MIN_CONFIRMATIONS} frames")
@@ -318,24 +351,34 @@ while True:
             cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 255, 255), 2
         )
     
-    # Display header information (compact, semi-transparent overlay)
+    # Display header information (two-line overlay with subject info)
     frame_h, frame_w = frame.shape[:2]
-    header_y = 25
-    header_height = 40  # Compact single-line header
     
-    # Semi-transparent header overlay (only covers top strip)
+    # Top bar: Subject & Period info + Timer
+    header_height = 70 if SUBJECT_NAME else 40
     overlay = frame.copy()
     cv2.rectangle(overlay, (0, 0), (frame_w, header_height), (0, 0, 0), -1)
-    cv2.addWeighted(overlay, 0.6, frame, 0.4, 0, frame)
+    cv2.addWeighted(overlay, 0.7, frame, 0.3, 0, frame)
     
-    # Timer on left
-    timer_text = f"Time: {remaining_time:.1f}s / {ATTENDANCE_DURATION}s"
-    cv2.putText(frame, timer_text, (10, header_y), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 255), 2)
-    
-    # Marked count on right
-    marked_count = len(marked_students)
-    count_text = f"Marked: {marked_count}"
-    cv2.putText(frame, count_text, (frame_w - 200, header_y), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)
+    if SUBJECT_NAME:
+        # Line 1: Subject & Period
+        subject_text = f"{SUBJECT_NAME} ({SUBJECT_CODE}) | {PERIOD}"
+        cv2.putText(frame, subject_text, (10, 22), cv2.FONT_HERSHEY_SIMPLEX, 0.55, (255, 200, 50), 2)
+        # Line 2: Faculty & Timer
+        faculty_text = f"Faculty: {FACULTY_NAME}"
+        cv2.putText(frame, faculty_text, (10, 45), cv2.FONT_HERSHEY_SIMPLEX, 0.45, (180, 180, 255), 1)
+        timer_text = f"Time: {remaining_time:.1f}s"
+        cv2.putText(frame, timer_text, (frame_w - 160, 22), cv2.FONT_HERSHEY_SIMPLEX, 0.55, (0, 255, 255), 2)
+        marked_count = len(marked_students)
+        count_text = f"Marked: {marked_count}"
+        cv2.putText(frame, count_text, (frame_w - 160, 50), cv2.FONT_HERSHEY_SIMPLEX, 0.55, (0, 255, 0), 2)
+    else:
+        # Fallback single-line header
+        timer_text = f"Time: {remaining_time:.1f}s / {ATTENDANCE_DURATION}s"
+        cv2.putText(frame, timer_text, (10, 25), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 255), 2)
+        marked_count = len(marked_students)
+        count_text = f"Marked: {marked_count}"
+        cv2.putText(frame, count_text, (frame_w - 200, 25), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)
     
     # Display marked students as a compact bottom bar
     if marked_students:
@@ -361,6 +404,10 @@ while True:
 print("=" * 60)
 print(f"✅ ATTENDANCE SESSION COMPLETE!")
 print("=" * 60)
+if SUBJECT_NAME:
+    print(f"📚 Subject: {SUBJECT_NAME} ({SUBJECT_CODE})")
+    print(f"🕐 Period: {PERIOD}")
+    print(f"👨‍🏫 Faculty: {FACULTY_NAME}")
 print(f"📊 Total students marked: {len(marked_students)}")
 if marked_students:
     print(f"👥 Students:")
@@ -369,6 +416,14 @@ if marked_students:
 else:
     print("⚠️  No students were recognized during this session.")
 print("=" * 60)
+
+# Update lecture session in database
+if SESSION_ID:
+    try:
+        database.end_lecture_session(SESSION_ID, total_present=len(marked_students))
+        print(f"📝 Lecture session #{SESSION_ID} marked as completed.")
+    except Exception as e:
+        print(f"⚠️ Failed to update lecture session: {e}")
 
 # Proper cleanup
 cap.release()
