@@ -52,7 +52,7 @@ export default function Sidebar({ isCollapsed, onMobileClose }) {
       <div className="h-[76px] flex items-center mb-6 mt-2 relative">
         <div className="size-12 rounded-xl bg-gradient-to-br from-primary to-primary-dark text-white flex items-center justify-center shrink-0 shadow-lg shadow-primary/30 ml-1">
           <span className="material-symbols-outlined text-[28px] animate-pulse">
-            face_recognition
+            center_focus_weak
           </span>
         </div>
         <div

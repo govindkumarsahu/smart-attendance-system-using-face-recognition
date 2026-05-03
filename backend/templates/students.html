@@ -1,0 +1,389 @@
+{% extends 'base.html' %}
+{% block title %}All Students - Smart Attendance System{% endblock %}
+{% block page_title %}Students{% endblock %}
+
+{% block content %}
+<div class="flex-1 w-full max-w-[1280px] mx-auto px-6 py-8">
+    <div class="flex flex-col md:flex-row items-start justify-between gap-6 mb-8">
+        <div>
+            <h2 class="text-3xl font-bold text-text-primary-light dark:text-text-primary-dark tracking-tight mb-2">
+                All Students
+            </h2>
+            <p class="text-text-secondary-light dark:text-text-secondary-dark">Manage all registered students in the
+                system.</p>
+        </div>
+        <div class="flex items-center gap-3">
+            <a href="{{ url_for('register_page') }}"
+                class="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-primary rounded-lg hover:bg-primary-dark transition-colors shadow-sm">
+                <span class="material-symbols-outlined text-lg">person_add</span>
+                Add Student
+            </a>
+        </div>
+    </div>
+
+    <!-- Registered Students Table Section -->
+    <div
+        class="bg-surface-light/90 dark:bg-surface-dark/90 rounded-[20px] shadow-sm border border-border-light/60 dark:border-border-dark/60 backdrop-blur-md overflow-hidden transition-shadow hover:shadow-md flex flex-col h-[calc(100vh-200px)] min-h-[500px]">
+        <div class="p-6 border-b border-border-light/60 dark:border-border-dark/60">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-4">
+                <h3
+                    class="text-[18px] font-extrabold text-text-primary-light dark:text-text-primary-dark flex items-center gap-2">
+                    <span class="material-symbols-outlined text-primary text-[24px]">group</span>
+                    Registered Students Database
+                    <span
+                        class="ml-2 px-3 py-1 bg-primary/10 text-primary text-xs font-bold rounded-full border border-primary/20">{{
+                        students|length }} Total</span>
+                </h3>
+            </div>
+
+            <div class="flex flex-col md:flex-row gap-4 items-center justify-between w-full">
+                <!-- Search bar -->
+                <div class="relative w-full md:w-96">
+                    <span
+                        class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-text-secondary-light dark:text-text-secondary-dark">search</span>
+                    <input type="text" id="searchInput" placeholder="Search by name or registration number..."
+                        class="w-full pl-10 pr-4 py-2 bg-background-light dark:bg-background-dark border border-border-light dark:border-border-dark rounded-xl text-text-primary-light dark:text-text-primary-dark focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all text-sm">
+                </div>
+
+                <!-- Filters -->
+                <div class="flex gap-3 w-full md:w-auto">
+                    <select id="deptFilter"
+                        class="form-select-arrow w-full md:w-auto pl-4 pr-10 py-2 bg-background-light dark:bg-background-dark border border-border-light dark:border-border-dark rounded-xl text-text-primary-light dark:text-text-primary-dark text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 cursor-pointer">
+                        <option value="">All Departments</option>
+                        <option value="cse">Computer Science & Engineering</option>
+                        <option value="cse-ai">Computer Science & Engineering (AI)</option>
+                        <option value="ece">Electronics & Communication Engineering</option>
+                        <option value="ee">Electrical Engineering</option>
+                        <option value="me">Mechanical Engineering</option>
+                        <option value="ce">Civil Engineering</option>
+                    </select>
+                    <select id="yearFilter"
+                        class="form-select-arrow w-full md:w-auto pl-4 pr-10 py-2 bg-background-light dark:bg-background-dark border border-border-light dark:border-border-dark rounded-xl text-text-primary-light dark:text-text-primary-dark text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 cursor-pointer">
+                        <option value="">All Years</option>
+                        <option value="1">1st Year</option>
+                        <option value="2">2nd Year</option>
+                        <option value="3">3rd Year</option>
+                        <option value="4">4th Year</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="overflow-auto flex-1 relative">
+            <table class="w-full text-left border-collapse" id="studentsTable">
+                <thead class="sticky top-0 bg-surface-light dark:bg-surface-dark z-20 shadow-sm">
+                    <tr
+                        class="bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md border-b border-border-light/60 dark:border-border-dark/60 text-xs uppercase tracking-wider text-text-secondary-light dark:text-text-secondary-dark font-bold">
+                        <th class="p-4 whitespace-nowrap">ID</th>
+                        <th class="p-4 whitespace-nowrap">Student</th>
+                        <th class="p-4 whitespace-nowrap">Reg. No.</th>
+                        <th class="p-4 whitespace-nowrap hidden sm:table-cell">Department</th>
+                        <th class="p-4 whitespace-nowrap hidden md:table-cell">Year</th>
+                        <th class="p-4 whitespace-nowrap hidden lg:table-cell">Date Registered</th>
+                        <th class="p-4 whitespace-nowrap text-center">Images</th>
+                        <th class="p-4 text-right whitespace-nowrap">Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-border-light/40 dark:divide-border-dark/40" id="studentsList">
+                    {% if students %}
+                    {% for student in students %}
+                    <tr class="hover:bg-background-light/50 dark:hover:bg-background-dark/50 transition-colors group student-row"
+                        data-name="{{ student.name|lower }}" data-roll="{{ (student.roll_number or '')|lower }}"
+                        data-dept="{{ (student.department or '')|lower }}"
+                        data-year="{{ student.academic_year or '' }}">
+                        <td class="p-4 text-sm font-medium text-text-secondary-light dark:text-text-secondary-dark">#{{
+                            student.id }}</td>
+                        <td class="p-4">
+                            <div class="flex items-center gap-3">
+                                <div
+                                    class="size-10 rounded-full overflow-hidden bg-primary/10 text-primary flex items-center justify-center text-sm font-bold border-2 border-white dark:border-surface-dark shadow-sm relative shrink-0">
+                                    {% if student.has_profile_pic %}
+                                    <img src="{{ url_for('static', filename='dataset/' + student.name + '/1.jpg') }}"
+                                        onerror="this.outerHTML='{{ student.name[:2]|upper }}'" alt="{{ student.name }}"
+                                        class="w-full h-full object-cover">
+                                    {% else %}
+                                    {{ student.name[:2]|upper }}
+                                    {% endif %}
+                                </div>
+                                <div>
+                                    <p class="font-bold text-text-primary-light dark:text-text-primary-dark text-sm">{{
+                                        student.name }}</p>
+                                    <p
+                                        class="text-xs text-text-secondary-light dark:text-text-secondary-dark sm:hidden">
+                                        {{ student.department|upper }} | Yr {{ student.academic_year }}</p>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="p-4 text-sm text-text-secondary-light dark:text-text-secondary-dark font-mono">{{
+                            student.roll_number or '—' }}</td>
+                        <td
+                            class="p-4 text-sm text-text-secondary-light dark:text-text-secondary-dark uppercase hidden sm:table-cell">
+                            {% if student.department == 'cse' %}CSE
+                            {% elif student.department == 'cse-ai' %}CSE (AI)
+                            {% elif student.department == 'ece' %}ECE
+                            {% elif student.department == 'ee' %}EE
+                            {% elif student.department == 'me' %}ME
+                            {% elif student.department == 'ce' %}CE
+                            {% else %}{{ student.department or '—' }}{% endif %}
+                        </td>
+                        <td
+                            class="p-4 text-sm text-text-secondary-light dark:text-text-secondary-dark hidden md:table-cell">
+                            {{ student.academic_year or '—' }}</td>
+                        <td
+                            class="p-4 text-sm text-text-secondary-light dark:text-text-secondary-dark hidden lg:table-cell whitespace-nowrap">
+                            {{ student.created_at.split()[0] if student.created_at else '—' }}
+                        </td>
+                        <td class="p-4 text-center">
+                            <span
+                                class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold {% if student.images > 0 %}bg-green-50 text-green-700 dark:bg-green-900/30 dark:text-green-400{% else %}bg-amber-50 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400{% endif %}">
+                                <span
+                                    class="w-1.5 h-1.5 rounded-full {% if student.images > 0 %}bg-green-500{% else %}bg-amber-500{% endif %} hover:animate-ping"></span>
+                                {{ student.images }}
+                            </span>
+                        </td>
+                        <td class="p-4 text-right">
+                            <div
+                                class="flex items-center justify-end gap-2 opacity-100 lg:opacity-0 group-hover:opacity-100 transition-opacity">
+                                <button type="button" data-id="{{ student.id }}" data-name="{{ student.name }}"
+                                    data-roll="{{ student.roll_number or '' }}"
+                                    data-dept="{{ student.department or '' }}"
+                                    data-year="{{ student.academic_year or '' }}" onclick="openEditModal(this)"
+                                    class="p-2 text-text-secondary-light dark:text-text-secondary-dark hover:text-primary dark:hover:text-primary bg-background-light dark:bg-background-dark hover:bg-primary/10 border border-border-light dark:border-border-dark hover:border-primary/30 rounded-lg transition-all"
+                                    title="Edit Student">
+                                    <span class="material-symbols-outlined text-[18px]">edit</span>
+                                </button>
+                                <button type="button" data-id="{{ student.id }}" data-name="{{ student.name }}"
+                                    onclick="openDeleteModal(this)"
+                                    class="p-2 text-text-secondary-light dark:text-text-secondary-dark hover:text-red-600 dark:hover:text-red-400 bg-background-light dark:bg-background-dark hover:bg-red-50 dark:hover:bg-red-900/20 border border-border-light dark:border-border-dark hover:border-red-200 dark:hover:border-red-800/50 rounded-lg transition-all"
+                                    title="Delete Student">
+                                    <span class="material-symbols-outlined text-[18px]">delete</span>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    {% else %}
+                    <tr>
+                        <td colspan="7" class="p-8 text-center text-text-secondary-light dark:text-text-secondary-dark">
+                            <span class="material-symbols-outlined text-4xl mb-3 opacity-50 block">group_off</span>
+                            <p>No students registered yet.</p>
+                            <a href="{{ url_for('register_page') }}"
+                                class="mt-4 inline-block text-primary hover:underline font-medium">Register a New
+                                Student</a>
+                        </td>
+                    </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Student Modal -->
+<div id="editModal" class="hidden fixed inset-0 z-[100] flex items-center justify-center">
+    <div class="absolute inset-0 bg-black/50 backdrop-blur-sm" onclick="closeEditModal()"></div>
+    <div class="bg-surface-light dark:bg-surface-dark w-full max-w-md p-6 rounded-[24px] shadow-2xl relative z-10 border border-border-light dark:border-border-dark transform scale-95 opacity-0 transition-all duration-300"
+        id="editModalContent">
+        <h3 class="text-xl font-bold text-text-primary-light dark:text-text-primary-dark mb-4 flex items-center gap-2">
+            <span class="material-symbols-outlined text-primary">edit_square</span> Edit Student
+        </h3>
+        <form id="editForm" method="POST" class="space-y-4">
+            <div>
+                <label class="text-sm font-medium text-text-secondary-light dark:text-text-secondary-dark">Full
+                    Name</label>
+                <input type="text" name="student_name" id="edit_name" required
+                    class="mt-1 w-full px-4 py-2 bg-background-light dark:bg-background-dark border border-border-light dark:border-border-dark rounded-lg text-text-primary-light dark:text-text-primary-dark focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary">
+            </div>
+            <div>
+                <label class="text-sm font-medium text-text-secondary-light dark:text-text-secondary-dark">Registration
+                    Number</label>
+                <input type="text" name="roll_number" id="edit_roll"
+                    class="mt-1 w-full px-4 py-2 bg-background-light dark:bg-background-dark border border-border-light dark:border-border-dark rounded-lg text-text-primary-light dark:text-text-primary-dark focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary">
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label
+                        class="text-sm font-medium text-text-secondary-light dark:text-text-secondary-dark">Department</label>
+                    <select name="department" id="edit_dept"
+                        class="mt-1 w-full px-4 py-2 bg-background-light dark:bg-background-dark border border-border-light dark:border-border-dark rounded-lg text-text-primary-light dark:text-text-primary-dark focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary">
+                        <option value="cse">Computer Science & Engineering</option>
+                        <option value="cse-ai">Computer Science & Engineering (AI)</option>
+                        <option value="ece">Electronics & Communication Engineering</option>
+                        <option value="ee">Electrical Engineering</option>
+                        <option value="me">Mechanical Engineering</option>
+                        <option value="ce">Civil Engineering</option>
+                    </select>
+                </div>
+                <div>
+                    <label
+                        class="text-sm font-medium text-text-secondary-light dark:text-text-secondary-dark">Year</label>
+                    <select name="academic_year" id="edit_year"
+                        class="mt-1 w-full px-4 py-2 bg-background-light dark:bg-background-dark border border-border-light dark:border-border-dark rounded-lg text-text-primary-light dark:text-text-primary-dark focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary">
+                        <option value="1">1st Year</option>
+                        <option value="2">2nd Year</option>
+                        <option value="3">3rd Year</option>
+                        <option value="4">4th Year</option>
+                    </select>
+                </div>
+            </div>
+            <div class="pt-4 flex justify-end gap-3 border-t border-border-light/60 dark:border-border-dark/60 mt-6">
+                <button type="button" onclick="closeEditModal()"
+                    class="px-5 py-2 rounded-lg font-medium text-text-secondary-light hover:bg-background-light dark:text-text-secondary-dark dark:hover:bg-background-dark transition-colors border border-transparent hover:border-border-light dark:hover:border-border-dark">Cancel</button>
+                <button type="submit"
+                    class="px-5 py-2 rounded-lg bg-primary text-white font-bold hover:bg-blue-600 transition-colors shadow-sm focus:ring-2 focus:ring-primary/50 focus:ring-offset-2 dark:focus:ring-offset-background-dark">Save
+                    Changes</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Delete Student Modal -->
+<div id="deleteModal" class="hidden fixed inset-0 z-[100] flex items-center justify-center">
+    <div class="absolute inset-0 bg-black/50 backdrop-blur-sm" onclick="closeDeleteModal()"></div>
+    <div class="bg-surface-light dark:bg-surface-dark w-full max-w-sm p-6 rounded-[24px] shadow-2xl relative z-10 border border-border-light dark:border-border-dark text-center transform scale-95 opacity-0 transition-all duration-300"
+        id="deleteModalContent">
+        <div
+            class="mx-auto w-16 h-16 rounded-full bg-red-100 dark:bg-red-900/30 flex items-center justify-center mb-4 border-4 border-white dark:border-surface-dark shadow-sm">
+            <span class="material-symbols-outlined text-red-600 dark:text-red-400 text-3xl">delete_forever</span>
+        </div>
+        <h3 class="text-xl font-bold text-text-primary-light dark:text-text-primary-dark mb-2">Delete Student</h3>
+        <p class="text-text-secondary-light dark:text-text-secondary-dark text-sm mb-6">
+            Are you sure you want to delete <strong id="delete_student_name"
+                class="text-text-primary-light dark:text-text-primary-dark"></strong>?
+            This will permanently erase their data and dataset images from the server.
+        </p>
+        <form id="deleteForm" method="POST" class="flex justify-center gap-3">
+            <button type="button" onclick="closeDeleteModal()"
+                class="flex-1 py-2 rounded-lg font-medium bg-background-light hover:bg-border-light text-text-primary-light dark:bg-background-dark dark:hover:bg-border-dark dark:text-text-primary-dark transition-colors border border-border-light dark:border-border-dark">Cancel</button>
+            <button type="submit"
+                class="flex-1 py-2 rounded-lg bg-red-600 hover:bg-red-700 text-white font-bold transition-colors shadow-sm focus:ring-2 focus:ring-red-600/50 focus:ring-offset-2 dark:focus:ring-offset-background-dark">Delete
+                Data</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    // Search and Filter Logic
+    document.addEventListener('DOMContentLoaded', function () {
+        const searchInput = document.getElementById('searchInput');
+        const deptFilter = document.getElementById('deptFilter');
+        const yearFilter = document.getElementById('yearFilter');
+        const rows = document.querySelectorAll('.student-row');
+
+        function filterTable() {
+            const searchTerm = searchInput.value.toLowerCase();
+            const dept = deptFilter.value.toLowerCase();
+            const year = yearFilter.value;
+
+            let visibleCount = 0;
+
+            rows.forEach(row => {
+                const name = row.dataset.name;
+                const roll = row.dataset.roll;
+                const rowDept = row.dataset.dept;
+                const rowYear = row.dataset.year;
+
+                const matchesSearch = name.includes(searchTerm) || roll.includes(searchTerm);
+                const matchesDept = dept === '' || rowDept === dept;
+                const matchesYear = year === '' || rowYear === year;
+
+                if (matchesSearch && matchesDept && matchesYear) {
+                    row.style.display = '';
+                    visibleCount++;
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+
+            // Handle no results
+            let noResultsRow = document.getElementById('noResultsRow');
+            if (visibleCount === 0 && rows.length > 0) {
+                if (!noResultsRow) {
+                    noResultsRow = document.createElement('tr');
+                    noResultsRow.id = 'noResultsRow';
+                    noResultsRow.innerHTML = `
+                        <td colspan="8" class="p-12 text-center text-text-secondary-light dark:text-text-secondary-dark">
+                            <span class="material-symbols-outlined text-5xl mb-4 opacity-40 block">search_off</span>
+                            <p class="text-lg font-medium">No students match your search.</p>
+                            <p class="text-sm mt-2 opacity-70">Try clearing the filters or search term.</p>
+                            <button type="button" onclick="clearFilters()" class="mt-4 text-primary font-bold hover:underline">Clear Filters</button>
+                        </td>
+                    `;
+                    document.getElementById('studentsList').appendChild(noResultsRow);
+                }
+                noResultsRow.style.display = '';
+            } else if (noResultsRow) {
+                noResultsRow.style.display = 'none';
+            }
+        }
+
+        searchInput.addEventListener('input', filterTable);
+        deptFilter.addEventListener('change', filterTable);
+        yearFilter.addEventListener('change', filterTable);
+    });
+
+    // Make clearFilters global so the injected button can use it
+    window.clearFilters = function () {
+        document.getElementById('searchInput').value = '';
+        document.getElementById('deptFilter').value = '';
+        document.getElementById('yearFilter').value = '';
+        document.getElementById('searchInput').dispatchEvent(new Event('input'));
+    };
+
+    function openEditModal(button) {
+        const id = button.dataset.id;
+        const name = button.dataset.name;
+        const roll = button.dataset.roll;
+        const dept = button.dataset.dept;
+        const year = button.dataset.year;
+
+        document.getElementById('editForm').action = '/edit_student/' + id;
+        document.getElementById('edit_name').value = name;
+        document.getElementById('edit_roll').value = roll !== 'None' ? roll : '';
+        document.getElementById('edit_dept').value = dept !== 'None' ? dept : '';
+        document.getElementById('edit_year').value = year !== 'None' ? year : '';
+
+        const modal = document.getElementById('editModal');
+        const content = document.getElementById('editModalContent');
+        modal.classList.remove('hidden');
+        // Trigger animation
+        setTimeout(() => {
+            content.classList.remove('scale-95', 'opacity-0');
+            content.classList.add('scale-100', 'opacity-100');
+        }, 10);
+    }
+
+    function closeEditModal() {
+        const modal = document.getElementById('editModal');
+        const content = document.getElementById('editModalContent');
+        content.classList.remove('scale-100', 'opacity-100');
+        content.classList.add('scale-95', 'opacity-0');
+        setTimeout(() => modal.classList.add('hidden'), 300);
+    }
+
+    function openDeleteModal(button) {
+        const id = button.dataset.id;
+        const name = button.dataset.name;
+
+        document.getElementById('deleteForm').action = '/delete_student/' + id;
+        document.getElementById('delete_student_name').textContent = name;
+
+        const modal = document.getElementById('deleteModal');
+        const content = document.getElementById('deleteModalContent');
+        modal.classList.remove('hidden');
+        // Trigger animation
+        setTimeout(() => {
+            content.classList.remove('scale-95', 'opacity-0');
+            content.classList.add('scale-100', 'opacity-100');
+        }, 10);
+    }
+
+    function closeDeleteModal() {
+        const modal = document.getElementById('deleteModal');
+        const content = document.getElementById('deleteModalContent');
+        content.classList.remove('scale-100', 'opacity-100');
+        content.classList.add('scale-95', 'opacity-0');
+        setTimeout(() => modal.classList.add('hidden'), 300);
+    }
+</script>
+{% endblock %}
