@@ -12,6 +12,7 @@
   "dependencies": {
     "@tailwindcss/forms": "^0.5.11",
     "@tailwindcss/vite": "^4.2.2",
+    "axios": "^1.16.0",
     "chart.js": "^4.5.1",
     "react": "^19.2.4",
     "react-chartjs-2": "^5.3.1",

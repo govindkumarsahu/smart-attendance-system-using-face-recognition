@@ -3,15 +3,21 @@ from functools import wraps
 import subprocess
 import sys
 import os
+import cv2
 import time
 import json
 import csv
 import numpy as np
 import shutil
+import hashlib
+import jwt
 from datetime import datetime
 import database
 
+from flask_cors import CORS
+
 app = Flask(__name__)
+CORS(app)
 app.secret_key = "attendance_secret_key"
 
 # Initialize database
@@ -77,6 +83,7 @@ def init_log():
 
 def get_registered_students():
     """Get list of registered student folders from dataset/ enriched with SQLite metadata"""
+    import re
     students = database.get_all_students()
     
     # Auto-sync: add any student folders from dataset/ that are missing from the database
@@ -84,11 +91,15 @@ def get_registered_students():
     if os.path.isdir(DATASET_DIR):
         for folder_name in os.listdir(DATASET_DIR):
             folder_path = os.path.join(DATASET_DIR, folder_name)
-            if os.path.isdir(folder_path) and folder_name.lower() not in db_names_lower:
-                # This student exists in dataset but not in DB – auto-register them
-                result = database.add_student(folder_name, "", "", "")
-                if result is not None:
-                    write_log(f"Auto-synced student '{folder_name}' from dataset folder to database.", "info")
+            if os.path.isdir(folder_path):
+                # Try matching folder name directly and after stripping roll number
+                base_name = re.sub(r'_\d+$', '', folder_name).strip()
+                if (folder_name.lower() not in db_names_lower and 
+                    base_name.lower() not in db_names_lower):
+                    # This student exists in dataset but not in DB – auto-register with base name
+                    result = database.add_student(base_name, "", "", "")
+                    if result is not None:
+                        write_log(f"Auto-synced student '{base_name}' from dataset folder '{folder_name}' to database.", "info")
         # Re-fetch after sync
         students = database.get_all_students()
 
@@ -96,14 +107,31 @@ def get_registered_students():
     for student in students:
         student['images'] = 0
         student['has_profile_pic'] = False
-        folder = os.path.join(DATASET_DIR, student['name'])
-        if os.path.isdir(folder):
-            images = [f for f in os.listdir(folder) if f.endswith(('.jpg', '.png', '.jpeg'))]
-            student['images'] = len(images)
-            if '1.jpg' in images:
-                student['has_profile_pic'] = True
-            elif len(images) > 0:
-                student['has_profile_pic'] = True
+        
+        # Try multiple folder name patterns: exact name, name_rollnumber
+        possible_folders = [student['name']]
+        if student.get('roll_number'):
+            possible_folders.append(f"{student['name']}_{student['roll_number']}")
+        
+        # Also search for any folder that starts with the student name
+        if os.path.isdir(DATASET_DIR):
+            for folder_name in os.listdir(DATASET_DIR):
+                folder_path = os.path.join(DATASET_DIR, folder_name)
+                if os.path.isdir(folder_path):
+                    base = re.sub(r'_\d+$', '', folder_name).strip()
+                    if base.lower() == student['name'].lower() and folder_name not in possible_folders:
+                        possible_folders.append(folder_name)
+        
+        for folder_candidate in possible_folders:
+            folder = os.path.join(DATASET_DIR, folder_candidate)
+            if os.path.isdir(folder):
+                images = [f for f in os.listdir(folder) if f.endswith(('.jpg', '.png', '.jpeg'))]
+                student['images'] = len(images)
+                if '1.jpg' in images:
+                    student['has_profile_pic'] = True
+                elif len(images) > 0:
+                    student['has_profile_pic'] = True
+                break  # Found the folder, stop looking
     return students
 
 def get_attendance_records():
@@ -653,11 +681,27 @@ def api_register():
         write_log(f"Registration failed: Student {name} already exists", "error")
         return jsonify({"success": False, "message": f"A student with the name {name} already exists!"}), 400
 
+    # Build folder name: "Name_RollNumber" if roll number provided, else just "Name"
+    folder_name = f"{name}_{roll_number}" if roll_number else name
+
+    # Clean stale DeepFace cache so embeddings are rebuilt with new student
+    import glob
+    cache_patterns = [
+        os.path.join(DATASET_DIR, "representations_*.pkl"),
+        os.path.join(DATASET_DIR, "ds_model_*.pkl"),
+    ]
+    for pattern in cache_patterns:
+        for f in glob.glob(pattern):
+            try:
+                os.remove(f)
+            except Exception:
+                pass
+
     kill_camera_processes()
-    write_log(f"Registration started for student: {name}", "info")
+    write_log(f"Registration started for student: {name} (folder: {folder_name})", "info")
 
     process = subprocess.Popen(
-        [sys.executable, "capture_faces.py", name],
+        [sys.executable, "capture_faces.py", folder_name],
         creationflags=subprocess.CREATE_NEW_CONSOLE if sys.platform == 'win32' else 0
     )
 
@@ -1100,8 +1144,791 @@ def reset_model():
     return redirect(url_for("model_page"))
 
 # ============================================================
+# ADMIN PANEL API ROUTES
+# ============================================================
+
+JWT_SECRET = "smartattend_admin_secret_2024"
+
+@app.route('/api/admin/login', methods=['POST'])
+def admin_login():
+    try:
+        data = request.get_json()
+        username = data.get('username')
+        password = data.get('password')
+        
+        conn = database.get_connection()
+        cursor = conn.cursor()
+        cursor.execute("SELECT * FROM admins WHERE username = ? AND password = ?", 
+                       (username, hashlib.sha256(password.encode()).hexdigest()))
+        admin = cursor.fetchone()
+        conn.close()
+        
+        if admin:
+            token = jwt.encode({
+                'user': username,
+                'exp': datetime.utcnow() + __import__('datetime').timedelta(hours=8)
+            }, JWT_SECRET, algorithm="HS256")
+            return jsonify({'success': True, 'token': token})
+        else:
+            return jsonify({'success': False, 'message': 'Invalid credentials'}), 401
+    except Exception as e:
+        return jsonify({'success': False, 'message': str(e)}), 500
+
+@app.route('/api/faculty/login', methods=['POST'])
+def faculty_login_api():
+    try:
+        data = request.get_json()
+        employee_id = data.get('employee_id', '').strip()
+        password = data.get('password', '').strip()
+
+        if not employee_id or not password:
+            return jsonify({'success': False, 'message': 'Employee ID and password are required'}), 400
+
+        hashed = hashlib.sha256(password.encode()).hexdigest()
+
+        conn = database.get_connection()
+        cursor = conn.cursor()
+        cursor.execute(
+            "SELECT id, full_name, employee_id, department, email FROM faculty WHERE (employee_id = ? OR username = ?) AND password = ?",
+            (employee_id, employee_id, hashed)
+        )
+        faculty = cursor.fetchone()
+        conn.close()
+
+        if faculty:
+            fac = dict(faculty)
+            token = jwt.encode({
+                'faculty_id': fac['employee_id'],
+                'exp': datetime.utcnow() + __import__('datetime').timedelta(hours=12)
+            }, JWT_SECRET, algorithm="HS256")
+            return jsonify({
+                'success': True,
+                'token': token,
+                'faculty_id': fac['employee_id'],
+                'faculty_name': fac['full_name'],
+                'department': fac['department'],
+                'email': fac['email']
+            })
+        else:
+            return jsonify({'success': False, 'message': 'Invalid Employee ID or Password'}), 401
+    except Exception as e:
+        return jsonify({'success': False, 'message': str(e)}), 500
+
+@app.route('/api/admin/register-student', methods=['POST'])
+def admin_register_student():
+    try:
+        data = request.get_json()
+        name = data.get('name')
+        roll = data.get('roll')
+        branch = data.get('branch')
+        semester = data.get('semester')
+        dob = data.get('dob')
+        
+        if not all([name, roll, branch, semester, dob]):
+            return jsonify({'success': False, 'message': 'All fields required'}), 400
+            
+        username = roll.upper()
+        password = hashlib.sha256(dob.encode()).hexdigest()
+        
+        # Save student to DB first
+        result = database.add_student(name, roll, branch, semester, dob, username, password)
+        if not result:
+            return jsonify({'success': False, 'message': 'Roll or Username already exists'}), 409
+        
+        # Create dataset folder: TrainingImage/<Name_Roll>
+        folder_name = f"{name}_{roll}"
+        save_path = f"TrainingImage/{folder_name}"
+        os.makedirs(save_path, exist_ok=True)
+        
+        # Launch capture_faces.py in a NEW CONSOLE WINDOW
+        # The script opens the laptop camera, captures YOLO-detected faces for ~5 seconds
+        write_log(f"Launching face capture for {name} ({roll})", "info")
+        try:
+            if sys.platform == 'win32':
+                process = subprocess.Popen(
+                    [sys.executable, "capture_faces.py", folder_name],
+                    creationflags=subprocess.CREATE_NEW_CONSOLE
+                )
+            else:
+                process = subprocess.Popen(
+                    [sys.executable, "capture_faces.py", folder_name]
+                )
+            
+            # Wait for capture to complete (camera window runs for ~7 seconds total)
+            process.wait(timeout=30)
+            
+            # Mark face as registered in DB
+            conn = database.get_connection()
+            cursor = conn.cursor()
+            cursor.execute("UPDATE students SET face_registered = 1 WHERE roll_number = ?", (roll,))
+            conn.commit()
+            conn.close()
+            
+            write_log(f"Face capture completed for {name} ({roll})", "success")
+            return jsonify({
+                'success': True, 
+                'message': f'Student registered & face captured!',
+                'credentials': {'username': username, 'password': dob}
+            })
+            
+        except subprocess.TimeoutExpired:
+            process.kill()
+            write_log(f"Face capture timed out for {name}", "warning")
+            return jsonify({
+                'success': True, 
+                'message': 'Student registered but face capture timed out. Try again later.',
+                'credentials': {'username': username, 'password': dob}
+            })
+        except Exception as cam_err:
+            write_log(f"Camera error for {name}: {str(cam_err)}", "error")
+            return jsonify({
+                'success': True,
+                'message': f'Student registered in DB but camera failed: {str(cam_err)}',
+                'credentials': {'username': username, 'password': dob}
+            })
+
+    except Exception as e:
+        return jsonify({'success': False, 'message': str(e)}), 500
+
+@app.route('/api/admin/student/<int:student_id>', methods=['DELETE'])
+def delete_student_admin(student_id):
+    conn = None
+    try:
+        conn = database.get_connection()
+        cursor = conn.cursor()
+        
+        # Get student info to delete folder and attendance
+        cursor.execute("SELECT roll_number, name FROM students WHERE id = ?", (student_id,))
+        row = cursor.fetchone()
+        
+        if row:
+            roll_number = row['roll_number']
+            student_name = row['name']
+            
+            # Possible folder names
+            folder_name1 = f"{student_name}_{roll_number}" if roll_number else student_name
+            folder_name2 = student_name
+            
+            import shutil
+            for fname in [folder_name1, folder_name2]:
+                folder_path = os.path.join(DATASET_DIR, fname)
+                if os.path.exists(folder_path):
+                    shutil.rmtree(folder_path)
+                    write_log(f"Deleted face data folder: {fname}", "info")
+            
+            # Clean DeepFace cache so the deleted face is removed from embeddings
+            import glob
+            cache_patterns = [
+                os.path.join(DATASET_DIR, "representations_*.pkl"),
+                os.path.join(DATASET_DIR, "ds_model_*.pkl"),
+            ]
+            for pattern in cache_patterns:
+                for f in glob.glob(pattern):
+                    try:
+                        os.remove(f)
+                    except Exception:
+                        pass
+                        
+            # Delete attendance records
+            cursor.execute("DELETE FROM attendance WHERE student_id = ?", (student_id,))
+                
+        # Delete from DB
+        cursor.execute("DELETE FROM students WHERE id = ?", (student_id,))
+        conn.commit()
+        
+        write_log(f"Deleted student ID {student_id} and their attendance records", "info")
+        return jsonify({'success': True, 'message': 'Student deleted successfully'})
+    except Exception as e:
+        if conn:
+            conn.rollback()
+        return jsonify({'success': False, 'message': str(e)}), 500
+    finally:
+        if conn:
+            conn.close()
+
+@app.route('/api/take-attendance', methods=['POST'])
+def api_take_attendance():
+    """One-click attendance: launches recognize_attendance.py with laptop camera for 20 seconds"""
+    try:
+        data = request.get_json() or {}
+        faculty_id = data.get('faculty_id', 'UNKNOWN')
+        faculty_name = data.get('faculty_name', localStorage_fallback(faculty_id))
+        
+        # Create a lecture session record
+        subject_name = data.get('subject_name', 'General')
+        subject_code = data.get('subject_code', 'GEN')
+        period = data.get('period', 'Demo')
+        
+        # Create session in DB
+        session_id = database.create_lecture_session(
+            subject_code=subject_code,
+            subject_name=subject_name,
+            period=period,
+            faculty_name=faculty_name
+        )
+        
+        write_log(f"Starting 20-sec attendance scan (Session #{session_id}) by {faculty_name}", "info")
+        
+        # Launch recognize_attendance.py in NEW CONSOLE WINDOW
+        try:
+            cmd_args = [
+                sys.executable, "recognize_attendance.py",
+                subject_code, subject_name, period, faculty_name,
+                str(session_id) if session_id else "0"
+            ]
+            
+            if sys.platform == 'win32':
+                process = subprocess.Popen(
+                    cmd_args,
+                    creationflags=subprocess.CREATE_NEW_CONSOLE
+                )
+            else:
+                process = subprocess.Popen(cmd_args)
+            
+            # Wait for the recognition to complete (~25 seconds including init)
+            process.wait(timeout=60)
+            
+            write_log(f"Attendance scan completed (Session #{session_id})", "success")
+            
+            # Get how many were marked
+            conn = database.get_connection()
+            cursor = conn.cursor()
+            cursor.execute(
+                "SELECT total_present FROM lecture_sessions WHERE id = ?",
+                (session_id,)
+            )
+            row = cursor.fetchone()
+            total_marked = dict(row)['total_present'] if row else 0
+            conn.close()
+            
+            return jsonify({
+                'success': True,
+                'message': f'Attendance completed! {total_marked} students marked present.',
+                'session_id': session_id,
+                'total_marked': total_marked
+            })
+            
+        except subprocess.TimeoutExpired:
+            process.kill()
+            write_log("Attendance scan timed out", "warning")
+            return jsonify({
+                'success': True,
+                'message': 'Scan completed (timed out). Check logbook for results.',
+                'session_id': session_id
+            })
+        except Exception as cam_err:
+            write_log(f"Camera error during attendance: {str(cam_err)}", "error")
+            return jsonify({
+                'success': False,
+                'message': f'Camera error: {str(cam_err)}'
+            }), 500
+        
+    except Exception as e:
+        return jsonify({'success': False, 'message': str(e)}), 500
+
+def localStorage_fallback(faculty_id):
+    """Helper to get faculty name from DB by ID"""
+    try:
+        conn = database.get_connection()
+        cursor = conn.cursor()
+        cursor.execute("SELECT full_name FROM faculty WHERE employee_id = ?", (faculty_id,))
+        row = cursor.fetchone()
+        conn.close()
+        return dict(row)['full_name'] if row else faculty_id
+    except:
+        return faculty_id
+
+
+
+@app.route('/api/admin/students', methods=['GET'])
+def admin_get_students():
+    try:
+        conn = database.get_connection()
+        cursor = conn.cursor()
+        cursor.execute("SELECT id, name, roll_number as roll, department as branch, academic_year as semester, face_registered, created_at FROM students ORDER BY created_at DESC")
+        students = [dict(row) for row in cursor.fetchall()]
+        conn.close()
+        return jsonify(students)
+    except Exception as e:
+        return jsonify({'success': False, 'message': str(e)}), 500
+
+@app.route('/api/admin/add-faculty', methods=['POST'])
+def admin_add_faculty():
+    try:
+        data = request.get_json()
+        name = data.get('name')
+        employee_id = data.get('employee_id')
+        department = data.get('department')
+        email = data.get('email')
+        plain_password = data.get('password', '').strip()
+        
+        if not all([name, employee_id, department, email]):
+            return jsonify({'success': False, 'message': 'All fields required'}), 400
+        
+        if not plain_password or len(plain_password) < 4:
+            return jsonify({'success': False, 'message': 'Password must be at least 4 characters'}), 400
+            
+        username = employee_id
+        password = hashlib.sha256(plain_password.encode()).hexdigest()
+        
+        result = database.add_faculty(username, password, name, employee_id, department, "Assistant Professor", email, "")
+        if result:
+            return jsonify({'success': True})
+        else:
+            return jsonify({'success': False, 'message': 'Employee ID or email already exists'}), 409
+    except Exception as e:
+        return jsonify({'success': False, 'message': str(e)}), 500
+
+@app.route('/api/admin/faculty/<int:faculty_id>', methods=['DELETE'])
+def delete_faculty_admin(faculty_id):
+    conn = None
+    try:
+        conn = database.get_connection()
+        cursor = conn.cursor()
+        
+        # Get employee_id to remove assignments
+        cursor.execute("SELECT employee_id FROM faculty WHERE id = ?", (faculty_id,))
+        row = cursor.fetchone()
+        
+        if row:
+            emp_id = row['employee_id']
+            # Delete subject assignments linked to this faculty
+            cursor.execute("DELETE FROM teacher_assignments WHERE teacher_id = ?", (emp_id,))
+            cursor.execute("DELETE FROM teacher_assignments WHERE teacher_id = ?", (str(faculty_id),))
+            
+        # Delete faculty attendance records
+        cursor.execute("DELETE FROM faculty_attendance WHERE faculty_id = ?", (faculty_id,))
+        
+        # Finally delete the faculty
+        cursor.execute("DELETE FROM faculty WHERE id = ?", (faculty_id,))
+        conn.commit()
+        
+        write_log(f"Deleted faculty ID {faculty_id} and their records", "info")
+        return jsonify({'success': True, 'message': 'Faculty deleted successfully'})
+    except Exception as e:
+        if conn:
+            conn.rollback()
+        return jsonify({'success': False, 'message': str(e)}), 500
+    finally:
+        if conn:
+            conn.close()
+
+
+@app.route('/api/admin/faculty', methods=['GET'])
+def admin_get_faculty():
+    try:
+        conn = database.get_connection()
+        cursor = conn.cursor()
+        cursor.execute("SELECT id, full_name as name, employee_id, department, email, 1 as is_active, created_at FROM faculty")
+        faculty = [dict(row) for row in cursor.fetchall()]
+        conn.close()
+        return jsonify(faculty)
+    except Exception as e:
+        return jsonify({'success': False, 'message': str(e)}), 500
+
+@app.route('/api/admin/add-classroom', methods=['POST'])
+def admin_add_classroom():
+    try:
+        data = request.get_json()
+        room_name = data.get('room_name')
+        camera_url = data.get('camera_url')
+        
+        if not all([room_name, camera_url]):
+            return jsonify({'success': False, 'message': 'All fields required'}), 400
+            
+        conn = database.get_connection()
+        cursor = conn.cursor()
+        cursor.execute('INSERT INTO classrooms (room_name, camera_url) VALUES (?, ?)', (room_name, camera_url))
+        conn.commit()
+        conn.close()
+        
+        return jsonify({'success': True, 'message': f"Classroom '{room_name}' added"})
+    except Exception as e:
+        return jsonify({'success': False, 'message': str(e)}), 500
+
+@app.route('/api/admin/classrooms', methods=['GET'])
+def admin_get_classrooms():
+    try:
+        conn = database.get_connection()
+        cursor = conn.cursor()
+        cursor.execute("SELECT * FROM classrooms ORDER BY created_at DESC")
+        classrooms = [dict(row) for row in cursor.fetchall()]
+        conn.close()
+        return jsonify(classrooms)
+    except Exception as e:
+        return jsonify({'success': False, 'message': str(e)}), 500
+
+@app.route('/api/admin/stats', methods=['GET'])
+def admin_get_stats():
+    try:
+        conn = database.get_connection()
+        cursor = conn.cursor()
+        cursor.execute("SELECT COUNT(*) FROM students")
+        students = cursor.fetchone()[0]
+        
+        cursor.execute("SELECT COUNT(*) FROM faculty")
+        faculty = cursor.fetchone()[0]
+        
+        cursor.execute("SELECT COUNT(*) FROM classrooms")
+        classrooms = cursor.fetchone()[0]
+        
+        cursor.execute("SELECT COUNT(*) FROM teacher_assignments")
+        subjects_count = cursor.fetchone()[0]
+        
+        conn.close()
+        return jsonify({
+            'students': students, 
+            'faculty': faculty, 
+            'classrooms': classrooms,
+            'subjects_count': subjects_count,
+            'attendance': "87%" # Static as per prompt requirements
+        })
+    except Exception as e:
+        return jsonify({'success': False, 'message': str(e)}), 500
+
+@app.route('/api/assign-subject', methods=['POST'])
+def api_assign_subject():
+    try:
+        data = request.get_json()
+        teacher_id = data.get('teacher_id')
+        teacher_name = data.get('teacher_name')
+        branch = data.get('branch')
+        semester = data.get('semester')
+        subject_name = data.get('subject_name')
+        subject_code = data.get('subject_code', '')
+        
+        if not all([teacher_id, teacher_name, branch, semester, subject_name]):
+            return jsonify({'success': False, 'message': 'Missing required fields'}), 400
+            
+        conn = database.get_connection()
+        cursor = conn.cursor()
+        cursor.execute('''
+            INSERT INTO teacher_assignments 
+            (teacher_id, teacher_name, branch, semester, subject_name, subject_code) 
+            VALUES (?, ?, ?, ?, ?, ?)
+        ''', (teacher_id, teacher_name, branch, semester, subject_name, subject_code))
+        conn.commit()
+        conn.close()
+        return jsonify({'success': True, 'message': 'Subject assigned successfully'})
+    except sqlite3.IntegrityError:
+        return jsonify({'success': False, 'message': 'This exact assignment already exists.'}), 409
+    except Exception as e:
+        return jsonify({'success': False, 'message': str(e)}), 500
+
+@app.route('/api/assignments', methods=['GET'])
+def api_get_assignments():
+    try:
+        limit = request.args.get('limit')
+        conn = database.get_connection()
+        cursor = conn.cursor()
+        
+        query = "SELECT * FROM teacher_assignments ORDER BY created_at DESC"
+        if limit and limit.isdigit():
+            query += f" LIMIT {limit}"
+            
+        cursor.execute(query)
+        assignments = [dict(row) for row in cursor.fetchall()]
+        conn.close()
+        return jsonify(assignments)
+    except Exception as e:
+        return jsonify({'success': False, 'message': str(e)}), 500
+
+@app.route('/api/assignment/<int:id>', methods=['DELETE'])
+def api_delete_assignment(id):
+    try:
+        conn = database.get_connection()
+        cursor = conn.cursor()
+        cursor.execute("DELETE FROM teacher_assignments WHERE id = ?", (id,))
+        conn.commit()
+        conn.close()
+        return jsonify({'success': True, 'message': 'Assignment removed'})
+    except Exception as e:
+        return jsonify({'success': False, 'message': str(e)}), 500
+
+@app.route('/api/get-faculty-subjects', methods=['GET'])
+def api_get_faculty_subjects():
+    try:
+        teacher_id = request.args.get('faculty_id') or request.args.get('teacher_id')
+        if not teacher_id:
+            return jsonify({'success': False, 'message': 'Teacher ID required'}), 400
+            
+        conn = database.get_connection()
+        cursor = conn.cursor()
+        cursor.execute("SELECT subject_name, subject_code, branch, semester FROM teacher_assignments WHERE teacher_id = ? ORDER BY subject_name ASC", (teacher_id,))
+        subjects = [dict(row) for row in cursor.fetchall()]
+        conn.close()
+        return jsonify(subjects)
+    except Exception as e:
+        return jsonify({'success': False, 'message': str(e)}), 500
+
+@app.route('/api/faculty-stats', methods=['GET'])
+def api_faculty_stats():
+    try:
+        faculty_id = request.args.get('faculty_id')
+        if not faculty_id:
+            return jsonify({'success': False, 'message': 'Faculty ID required'}), 400
+            
+        conn = database.get_connection()
+        cursor = conn.cursor()
+        
+        today = datetime.now().strftime("%Y-%m-%d")
+        cursor.execute("SELECT COUNT(*) FROM class_sessions WHERE faculty_id = ? AND date = ?", (faculty_id, today))
+        classes_today = cursor.fetchone()[0]
+        
+        cursor.execute("SELECT COUNT(*) FROM teacher_assignments WHERE teacher_id = ?", (faculty_id,))
+        subjects_assigned = cursor.fetchone()[0]
+        
+        cursor.execute("SELECT AVG(total_present * 100.0 / NULLIF(total_students, 0)) FROM class_sessions WHERE faculty_id = ?", (faculty_id,))
+        avg_att = cursor.fetchone()[0]
+        avg_attendance = float(avg_att) if avg_att else 0.0
+        
+        conn.close()
+        return jsonify({
+            'classes_today': classes_today,
+            'subjects_assigned': subjects_assigned,
+            'avg_attendance': avg_attendance
+        })
+    except Exception as e:
+        return jsonify({'success': False, 'message': str(e)}), 500
+
+@app.route('/api/start-session', methods=['POST'])
+def api_new_start_session():
+    try:
+        data = request.get_json()
+        faculty_id = data.get('faculty_id')
+        subject_raw = data.get('subject') # "Subject Name (Code) — Branch Sem"
+        period = data.get('period')
+        classroom = data.get('classroom')
+        date = data.get('date')
+        
+        if not all([faculty_id, subject_raw, period, classroom, date]):
+            return jsonify({'success': False, 'message': 'Missing fields'}), 400
+            
+        # Parse subject string
+        subject_name = subject_raw.split(' (')[0]
+        subject_code = ""
+        branch = ""
+        semester = ""
+        try:
+            code_part = subject_raw.split('(')[1].split(')')[0]
+            subject_code = code_part
+            rest = subject_raw.split('— ')[1].split(' ')
+            branch = rest[0]
+            semester = " ".join(rest[1:])
+        except:
+            pass
+            
+        conn = database.get_connection()
+        cursor = conn.cursor()
+        cursor.execute('''
+            INSERT INTO class_sessions 
+            (faculty_id, subject_name, subject_code, branch, semester, period, classroom, date)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+        ''', (faculty_id, subject_name, subject_code, branch, semester, period, classroom, date))
+        session_id = cursor.lastrowid
+        conn.commit()
+        conn.close()
+        
+        # In a real scenario, we trigger camera here using subprocess.Popen
+        # e.g., subprocess.Popen(["python", "recognize_attendance.py", "--faculty", faculty_id, "--subject", subject_name, "--period", period, "--classroom", classroom])
+        write_log(f"Started session {session_id} for {subject_name} by {faculty_id} in {classroom}", "info")
+        
+        return jsonify({'success': True, 'session_id': session_id})
+    except Exception as e:
+        return jsonify({'success': False, 'message': str(e)}), 500
+
+@app.route('/api/save-session', methods=['POST'])
+def api_save_session():
+    try:
+        data = request.get_json()
+        session_id = data.get('session_id')
+        total_present = data.get('total_present', 0)
+        total_students = data.get('total_students', 60)
+        
+        if not session_id:
+            return jsonify({'success': False, 'message': 'Session ID required'}), 400
+            
+        conn = database.get_connection()
+        cursor = conn.cursor()
+        cursor.execute('''
+            UPDATE class_sessions 
+            SET total_present = ?, total_students = ?, saved_at = CURRENT_TIMESTAMP
+            WHERE id = ?
+        ''', (total_present, total_students, session_id))
+        conn.commit()
+        conn.close()
+        
+        write_log(f"Saved session {session_id} with {total_present} present", "success")
+        return jsonify({'success': True, 'message': 'Session saved'})
+    except Exception as e:
+        return jsonify({'success': False, 'message': str(e)}), 500
+
+@app.route('/api/class-sessions', methods=['GET'])
+def api_class_sessions():
+    try:
+        faculty_id = request.args.get('faculty_id')
+        filter_type = request.args.get('filter', 'all')
+        
+        if not faculty_id:
+            return jsonify({'success': False, 'message': 'Faculty ID required'}), 400
+            
+        conn = database.get_connection()
+        cursor = conn.cursor()
+        
+        query = "SELECT * FROM class_sessions WHERE faculty_id = ?"
+        params = [faculty_id]
+        
+        if filter_type == 'today':
+            today = datetime.now().strftime("%Y-%m-%d")
+            query += " AND date = ?"
+            params.append(today)
+            
+        query += " ORDER BY started_at DESC"
+        
+        cursor.execute(query, params)
+        sessions = [dict(row) for row in cursor.fetchall()]
+        conn.close()
+        return jsonify(sessions)
+    except Exception as e:
+        return jsonify({'success': False, 'message': str(e)}), 500
+
+
+
+
+# ============================================================
+# STUDENT API ROUTES
+# ============================================================
+
+STUDENT_DUMMY = {
+    "overall_pct": 84.0,
+    "attended": 42,
+    "total": 50,
+    "subjects": [
+        {"name": "Machine Learning", "pct": 88.0, "attended": 22, "total": 25},
+        {"name": "Deep Learning",    "pct": 80.0, "attended": 20, "total": 25},
+        {"name": "Soft Computing",   "pct": 68.0, "attended": 17, "total": 25},
+        {"name": "NLP",              "pct": 92.0, "attended": 23, "total": 25},
+        {"name": "Cloud Computing",  "pct": 72.0, "attended": 18, "total": 25},
+        {"name": "Major Project",    "pct": 96.0, "attended": 24, "total": 25},
+    ],
+    "history": [
+        {"date": "04 May 2026", "subject": "Machine Learning", "period": "Period 3", "faculty": "Dr. R. Kumar",   "status": "Present"},
+        {"date": "04 May 2026", "subject": "Deep Learning",    "period": "Period 1", "faculty": "Dr. R. Kumar",   "status": "Present"},
+        {"date": "03 May 2026", "subject": "Soft Computing",   "period": "Period 5", "faculty": "Prof. A. Verma", "status": "Absent"},
+        {"date": "03 May 2026", "subject": "NLP",              "period": "Period 3", "faculty": "Prof. S. Patel", "status": "Present"},
+        {"date": "02 May 2026", "subject": "Cloud Computing",  "period": "Period 6", "faculty": "Dr. M. Singh",   "status": "Absent"},
+    ]
+}
+
+@app.route('/api/student/login', methods=['POST'])
+def student_login_api():
+    try:
+        data = request.get_json()
+        username = data.get('username', '').strip().upper()
+        password_plain = data.get('password', '').strip()
+        
+        if not username or not password_plain:
+            return jsonify({'success': False, 'message': 'Registration number and password required'}), 400
+
+        conn = database.get_connection()
+        cursor = conn.cursor()
+        
+        # Check credentials in DB
+        hashed_pw = hashlib.sha256(password_plain.encode()).hexdigest()
+        cursor.execute(
+            "SELECT name, roll_number, department, academic_year FROM students WHERE username = ? AND password = ?",
+            (username, hashed_pw)
+        )
+        student = cursor.fetchone()
+        conn.close()
+
+        if student:
+            s = dict(student)
+            token = jwt.encode(
+                {'roll': s['roll_number'], 'exp': datetime.utcnow() + __import__('datetime').timedelta(hours=12)},
+                JWT_SECRET, algorithm="HS256"
+            )
+            return jsonify({
+                'success': True,
+                'token': token,
+                'name': s['name'],
+                'roll_number': s['roll_number'],
+                'branch': s.get('department', 'CSE'),
+                'semester': s.get('academic_year', '8th Sem')
+            })
+        else:
+            return jsonify({'success': False, 'message': 'Invalid Registration Number or Password.'}), 404
+    except Exception as e:
+        return jsonify({'success': False, 'message': str(e)}), 500
+
+@app.route('/api/student-stats/<roll_no>', methods=['GET'])
+def student_stats(roll_no):
+    try:
+        roll_no = roll_no.strip().upper()
+        conn = database.get_connection()
+        cursor = conn.cursor()
+
+        # 1. Overall stats
+        cursor.execute('''
+            SELECT
+                COUNT(*) as total,
+                SUM(CASE WHEN status='Present' THEN 1 ELSE 0 END) as attended,
+                ROUND(SUM(CASE WHEN status='Present' THEN 1 ELSE 0 END) * 100.0 / NULLIF(COUNT(*),0), 1) as overall_pct
+            FROM attendance WHERE student_roll = ?
+        ''', (roll_no,))
+        overall = cursor.fetchone()
+
+        if not overall or not overall['total']:
+            return jsonify({
+                'overall_pct': 0.0,
+                'attended': 0,
+                'total': 0,
+                'subjects': [],
+                'history': []
+            })
+
+        # 2. Subject-wise
+        cursor.execute('''
+            SELECT
+                subject_name as name,
+                COUNT(*) as total,
+                SUM(CASE WHEN status='Present' THEN 1 ELSE 0 END) as attended,
+                ROUND(SUM(CASE WHEN status='Present' THEN 1 ELSE 0 END) * 100.0 / NULLIF(COUNT(*),0), 1) as pct
+            FROM attendance WHERE student_roll = ?
+            GROUP BY subject_name ORDER BY pct DESC
+        ''', (roll_no,))
+        subjects = [dict(r) for r in cursor.fetchall()]
+
+        # 3. Recent history
+        cursor.execute('''
+            SELECT date, subject_name as subject, period,
+                   faculty_name as faculty, status
+            FROM attendance WHERE student_roll = ?
+            ORDER BY date DESC, period ASC LIMIT 5
+        ''', (roll_no,))
+        history = [dict(r) for r in cursor.fetchall()]
+
+        conn.close()
+        return jsonify({
+            'overall_pct': overall['overall_pct'] or 0.0,
+            'attended': overall['attended'] or 0,
+            'total': overall['total'] or 0,
+            'subjects': subjects,
+            'history': history
+        })
+    except Exception as e:
+        return jsonify({
+            'overall_pct': 0.0,
+            'attended': 0,
+            'total': 0,
+            'subjects': [],
+            'history': []
+        })
+
+# ============================================================
 # MAIN
 # ============================================================
+
 
 if __name__ == "__main__":
     init_log()

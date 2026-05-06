@@ -7,7 +7,7 @@ DB_FILE = "attendance.db"
 
 def get_connection():
     """Establish a connection to the SQLite database with dictionary row factory"""
-    conn = sqlite3.connect(DB_FILE)
+    conn = sqlite3.connect(DB_FILE, timeout=20)
     conn.row_factory = sqlite3.Row
     return conn
 
@@ -110,14 +110,85 @@ def init_db():
         )
     ''')
 
+    # Admins table for Admin Panel
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS admins (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            username TEXT UNIQUE NOT NULL,
+            password TEXT NOT NULL,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+    ''')
+
+    # Classrooms table for Admin Panel
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS classrooms (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            room_name TEXT NOT NULL,
+            camera_url TEXT NOT NULL,
+            is_active INTEGER DEFAULT 1,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+    ''')
+
+    # Teacher Assignments table for subject-to-faculty mapping
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS teacher_assignments (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            teacher_id TEXT NOT NULL,
+            teacher_name TEXT NOT NULL,
+            branch TEXT NOT NULL,
+            semester TEXT NOT NULL,
+            subject_name TEXT NOT NULL,
+            subject_code TEXT,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            UNIQUE(teacher_id, branch, semester, subject_name)
+        )
+    ''')
+
+    # Class sessions table for Faculty logbook
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS class_sessions (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            faculty_id TEXT NOT NULL,
+            subject_name TEXT NOT NULL,
+            subject_code TEXT DEFAULT '',
+            branch TEXT NOT NULL,
+            semester TEXT NOT NULL,
+            period TEXT NOT NULL,
+            classroom TEXT NOT NULL,
+            date TEXT NOT NULL,
+            total_students INTEGER DEFAULT 0,
+            total_present INTEGER DEFAULT 0,
+            started_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            saved_at TIMESTAMP
+        )
+    ''')
+
     # Auto-migrate: add employee_id column if missing (for existing DBs)
+
     try:
         cursor.execute("PRAGMA table_info(faculty)")
         columns = [col[1] for col in cursor.fetchall()]
         if 'employee_id' not in columns:
-            cursor.execute("ALTER TABLE faculty ADD COLUMN employee_id TEXT UNIQUE")
+            cursor.execute("ALTER TABLE faculty ADD COLUMN employee_id TEXT")
     except Exception:
         pass
+
+    # Auto-migrate students table to support admin panel requirements
+    try:
+        cursor.execute("PRAGMA table_info(students)")
+        student_columns = [col[1] for col in cursor.fetchall()]
+        if 'dob' not in student_columns:
+            cursor.execute("ALTER TABLE students ADD COLUMN dob TEXT")
+        if 'username' not in student_columns:
+            cursor.execute("ALTER TABLE students ADD COLUMN username TEXT")
+        if 'password' not in student_columns:
+            cursor.execute("ALTER TABLE students ADD COLUMN password TEXT")
+        if 'face_registered' not in student_columns:
+            cursor.execute("ALTER TABLE students ADD COLUMN face_registered INTEGER DEFAULT 0")
+    except Exception as e:
+        print(f"Error auto-migrating students table: {e}")
 
     # Seed default subjects if the table is empty
     cursor.execute("SELECT COUNT(*) FROM subjects")
@@ -138,17 +209,26 @@ def init_db():
         )
 
     # Seed default faculty if the table is empty
+    import hashlib as _hl
     cursor.execute("SELECT COUNT(*) FROM faculty")
     if cursor.fetchone()[0] == 0:
+        def _hp(p): return _hl.sha256(p.encode()).hexdigest()
         default_faculty = [
-            ('sharma', '1234', 'Prof. Rajesh Sharma', 'EMP001', 'CSE', 'HOD', 'sharma@college.edu', '9876543210'),
-            ('verma', '1234', 'Prof. Neha Verma', 'EMP002', 'CSE', 'Assistant Professor', 'verma@college.edu', '9876543211'),
-            ('gupta', '1234', 'Prof. Amit Gupta', 'EMP003', 'CSE-AI', 'Assistant Professor', 'gupta@college.edu', '9876543212'),
+            ('EMP001', _hp('EMP001@123'), 'Prof. Rajesh Sharma', 'EMP001', 'CSE', 'HOD', 'sharma@college.edu', '9876543210'),
+            ('EMP002', _hp('EMP002@123'), 'Prof. Neha Verma',   'EMP002', 'CSE', 'Assistant Professor', 'verma@college.edu', '9876543211'),
+            ('EMP003', _hp('EMP003@123'), 'Prof. Amit Gupta',   'EMP003', 'CSE-AI', 'Assistant Professor', 'gupta@college.edu', '9876543212'),
         ]
         cursor.executemany(
             "INSERT INTO faculty (username, password, full_name, employee_id, department, designation, email, phone) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
             default_faculty
         )
+
+    # Seed default admin if missing
+    import hashlib
+    cursor.execute("SELECT COUNT(*) FROM admins")
+    if cursor.fetchone()[0] == 0:
+        admin_pass = hashlib.sha256("admin123".encode()).hexdigest()
+        cursor.execute("INSERT INTO admins (username, password) VALUES (?, ?)", ("admin", admin_pass))
 
     conn.commit()
     conn.close()
@@ -157,19 +237,19 @@ def init_db():
 # STUDENT OPERATIONS
 # ============================================================
 
-def add_student(name, roll_number, department, academic_year):
+def add_student(name, roll_number, department, academic_year, dob=None, username=None, password=None):
     """Add a new student to the database"""
     conn = get_connection()
     cursor = conn.cursor()
     try:
         cursor.execute(
-            "INSERT INTO students (name, roll_number, department, academic_year) VALUES (?, ?, ?, ?)",
-            (name, roll_number, department, academic_year)
+            "INSERT INTO students (name, roll_number, department, academic_year, dob, username, password) VALUES (?, ?, ?, ?, ?, ?, ?)",
+            (name, roll_number, department, academic_year, dob, username, password)
         )
         conn.commit()
         return cursor.lastrowid
     except sqlite3.IntegrityError:
-        return None # Student name already exists
+        return None # Student name or username already exists
     finally:
         conn.close()
 
@@ -191,6 +271,55 @@ def get_student_by_name(name):
     row = cursor.fetchone()
     conn.close()
     return dict(row) if row else None
+
+def get_student_by_folder_name(folder_name):
+    """
+    Robust student lookup from a dataset folder name.
+    Handles formats like 'Sagar Kumar_21104131014' where the DB stores 'Sagar Kumar'.
+    
+    Tries in order:
+      1. Exact match on name
+      2. Strip trailing _RollNumber and match
+      3. Partial LIKE match on the base name part
+    """
+    import re
+    
+    # Strategy 1: Exact match
+    student = get_student_by_name(folder_name)
+    if student:
+        return student
+    
+    # Strategy 2: Strip trailing _<digits> (roll number suffix) and match
+    # Pattern: "Name_RollNumber" → "Name"
+    base_name = re.sub(r'_\d+$', '', folder_name).strip()
+    if base_name and base_name != folder_name:
+        student = get_student_by_name(base_name)
+        if student:
+            return student
+    
+    # Strategy 3: Also try splitting on last underscore for non-numeric suffixes
+    if '_' in folder_name:
+        parts = folder_name.rsplit('_', 1)
+        name_part = parts[0].strip()
+        if name_part:
+            student = get_student_by_name(name_part)
+            if student:
+                return student
+    
+    # Strategy 4: Partial match — folder name LIKE '%name%' or name LIKE '%folder%'
+    conn = get_connection()
+    cursor = conn.cursor()
+    search_term = base_name if base_name != folder_name else folder_name
+    cursor.execute(
+        "SELECT * FROM students WHERE LOWER(name) LIKE LOWER(?) ORDER BY id ASC LIMIT 1",
+        (f"%{search_term}%",)
+    )
+    row = cursor.fetchone()
+    conn.close()
+    if row:
+        return dict(row)
+    
+    return None
 
 def update_student(student_id, name, roll_number, department, academic_year):
     """Update student details"""
@@ -547,12 +676,14 @@ def get_today_sessions():
 def mark_attendance(name, subject_code="", subject_name="", period="", faculty_name="", session_id=None):
     """
     Attempt to mark attendance for a student on the current date for a specific subject/period.
+    Uses robust folder-name matching to handle 'Name_RollNumber' format.
     Returns:
        'success' if inserted,
        'duplicate' if already marked today for that subject/period,
        'not_found' if student doesnt exist in students table.
     """
-    student = get_student_by_name(name)
+    # Use robust lookup that handles folder naming format (Name_RollNumber)
+    student = get_student_by_folder_name(name)
     if not student:
         return 'not_found'
 

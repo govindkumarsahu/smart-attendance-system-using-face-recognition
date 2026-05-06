@@ -1,266 +1,417 @@
-import { Link } from 'react-router-dom';
+import React from "react";
+import { useNavigate } from "react-router-dom";
+
+const GraduationIcon = () => (
+  <svg viewBox="0 0 24 24" fill="#818cf8" width="22" height="22">
+    <path d="M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82zM12 3L1 9l11 6 9-4.91V17h2V9L12 3z" />
+  </svg>
+);
+
+const TeacherIcon = () => (
+  <svg viewBox="0 0 24 24" fill="#22c55e" width="22" height="22">
+    <path d="M20 3H4v10c0 2.21 1.79 4 4 4h6c2.21 0 4-1.79 4-4v-3h2c1.11 0 2-.89 2-2V5c0-1.11-.89-2-2-2zm0 5h-2V5h2v3zM4 19h16v2H4z" />
+  </svg>
+);
+
+const ShieldIcon = () => (
+  <svg viewBox="0 0 24 24" fill="#f87171" width="22" height="22">
+    <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 4l5 2.18V11c0 3.5-2.33 6.79-5 7.93-2.67-1.14-5-4.43-5-7.93V7.18L12 5z" />
+  </svg>
+);
+
+const FaceIcon = () => (
+  <svg viewBox="0 0 24 24" fill="white" width="18" height="18">
+    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z" />
+  </svg>
+);
+
+const cards = [
+  {
+    role: "student",
+    title: "Student Portal",
+    description: "Check your attendance, apply for leaves, and track your academic standing.",
+    icon: <GraduationIcon />,
+    color: "#818cf8",
+    iconBg: "rgba(99,102,241,0.15)",
+    cardBg: "linear-gradient(145deg, #0f172a, #1e1b4b)",
+    borderColor: "rgba(99,102,241,0.25)",
+    borderHover: "rgba(99,102,241,0.65)",
+    btnBg: "rgba(99,102,241,0.18)",
+    btnBorder: "rgba(99,102,241,0.35)",
+    btnColor: "#a5b4fc",
+    dotColor: "#818cf8",
+    dotBg: "rgba(99,102,241,0.2)",
+    features: [
+      "View attendance per subject",
+      "Apply for medical leave online",
+      "75% shortage warnings",
+      "Required classes calculator",
+    ],
+    route: "/student/login",
+    label: "Student Login",
+  },
+  {
+    role: "faculty",
+    title: "Faculty Portal",
+    description: "Launch face-scan sessions, monitor live recognition feed, and export reports.",
+    icon: <TeacherIcon />,
+    color: "#22c55e",
+    iconBg: "rgba(34,197,94,0.12)",
+    cardBg: "linear-gradient(145deg, #0f172a, #1a2e1a)",
+    borderColor: "rgba(34,197,94,0.2)",
+    borderHover: "rgba(34,197,94,0.55)",
+    btnBg: "rgba(34,197,94,0.13)",
+    btnBorder: "rgba(34,197,94,0.3)",
+    btnColor: "#86efac",
+    dotColor: "#22c55e",
+    dotBg: "rgba(34,197,94,0.15)",
+    features: [
+      "One-click attendance scan",
+      "Live real-time recognition feed",
+      "Export PDF / Excel reports",
+      "Unknown face intruder alerts",
+    ],
+    route: "/faculty/login",
+    label: "Faculty Login",
+  },
+  {
+    role: "admin",
+    title: "Admin Panel",
+    description: "Full system control — register students, manage timetables, assign substitutes.",
+    icon: <ShieldIcon />,
+    color: "#f87171",
+    iconBg: "rgba(239,68,68,0.12)",
+    cardBg: "linear-gradient(145deg, #0f172a, #1e1414)",
+    borderColor: "rgba(239,68,68,0.2)",
+    borderHover: "rgba(239,68,68,0.55)",
+    btnBg: "rgba(239,68,68,0.13)",
+    btnBorder: "rgba(239,68,68,0.3)",
+    btnColor: "#fca5a5",
+    dotColor: "#f87171",
+    dotBg: "rgba(239,68,68,0.15)",
+    features: [
+      "Register & manage students",
+      "Assign substitute teachers",
+      "Full audit trail / logs",
+      "System-wide analytics",
+    ],
+    route: "/admin/login",
+    label: "Admin Login",
+  },
+];
+
+const stats = [
+  { value: "99.2%", label: "Recognition Accuracy" },
+  { value: "< 30s", label: "Full Class Scan" },
+  { value: "0", label: "Proxy Attempts Passed" },
+];
+
+const techPills = ["YOLOv8", "ArcFace", "React", "Flask", "DeepFace", "SQLite"];
 
 export default function LandingPage() {
+  const navigate = useNavigate();
+
   return (
-    <div className="relative flex min-h-screen w-full flex-col group/design-root bg-background-light dark:bg-[#101622] text-slate-900 dark:text-slate-100 font-sans antialiased overflow-x-hidden">
-        {/* Header */}
-        <header className="sticky top-0 z-50 w-full bg-white/90 backdrop-blur-md border-b border-slate-200 dark:bg-slate-900/90 dark:border-slate-800">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="flex items-center justify-between h-16">
-                    {/* Logo */}
-                    <div className="flex items-center gap-3">
-                        <div className="flex items-center justify-center size-8 rounded-lg bg-[#003366] text-white">
-                            <span className="material-symbols-outlined text-[20px]">school</span>
-                        </div>
-                        <h2 className="text-slate-900 dark:text-white text-lg font-bold tracking-tight">Smart Attendance</h2>
-                    </div>
-                    {/* Desktop Nav */}
-                    <nav className="hidden md:flex flex-1 justify-center gap-8">
-                        <a className="text-slate-600 hover:text-[#003366] dark:text-slate-300 dark:hover:text-white text-sm font-medium transition-colors" href="#features">Features</a>
-                        <a className="text-slate-600 hover:text-[#003366] dark:text-slate-300 dark:hover:text-white text-sm font-medium transition-colors" href="#how-it-works">How it Works</a>
-                        <a className="text-slate-600 hover:text-[#003366] dark:text-slate-300 dark:hover:text-white text-sm font-medium transition-colors" href="#roles">Roles</a>
-                    </nav>
-                    {/* CTA */}
-                    <div className="flex items-center gap-4">
-                        <Link className="hidden sm:flex items-center justify-center rounded-lg h-9 px-4 bg-[#003366] hover:bg-[#002852] text-white text-sm font-bold transition-colors shadow-sm" to="/login">
-                            <span>Login</span>
-                        </Link>
-                        {/* Mobile Menu Icon (Visual Only) */}
-                        <button className="md:hidden text-slate-600 dark:text-slate-300">
-                            <span className="material-symbols-outlined">menu</span>
-                        </button>
-                    </div>
-                </div>
+    <div
+      style={{
+        background: "#0a0f1e",
+        minHeight: "100vh",
+        fontFamily: "'Inter', 'Segoe UI', system-ui, sans-serif",
+        color: "#fff",
+      }}
+    >
+      {/* Navbar */}
+      <nav
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          padding: "18px 48px",
+          borderBottom: "0.5px solid rgba(255,255,255,0.07)",
+        }}
+      >
+        <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+          <div
+            style={{
+              width: 36,
+              height: 36,
+              background: "#3b82f6",
+              borderRadius: 9,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <FaceIcon />
+          </div>
+          <div>
+            <div style={{ fontSize: 15, fontWeight: 700, letterSpacing: "-0.3px" }}>
+              SmartAttend AI
             </div>
-        </header>
-
-        <main className="flex-grow">
-            {/* Hero Section */}
-            <section className="relative bg-white dark:bg-[#101622] overflow-hidden">
-                {/* Background Decoration */}
-                <div className="absolute inset-0 z-0 opacity-10 dark:opacity-5">
-                    <div className="absolute inset-0" aria-label="Subtle geometric dot pattern" style={{backgroundImage: 'radial-gradient(#003366 1px, transparent 1px)', backgroundSize: '32px 32px'}}></div>
-                </div>
-                <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-32">
-                    <div className="grid lg:grid-cols-2 gap-12 items-center">
-                        <div className="flex flex-col gap-6 text-left">
-                            <div className="inline-flex items-center rounded-full border border-blue-200 bg-blue-50 px-3 py-1 text-sm font-medium text-[#003366] dark:bg-blue-900/20 dark:border-blue-800 dark:text-blue-300 w-fit">
-                                <span className="flex h-2 w-2 rounded-full bg-[#003366] mr-2"></span>
-                                Now available for Faculty
-                            </div>
-                            <h1 className="text-4xl lg:text-6xl font-black leading-tight tracking-tight text-slate-900 dark:text-white">
-                                Smart Attendance <br />
-                                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#003366] to-blue-500">System</span>
-                            </h1>
-                            <p className="text-lg text-slate-600 dark:text-slate-400 max-w-xl leading-relaxed">
-                                Automated Face Recognition-Based Attendance for Smart Campuses. Experience seamless classroom management with high-precision AI technology.
-                            </p>
-                            <div className="flex flex-wrap gap-4 pt-4">
-                                <Link className="flex items-center justify-center rounded-lg h-12 px-8 bg-[#003366] hover:bg-[#002852] text-white text-base font-bold transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5" to="/login">
-                                    Login
-                                </Link>
-                                <Link className="flex items-center justify-center rounded-lg h-12 px-8 border-2 border-slate-200 bg-transparent hover:border-[#003366] hover:text-[#003366] text-slate-700 dark:border-slate-700 dark:text-slate-300 dark:hover:border-blue-400 dark:hover:text-blue-400 text-base font-bold transition-all" to="/login">
-                                    Faculty Sign Up
-                                </Link>
-                            </div>
-                        </div>
-                        <div className="relative lg:h-[500px] w-full rounded-2xl overflow-hidden shadow-2xl bg-slate-100 dark:bg-slate-800 group">
-                            {/* Abstract Representation of Face Scan */}
-                            <div className="absolute inset-0 bg-cover bg-center" aria-label="Modern classroom collaborative students" style={{backgroundImage: "url('https://lh3.googleusercontent.com/aida-public/AB6AXuDXFfgq11a7k4tQRPnVr8RKO-RS2VXi0udwUOPjTLXbNlJoGM5Os5_HhbD5s1tJgotgHJvzdG8Voth3MyYMlNHiQrKnsp8bsFzTNPs3mJApWNq0XlN1nTgKsSInCI2_LJIBJPEXEtmo686A6-MEuhd5S9wucfm0Zrmd9Ji4LG0YGiclc5dJ4QKwaOXzmiW3yLSkRmTplP1jjuYc2Z82YPpri862Syv4ECOuWnRangMAxStKiV2FDEZm1uVkcJeIi3_dEbtvmY3svJQ')"}}></div>
-                            <div className="absolute inset-0 bg-gradient-to-t from-[#003366]/90 to-transparent mix-blend-multiply"></div>
-                            <div className="absolute bottom-0 left-0 p-8 w-full">
-                                <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-xl p-4 flex items-center gap-4">
-                                    <div className="h-12 w-12 rounded-full bg-green-500 flex items-center justify-center text-white shadow-lg">
-                                        <span className="material-symbols-outlined">check</span>
-                                    </div>
-                                    <div>
-                                        <p className="text-white font-bold text-lg">Attendance Marked</p>
-                                        <p className="text-blue-100 text-sm">Real-time verification complete</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            {/* Key Features Section */}
-            <section className="py-20 bg-background-light dark:bg-slate-900 border-y border-slate-200 dark:border-slate-800" id="features">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="text-center max-w-3xl mx-auto mb-16">
-                        <h2 className="text-[#003366] dark:text-blue-400 font-semibold tracking-wide uppercase text-sm mb-2">Key Features</h2>
-                        <h3 className="text-3xl font-bold text-slate-900 dark:text-white sm:text-4xl">Why Choose Smart Attendance?</h3>
-                        <p className="mt-4 text-lg text-slate-600 dark:text-slate-400">Experience the future of classroom management with our cutting-edge features designed for efficiency and security.</p>
-                    </div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                        <div className="group bg-white dark:bg-slate-800 rounded-xl p-6 shadow-sm hover:shadow-md transition-all border border-slate-200 dark:border-slate-700">
-                            <div className="w-12 h-12 rounded-lg bg-blue-50 dark:bg-blue-900/30 flex items-center justify-center text-[#003366] dark:text-blue-400 mb-4 group-hover:scale-110 transition-transform">
-                                <span className="material-symbols-outlined">face</span>
-                            </div>
-                            <h4 className="text-lg font-bold text-slate-900 dark:text-white mb-2">Face Recognition</h4>
-                            <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">Instant identification using advanced AI models ensuring high accuracy attendance.</p>
-                        </div>
-                        <div className="group bg-white dark:bg-slate-800 rounded-xl p-6 shadow-sm hover:shadow-md transition-all border border-slate-200 dark:border-slate-700">
-                            <div className="w-12 h-12 rounded-lg bg-blue-50 dark:bg-blue-900/30 flex items-center justify-center text-[#003366] dark:text-blue-400 mb-4 group-hover:scale-110 transition-transform">
-                                <span className="material-symbols-outlined">visibility</span>
-                            </div>
-                            <h4 className="text-lg font-bold text-slate-900 dark:text-white mb-2">Real-Time Monitoring</h4>
-                            <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">Track student presence as it happens in real-time with live dashboard updates.</p>
-                        </div>
-                        <div className="group bg-white dark:bg-slate-800 rounded-xl p-6 shadow-sm hover:shadow-md transition-all border border-slate-200 dark:border-slate-700">
-                            <div className="w-12 h-12 rounded-lg bg-blue-50 dark:bg-blue-900/30 flex items-center justify-center text-[#003366] dark:text-blue-400 mb-4 group-hover:scale-110 transition-transform">
-                                <span className="material-symbols-outlined">description</span>
-                            </div>
-                            <h4 className="text-lg font-bold text-slate-900 dark:text-white mb-2">Automated Reports</h4>
-                            <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">Generate detailed Excel and PDF reports instantly for monthly or semester reviews.</p>
-                        </div>
-                        <div className="group bg-white dark:bg-slate-800 rounded-xl p-6 shadow-sm hover:shadow-md transition-all border border-slate-200 dark:border-slate-700">
-                            <div className="w-12 h-12 rounded-lg bg-blue-50 dark:bg-blue-900/30 flex items-center justify-center text-[#003366] dark:text-blue-400 mb-4 group-hover:scale-110 transition-transform">
-                                <span className="material-symbols-outlined">admin_panel_settings</span>
-                            </div>
-                            <h4 className="text-lg font-bold text-slate-900 dark:text-white mb-2">Secure Access</h4>
-                            <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">Role-based access controls ensuring data privacy and security for all users.</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            {/* How It Works Section */}
-            <section className="py-20 bg-white dark:bg-[#101622]" id="how-it-works">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="text-center mb-16">
-                        <h2 className="text-3xl font-bold text-slate-900 dark:text-white">How It Works</h2>
-                        <p className="mt-4 text-slate-600 dark:text-slate-400">Streamlined process from registration to reporting.</p>
-                    </div>
-                    <div className="relative">
-                        <div className="hidden md:block absolute top-1/2 left-0 w-full h-0.5 bg-slate-200 dark:bg-slate-700 -translate-y-1/2 z-0"></div>
-                        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 relative z-10">
-                            <div className="bg-white dark:bg-[#101622] p-4 flex flex-col items-center text-center">
-                                <div className="w-16 h-16 rounded-full bg-[#003366] text-white flex items-center justify-center text-2xl font-bold shadow-lg mb-4 border-4 border-white dark:border-[#101622]">1</div>
-                                <h4 className="font-bold text-lg text-slate-900 dark:text-white mb-2">Register Students</h4>
-                                <p className="text-sm text-slate-500 dark:text-slate-400">Input student details and initial photos into the database.</p>
-                            </div>
-                            <div className="bg-white dark:bg-[#101622] p-4 flex flex-col items-center text-center">
-                                <div className="w-16 h-16 rounded-full bg-white border-2 border-[#003366] text-[#003366] flex items-center justify-center text-2xl font-bold shadow-lg mb-4 dark:bg-slate-800 dark:border-blue-500 dark:text-blue-400">2</div>
-                                <h4 className="font-bold text-lg text-slate-900 dark:text-white mb-2">Train Model</h4>
-                                <p className="text-sm text-slate-500 dark:text-slate-400">System learns face encodings for accurate recognition.</p>
-                            </div>
-                            <div className="bg-white dark:bg-[#101622] p-4 flex flex-col items-center text-center">
-                                <div className="w-16 h-16 rounded-full bg-white border-2 border-[#003366] text-[#003366] flex items-center justify-center text-2xl font-bold shadow-lg mb-4 dark:bg-slate-800 dark:border-blue-500 dark:text-blue-400">3</div>
-                                <h4 className="font-bold text-lg text-slate-900 dark:text-white mb-2">Take Attendance</h4>
-                                <p className="text-sm text-slate-500 dark:text-slate-400">Camera scans classroom and marks present students.</p>
-                            </div>
-                            <div className="bg-white dark:bg-[#101622] p-4 flex flex-col items-center text-center">
-                                <div className="w-16 h-16 rounded-full bg-white border-2 border-[#003366] text-[#003366] flex items-center justify-center text-2xl font-bold shadow-lg mb-4 dark:bg-slate-800 dark:border-blue-500 dark:text-blue-400">4</div>
-                                <h4 className="font-bold text-lg text-slate-900 dark:text-white mb-2">Generate Reports</h4>
-                                <p className="text-sm text-slate-500 dark:text-slate-400">Export attendance data for academic records.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            {/* Roles Section */}
-            <section className="py-20 bg-slate-50 dark:bg-slate-900/50" id="roles">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="text-center mb-12">
-                        <h2 className="text-3xl font-bold text-slate-900 dark:text-white">User Roles</h2>
-                        <p className="mt-4 text-slate-600 dark:text-slate-400">Tailored dashboards for different responsibilities.</p>
-                    </div>
-                    <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-                        <div className="bg-white dark:bg-slate-800 rounded-2xl p-8 shadow-sm border border-slate-100 dark:border-slate-700 flex flex-col items-start hover:border-[#003366] dark:hover:border-blue-500 transition-colors">
-                            <div className="p-3 bg-purple-100 text-purple-700 rounded-lg mb-6 dark:bg-purple-900/30 dark:text-purple-300">
-                                <span className="material-symbols-outlined text-3xl">person</span>
-                            </div>
-                            <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-4">Student</h3>
-                            <ul className="space-y-3 mb-8 flex-1">
-                                <li className="flex items-start gap-3 text-slate-600 dark:text-slate-400">
-                                    <span className="material-symbols-outlined text-green-500 text-xl">check_circle</span>
-                                    <span>View personal attendance history</span>
-                                </li>
-                                <li className="flex items-start gap-3 text-slate-600 dark:text-slate-400">
-                                    <span className="material-symbols-outlined text-green-500 text-xl">check_circle</span>
-                                    <span>Track subject-wise presence</span>
-                                </li>
-                                <li className="flex items-start gap-3 text-slate-600 dark:text-slate-400">
-                                    <span className="material-symbols-outlined text-green-500 text-xl">check_circle</span>
-                                    <span>Download attendance certificates</span>
-                                </li>
-                            </ul>
-                            <Link to="/login" className="w-full py-3 px-4 bg-slate-100 hover:bg-slate-200 text-slate-800 font-semibold rounded-lg transition-colors dark:bg-slate-700 dark:text-white dark:hover:bg-slate-600 text-center block">
-                                Student Login
-                            </Link>
-                        </div>
-                        <div className="bg-white dark:bg-slate-800 rounded-2xl p-8 shadow-sm border border-slate-100 dark:border-slate-700 flex flex-col items-start hover:border-[#003366] dark:hover:border-blue-500 transition-colors">
-                            <div className="p-3 bg-blue-100 text-[#003366] rounded-lg mb-6 dark:bg-blue-900/30 dark:text-blue-300">
-                                <span className="material-symbols-outlined text-3xl">cast_for_education</span>
-                            </div>
-                            <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-4">Faculty</h3>
-                            <ul className="space-y-3 mb-8 flex-1">
-                                <li className="flex items-start gap-3 text-slate-600 dark:text-slate-400">
-                                    <span className="material-symbols-outlined text-green-500 text-xl">check_circle</span>
-                                    <span>Class-specific attendance management</span>
-                                </li>
-                                <li className="flex items-start gap-3 text-slate-600 dark:text-slate-400">
-                                    <span className="material-symbols-outlined text-green-500 text-xl">check_circle</span>
-                                    <span>Download subject-wise reports</span>
-                                </li>
-                                <li className="flex items-start gap-3 text-slate-600 dark:text-slate-400">
-                                    <span className="material-symbols-outlined text-green-500 text-xl">check_circle</span>
-                                    <span>View individual student analytics</span>
-                                </li>
-                            </ul>
-                            <Link to="/login" className="w-full py-3 px-4 bg-[#003366] hover:bg-[#002852] text-white font-semibold rounded-lg transition-colors shadow-md text-center block">
-                                Faculty Login
-                            </Link>
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </main>
-        
-        {/* Footer */}
-        <footer className="bg-[#001a33] text-slate-300 py-12 border-t border-slate-800">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
-                    <div className="col-span-1">
-                        <div className="flex items-center gap-2 mb-4 text-white">
-                            <span className="material-symbols-outlined">school</span>
-                            <span className="text-xl font-bold">Smart Attendance</span>
-                        </div>
-                        <p className="text-sm text-slate-400 mb-4">
-                            College of Engineering &amp; Technology<br />
-                            Department of Computer Science
-                        </p>
-                    </div>
-                    <div className="col-span-1">
-                        <h4 className="text-white font-bold mb-4">Quick Links</h4>
-                        <ul className="space-y-2 text-sm">
-                            <li><Link className="hover:text-white transition-colors" to="/">Home</Link></li>
-                            <li><Link className="hover:text-white transition-colors" to="/">Privacy Policy</Link></li>
-                            <li><Link className="hover:text-white transition-colors" to="/">Terms of Service</Link></li>
-                        </ul>
-                    </div>
-                    <div className="col-span-1">
-                        <h4 className="text-white font-bold mb-4">Contact</h4>
-                        <ul className="space-y-2 text-sm">
-                            <li className="flex items-center gap-2">
-                                <span className="material-symbols-outlined text-sm">email</span>
-                                <a className="hover:text-white transition-colors" href="mailto:admin@college.edu">admin@college.edu</a>
-                            </li>
-                            <li className="flex items-center gap-2">
-                                <span className="material-symbols-outlined text-sm">code</span>
-                                <a className="hover:text-white transition-colors" href="#">View on GitHub</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-slate-500">
-                    <p>&copy; 2025 Smart Attendance System. All rights reserved.</p>
-                    <p>Designed for Academic Excellence</p>
-                </div>
+            <div style={{ fontSize: 11, color: "#475569", marginTop: 1 }}>
+              YOLOv8 · ArcFace · DeepFace
             </div>
-        </footer>
+          </div>
+        </div>
+        <div
+          style={{
+            background: "rgba(59,130,246,0.12)",
+            border: "0.5px solid rgba(59,130,246,0.28)",
+            color: "#60a5fa",
+            fontSize: 12,
+            padding: "5px 14px",
+            borderRadius: 20,
+            display: "flex",
+            alignItems: "center",
+            gap: 6,
+          }}
+        >
+          <span
+            style={{
+              width: 7,
+              height: 7,
+              background: "#22c55e",
+              borderRadius: "50%",
+              display: "inline-block",
+            }}
+          />
+          System Active
+        </div>
+      </nav>
+
+      {/* Hero */}
+      <section style={{ textAlign: "center", padding: "52px 24px 36px" }}>
+        <div
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            gap: 7,
+            background: "rgba(59,130,246,0.1)",
+            border: "0.5px solid rgba(59,130,246,0.22)",
+            color: "#60a5fa",
+            fontSize: 12,
+            padding: "5px 14px",
+            borderRadius: 20,
+            marginBottom: 20,
+          }}
+        >
+          <span
+            style={{
+              width: 7,
+              height: 7,
+              background: "#22c55e",
+              borderRadius: "50%",
+              display: "inline-block",
+            }}
+          />
+          AI-Powered Face Recognition Attendance
+        </div>
+
+        <h1
+          style={{
+            fontSize: "clamp(26px, 4vw, 36px)",
+            fontWeight: 800,
+            lineHeight: 1.2,
+            letterSpacing: "-0.8px",
+            marginBottom: 12,
+          }}
+        >
+          Attendance in{" "}
+          <span style={{ color: "#3b82f6" }}>30 Seconds</span>
+          <br />
+          No Proxy. No Paper.
+        </h1>
+
+        <p
+          style={{
+            fontSize: 14,
+            color: "#64748b",
+            maxWidth: 420,
+            margin: "0 auto 36px",
+            lineHeight: 1.7,
+          }}
+        >
+          Automated classroom attendance using YOLOv8 face detection and ArcFace
+          recognition — built for real university challenges.
+        </p>
+
+        {/* Stats */}
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            gap: "clamp(20px, 5vw, 48px)",
+            marginBottom: 48,
+            flexWrap: "wrap",
+          }}
+        >
+          {stats.map((s) => (
+            <div key={s.label} style={{ textAlign: "center" }}>
+              <div style={{ fontSize: 22, fontWeight: 800, color: "#f1f5f9" }}>
+                {s.value}
+              </div>
+              <div style={{ fontSize: 12, color: "#475569", marginTop: 3 }}>
+                {s.label}
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Cards */}
+      <section
+        style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
+          gap: 16,
+          padding: "0 40px 48px",
+          maxWidth: 1100,
+          margin: "0 auto",
+        }}
+      >
+        {cards.map((card) => (
+          <LoginCard key={card.role} card={card} onLogin={() => navigate(card.route)} />
+        ))}
+      </section>
+
+      {/* Footer */}
+      <footer
+        style={{
+          borderTop: "0.5px solid rgba(255,255,255,0.05)",
+          padding: "14px 48px",
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          flexWrap: "wrap",
+          gap: 12,
+        }}
+      >
+        <div style={{ fontSize: 12, color: "#334155" }}>
+          B.Tech CSE-AI · Final Year Major Project · Govind Kumar Sahu
+        </div>
+        <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
+          {techPills.map((p) => (
+            <span
+              key={p}
+              style={{
+                fontSize: 11,
+                color: "#475569",
+                background: "rgba(255,255,255,0.04)",
+                border: "0.5px solid rgba(255,255,255,0.07)",
+                padding: "3px 9px",
+                borderRadius: 10,
+              }}
+            >
+              {p}
+            </span>
+          ))}
+        </div>
+      </footer>
+    </div>
+  );
+}
+
+function LoginCard({ card, onLogin }) {
+  const [hovered, setHovered] = React.useState(false);
+
+  return (
+    <div
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      style={{
+        background: card.cardBg,
+        border: `0.5px solid ${hovered ? card.borderHover : card.borderColor}`,
+        borderRadius: 14,
+        padding: "26px 22px",
+        cursor: "default",
+        transition: "transform 0.2s ease, border-color 0.2s ease",
+        transform: hovered ? "translateY(-4px)" : "translateY(0)",
+      }}
+    >
+      {/* Icon */}
+      <div
+        style={{
+          width: 46,
+          height: 46,
+          background: card.iconBg,
+          borderRadius: 11,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          marginBottom: 16,
+        }}
+      >
+        {card.icon}
+      </div>
+
+      {/* Title & desc */}
+      <div style={{ fontSize: 17, fontWeight: 700, color: "#f1f5f9", marginBottom: 6 }}>
+        {card.title}
+      </div>
+      <div style={{ fontSize: 13, color: "#64748b", lineHeight: 1.6, marginBottom: 18 }}>
+        {card.description}
+      </div>
+
+      {/* Features */}
+      <ul style={{ listStyle: "none", marginBottom: 22, padding: 0 }}>
+        {card.features.map((f) => (
+          <li
+            key={f}
+            style={{
+              fontSize: 12,
+              color: "#94a3b8",
+              padding: "4px 0",
+              display: "flex",
+              alignItems: "center",
+              gap: 8,
+            }}
+          >
+            <span
+              style={{
+                width: 13,
+                height: 13,
+                borderRadius: "50%",
+                background: card.dotBg,
+                display: "inline-flex",
+                alignItems: "center",
+                justifyContent: "center",
+                flexShrink: 0,
+              }}
+            >
+              <span
+                style={{
+                  width: 5,
+                  height: 5,
+                  background: card.dotColor,
+                  borderRadius: "50%",
+                  display: "inline-block",
+                }}
+              />
+            </span>
+            {f}
+          </li>
+        ))}
+      </ul>
+
+      {/* Button */}
+      <button
+        onClick={onLogin}
+        style={{
+          width: "100%",
+          padding: "10px 0",
+          borderRadius: 8,
+          fontSize: 13,
+          fontWeight: 600,
+          border: `0.5px solid ${card.btnBorder}`,
+          background: hovered ? card.btnBg : "transparent",
+          color: card.btnColor,
+          cursor: "pointer",
+          transition: "background 0.2s ease",
+          letterSpacing: "0.2px",
+        }}
+      >
+        {card.label} →
+      </button>
     </div>
   );
 }
