@@ -120,9 +120,9 @@ export default function RegisteredStudents() {
                           onChange={(e) => setDepartmentFilter(e.target.value)}
                           className="w-full pl-4 pr-10 py-2.5 bg-background-light dark:bg-background-dark border border-border-light dark:border-border-dark rounded-xl focus:ring-2 focus:ring-primary/50 outline-none text-sm font-medium appearance-none form-select-arrow"
                        >
-                           <option value="all">All Departments</option>
+                           <option value="all" style={{backgroundColor:'#0d1117', color:'#f1f5f9'}}>All Departments</option>
                            {uniqueDepartments.map(dept => (
-                               <option key={dept} value={dept}>{dept}</option>
+                               <option key={dept} value={dept} style={{backgroundColor:'#0d1117', color:'#f1f5f9'}}>{dept}</option>
                            ))}
                        </select>
                    </div>

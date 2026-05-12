@@ -1927,3 +1927,15 @@
 {"timestamp": "2026-05-07 02:19:57", "type": "warning", "message": "Attendance already recorded for Vinit Kumar in General"}
 {"timestamp": "2026-05-07 02:19:57", "type": "warning", "message": "Attendance already recorded for Vinit Kumar in General"}
 {"timestamp": "2026-05-07 02:19:58", "type": "warning", "message": "Attendance already recorded for Vinit Kumar in General"}
+{"timestamp": "2026-05-09 22:26:47", "type": "success", "message": "Attendance recorded for Govind Kumar in Machine Learning (Period 4)"}
+{"timestamp": "2026-05-09 22:26:53", "type": "success", "message": "Attendance recorded for Vinit Kumar in Machine Learning (Period 4)"}
+{"timestamp": "2026-05-09 22:27:10", "type": "success", "message": "Attendance recorded for Rahul Kumar in Machine Learning (Period 4)"}
+{"timestamp": "2026-05-09 22:30:21", "type": "success", "message": "Attendance recorded for Govind Kumar in General (Demo)"}
+{"timestamp": "2026-05-10 18:37:52", "type": "success", "message": "Attendance recorded for Govind Kumar in General (Demo)"}
+{"timestamp": "2026-05-10 18:38:01", "type": "success", "message": "Attendance recorded for Vinit Kumar in General (Demo)"}
+{"timestamp": "2026-05-10 18:40:07", "type": "success", "message": "Attendance recorded for Govind Kumar in Software Engineering (Period 3)"}
+{"timestamp": "2026-05-10 18:49:10", "type": "success", "message": "Attendance recorded for Vinit Kumar in Software Engineering (Period 4)"}
+{"timestamp": "2026-05-10 18:50:40", "type": "success", "message": "Attendance recorded for Govind Kumar in Software Engineering (Period 4)"}
+{"timestamp": "2026-05-10 18:53:44", "type": "warning", "message": "Attendance already recorded for Vinit Kumar in Software Engineering"}
+{"timestamp": "2026-05-10 18:53:45", "type": "warning", "message": "Attendance already recorded for Vinit Kumar in Software Engineering"}
+{"timestamp": "2026-05-10 18:53:46", "type": "warning", "message": "Attendance already recorded for Vinit Kumar in Software Engineering"}

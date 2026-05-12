@@ -117,16 +117,16 @@ export default function FacultyAttendance() {
             <div className="lg:col-span-2 relative">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"><span className="material-symbols-outlined text-text-secondary-light text-[20px]">person</span></div>
               <select value={selectedFaculty} onChange={e => setSelectedFaculty(e.target.value)} className={selectCls}>
-                <option value="">Select Faculty</option>
-                {faculty.map(f => <option key={f.id} value={f.id}>{f.full_name} ({f.employee_id || 'N/A'})</option>)}
+                <option value="" style={{backgroundColor:'#0d1117', color:'#f1f5f9'}}>Select Faculty</option>
+                {faculty.map(f => <option key={f.id} value={f.id} style={{backgroundColor:'#0d1117', color:'#f1f5f9'}}>{f.full_name} ({f.employee_id || 'N/A'})</option>)}
               </select>
             </div>
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"><span className="material-symbols-outlined text-text-secondary-light text-[20px]">fact_check</span></div>
               <select value={status} onChange={e => setStatus(e.target.value)} className={selectCls}>
-                <option value="Present">Present</option>
-                <option value="On Leave">On Leave</option>
-                <option value="Half-Day">Half-Day</option>
+                <option value="Present" style={{backgroundColor:'#0d1117', color:'#f1f5f9'}}>Present</option>
+                <option value="On Leave" style={{backgroundColor:'#0d1117', color:'#f1f5f9'}}>On Leave</option>
+                <option value="Half-Day" style={{backgroundColor:'#0d1117', color:'#f1f5f9'}}>Half-Day</option>
               </select>
             </div>
             <div className="relative">

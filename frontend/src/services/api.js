@@ -187,4 +187,64 @@ export const api = {
       const query = new URLSearchParams(params).toString();
       window.location.href = `/api/faculty-attendance/export-csv?${query}`;
     },
+
+    // ============================================================
+    // TIMETABLE
+    // ============================================================
+    getTimetable: async (facultyId) => {
+      const res = await fetch(`http://localhost:8000/api/timetable?faculty_id=${facultyId}`);
+      return res.json();
+    },
+    getCurrentClass: async (facultyId) => {
+      const res = await fetch(`http://localhost:8000/api/timetable/current-class?faculty_id=${facultyId}`);
+      return res.json();
+    },
+    getAllTimetable: async () => {
+      const res = await fetch('http://localhost:8000/api/timetable/all');
+      return res.json();
+    },
+    addTimetableEntry: async (data) => {
+      const res = await fetch('http://localhost:8000/api/timetable', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+      return res.json();
+    },
+    deleteTimetableEntry: async (id) => {
+      const res = await fetch(`http://localhost:8000/api/timetable/${id}`, { method: 'DELETE' });
+      return res.json();
+    },
+
+    // ============================================================
+    // EXTRA CLASS / SUBSTITUTE
+    // ============================================================
+    takeExtraClass: async (data) => {
+      const res = await fetch('http://localhost:8000/api/take-extra-class', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+      return res.json();
+    },
+    getFacultyExtraStats: async (facultyId) => {
+      const res = await fetch(`http://localhost:8000/api/faculty-extra-stats?faculty_id=${facultyId}`);
+      return res.json();
+    },
+    getAdminExtraClassesSummary: async () => {
+      const res = await fetch('http://localhost:8000/api/admin/extra-classes-summary');
+      return res.json();
+    },
+
+    // ============================================================
+    // SESSION ATTENDANCE DETAIL & LOGBOOK
+    // ============================================================
+    getSessionAttendance: async (sessionId) => {
+      const res = await fetch(`http://localhost:8000/api/session-attendance/${sessionId}`);
+      return res.json();
+    },
+    getFacultyLogbook: async (facultyId) => {
+      const res = await fetch(`http://localhost:8000/api/faculty-logbook?faculty_id=${facultyId}`);
+      return res.json();
+    },
   };

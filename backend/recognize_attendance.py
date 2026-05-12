@@ -13,12 +13,13 @@ from deepface import DeepFace
 # ==========================================
 # PARSE COMMAND-LINE ARGUMENTS
 # ==========================================
-# Usage: python recognize_attendance.py <subject_code> <subject_name> <period> <faculty_name> <session_id>
+# Usage: python recognize_attendance.py <subject_code> <subject_name> <period> <faculty_name> <session_id> [rtsp_url]
 SUBJECT_CODE = sys.argv[1] if len(sys.argv) > 1 else ""
 SUBJECT_NAME = sys.argv[2] if len(sys.argv) > 2 else ""
 PERIOD = sys.argv[3] if len(sys.argv) > 3 else ""
 FACULTY_NAME = sys.argv[4] if len(sys.argv) > 4 else ""
 SESSION_ID = int(sys.argv[5]) if len(sys.argv) > 5 and sys.argv[5].isdigit() else None
+RTSP_URL = sys.argv[6] if len(sys.argv) > 6 else None  # Optional IP camera stream
 
 print(f"\n{'='*60}")
 print(f"  LECTURE DETAILS")
@@ -38,9 +39,11 @@ DATASET_DIR = "TrainingImage"
 # ==========================================
 # RECOGNITION TUNING PARAMETERS
 # ==========================================
-DISTANCE_THRESHOLD = 0.55       # ArcFace cosine distance threshold (lower = stricter)
-MIN_FACE_SIZE = 60              # Minimum face width/height in pixels to attempt recognition
-MIN_CONFIRMATIONS = 3           # Frames needed to confirm a student
+DISTANCE_THRESHOLD = 0.40       # ArcFace cosine distance (STRICT: 0.40 prevents false matches)
+                                 # Lower = stricter. 0.55 was too loose (wrong names given)
+                                 # 0.40 = face must be 60% similar to stored image
+MIN_FACE_SIZE = 80              # Minimum face width/height in pixels (larger = clearer face needed)
+MIN_CONFIRMATIONS = 5           # Frames needed to confirm — prevents single-frame false match
 RECOGNITION_BUFFER_SIZE = 10    # Max buffer entries per student
 ATTENDANCE_DURATION = 30        # Seconds for attendance session
 
@@ -85,19 +88,40 @@ except Exception as e:
 # OPEN CAMERA EARLY (warms up while models load)
 # ==========================================
 print("[STEP 3/4] Opening camera...")
-if sys.platform == 'win32':
-    cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)
+# Use RTSP stream if provided, otherwise use local webcam
+if RTSP_URL:
+    print(f"  🎥 Connecting to IP camera: {RTSP_URL}")
+    cap = cv2.VideoCapture(RTSP_URL)
+    if not cap.isOpened():
+        print(f"  ⚠️  RTSP stream unreachable: {RTSP_URL}")
+        print("  🔄 Falling back to local webcam (index 0)...")
+        if sys.platform == 'win32':
+            cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)
+        else:
+            cap = cv2.VideoCapture(0)
 else:
-    cap = cv2.VideoCapture(0)
+    if sys.platform == 'win32':
+        cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)
+    else:
+        cap = cv2.VideoCapture(0)
 
 if not cap.isOpened():
     print("[ERROR] Camera not accessible!")
     sys.exit(1)
 
 # Set camera properties for faster capture
-cap.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
-cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
-cap.set(cv2.CAP_PROP_FPS, 30)
+if RTSP_URL:
+    # IP Camera (WiFi) — reduce lag with minimal buffer
+    cap.set(cv2.CAP_PROP_BUFFERSIZE, 1)       # Only keep 1 frame in buffer (latest frame)
+    cap.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
+    cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
+    cap.set(cv2.CAP_PROP_FPS, 15)             # Lower FPS = less WiFi bandwidth = less lag
+    print("  📡 IP Camera mode: Anti-lag settings applied")
+else:
+    # Laptop webcam — normal settings
+    cap.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
+    cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
+    cap.set(cv2.CAP_PROP_FPS, 30)
 print("  ✅ Camera ready")
 
 # ==========================================

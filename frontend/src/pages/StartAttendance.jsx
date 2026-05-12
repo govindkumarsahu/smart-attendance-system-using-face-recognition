@@ -130,9 +130,9 @@ export default function StartAttendance() {
                         onChange={(e) => setSelectedSubject(e.target.value)}
                         className="form-select-arrow w-full px-4 py-3.5 pr-10 rounded-xl border-2 border-border-light/60 dark:border-border-dark/60 bg-background-light dark:bg-background-dark text-text-primary-light dark:text-text-primary-dark text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary transition-all cursor-pointer hover:border-primary/50"
                       >
-                        <option value="">— Select Subject —</option>
+                        <option value="" style={{backgroundColor:'#0d1117', color:'#f1f5f9'}}>— Select Subject —</option>
                         {subjects.map((subj) => (
-                          <option key={subj.id} value={subj.code}>
+                          <option key={subj.id} value={subj.code} style={{backgroundColor:'#0d1117', color:'#f1f5f9'}}>
                             {subj.code} — {subj.name}
                           </option>
                         ))}
@@ -162,9 +162,9 @@ export default function StartAttendance() {
                         onChange={(e) => setSelectedPeriod(e.target.value)}
                         className="form-select-arrow w-full px-4 py-3.5 pr-10 rounded-xl border-2 border-border-light/60 dark:border-border-dark/60 bg-background-light dark:bg-background-dark text-text-primary-light dark:text-text-primary-dark text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary transition-all cursor-pointer hover:border-primary/50"
                       >
-                        <option value="">— Select Period —</option>
+                        <option value="" style={{backgroundColor:'#0d1117', color:'#f1f5f9'}}>— Select Period —</option>
                         {PERIODS.map((p) => (
-                          <option key={p.value} value={p.value}>
+                          <option key={p.value} value={p.value} style={{backgroundColor:'#0d1117', color:'#f1f5f9'}}>
                             {p.label} ({p.time})
                           </option>
                         ))}

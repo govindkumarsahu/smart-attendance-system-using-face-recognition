@@ -165,6 +165,27 @@ def init_db():
         )
     ''')
 
+    # Timetable table — maps Faculty -> Subject -> Day -> Period
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS timetable (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            faculty_id TEXT NOT NULL,
+            faculty_name TEXT NOT NULL,
+            subject_code TEXT NOT NULL,
+            subject_name TEXT NOT NULL,
+            day_of_week TEXT NOT NULL,
+            period TEXT NOT NULL,
+            start_time TEXT DEFAULT '',
+            end_time TEXT DEFAULT '',
+            branch TEXT DEFAULT '',
+            semester TEXT DEFAULT '',
+            room TEXT DEFAULT '',
+            is_active INTEGER DEFAULT 1,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            UNIQUE(faculty_id, day_of_week, period)
+        )
+    ''')
+
     # Auto-migrate: add employee_id column if missing (for existing DBs)
 
     try:
@@ -174,6 +195,17 @@ def init_db():
             cursor.execute("ALTER TABLE faculty ADD COLUMN employee_id TEXT")
     except Exception:
         pass
+
+    # Rooms table — for RTSP/IP camera management
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS rooms (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            room_name TEXT NOT NULL UNIQUE,
+            rtsp_url TEXT NOT NULL,
+            is_active INTEGER DEFAULT 1,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+    ''')
 
     # Auto-migrate students table to support admin panel requirements
     try:
@@ -187,8 +219,36 @@ def init_db():
             cursor.execute("ALTER TABLE students ADD COLUMN password TEXT")
         if 'face_registered' not in student_columns:
             cursor.execute("ALTER TABLE students ADD COLUMN face_registered INTEGER DEFAULT 0")
+        if 'email' not in student_columns:
+            cursor.execute("ALTER TABLE students ADD COLUMN email TEXT DEFAULT ''")
     except Exception as e:
         print(f"Error auto-migrating students table: {e}")
+
+    # Auto-migrate timetable table to add room_id
+    try:
+        cursor.execute("PRAGMA table_info(timetable)")
+        tt_columns = [col[1] for col in cursor.fetchall()]
+        if 'room_id' not in tt_columns:
+            cursor.execute("ALTER TABLE timetable ADD COLUMN room_id INTEGER REFERENCES rooms(id)")
+    except Exception as e:
+        print(f"Error auto-migrating timetable table: {e}")
+
+    # Auto-migrate lecture_sessions table for substitute/extra class tracking
+    try:
+        cursor.execute("PRAGMA table_info(lecture_sessions)")
+        ls_columns = [col[1] for col in cursor.fetchall()]
+        if 'session_type' not in ls_columns:
+            cursor.execute("ALTER TABLE lecture_sessions ADD COLUMN session_type TEXT DEFAULT 'regular'")
+        if 'original_faculty_id' not in ls_columns:
+            cursor.execute("ALTER TABLE lecture_sessions ADD COLUMN original_faculty_id TEXT DEFAULT ''")
+        if 'original_faculty_name' not in ls_columns:
+            cursor.execute("ALTER TABLE lecture_sessions ADD COLUMN original_faculty_name TEXT DEFAULT ''")
+        if 'timetable_id' not in ls_columns:
+            cursor.execute("ALTER TABLE lecture_sessions ADD COLUMN timetable_id INTEGER")
+        if 'faculty_id' not in ls_columns:
+            cursor.execute("ALTER TABLE lecture_sessions ADD COLUMN faculty_id TEXT DEFAULT ''")
+    except Exception as e:
+        print(f"Error auto-migrating lecture_sessions table: {e}")
 
     # Seed default subjects if the table is empty
     cursor.execute("SELECT COUNT(*) FROM subjects")
@@ -229,6 +289,49 @@ def init_db():
     if cursor.fetchone()[0] == 0:
         admin_pass = hashlib.sha256("admin123".encode()).hexdigest()
         cursor.execute("INSERT INTO admins (username, password) VALUES (?, ?)", ("admin", admin_pass))
+
+    # Seed sample timetable if empty
+    cursor.execute("SELECT COUNT(*) FROM timetable")
+    if cursor.fetchone()[0] == 0:
+        _PERIOD_TIMES = {
+            'Period 1': ('09:00', '09:50'), 'Period 2': ('10:00', '10:50'),
+            'Period 3': ('11:00', '11:50'), 'Period 4': ('12:00', '12:50'),
+            'Period 5': ('14:00', '14:50'), 'Period 6': ('15:00', '15:50'),
+            'Period 7': ('16:00', '16:50'), 'Period 8': ('17:00', '17:50'),
+        }
+        sample_timetable = [
+            # EMP001 — Prof. Rajesh Sharma
+            ('EMP001', 'Prof. Rajesh Sharma', 'CS501', 'Data Structures & Algorithms', 'Monday',    'Period 1', 'CSE', '5th Sem', 'Room 101'),
+            ('EMP001', 'Prof. Rajesh Sharma', 'CS502', 'Database Management Systems',  'Monday',    'Period 3', 'CSE', '5th Sem', 'Room 101'),
+            ('EMP001', 'Prof. Rajesh Sharma', 'CS501', 'Data Structures & Algorithms', 'Wednesday', 'Period 2', 'CSE', '5th Sem', 'Room 101'),
+            ('EMP001', 'Prof. Rajesh Sharma', 'CS502', 'Database Management Systems',  'Thursday',  'Period 1', 'CSE', '5th Sem', 'Room 101'),
+            ('EMP001', 'Prof. Rajesh Sharma', 'CS501', 'Data Structures & Algorithms', 'Friday',    'Period 4', 'CSE', '5th Sem', 'Room 101'),
+            # EMP002 — Prof. Neha Verma
+            ('EMP002', 'Prof. Neha Verma', 'CS503', 'Operating Systems',   'Monday',    'Period 2', 'CSE', '5th Sem', 'Room 102'),
+            ('EMP002', 'Prof. Neha Verma', 'CS504', 'Computer Networks',   'Tuesday',   'Period 1', 'CSE', '5th Sem', 'Room 102'),
+            ('EMP002', 'Prof. Neha Verma', 'CS503', 'Operating Systems',   'Wednesday', 'Period 3', 'CSE', '5th Sem', 'Room 102'),
+            ('EMP002', 'Prof. Neha Verma', 'CS504', 'Computer Networks',   'Thursday',  'Period 2', 'CSE', '5th Sem', 'Room 102'),
+            ('EMP002', 'Prof. Neha Verma', 'CS503', 'Operating Systems',   'Friday',    'Period 1', 'CSE', '5th Sem', 'Room 102'),
+            # EMP003 — Prof. Amit Gupta
+            ('EMP003', 'Prof. Amit Gupta', 'CS507', 'Machine Learning',  'Monday',    'Period 5', 'CSE-AI', '7th Sem', 'Lab A1'),
+            ('EMP003', 'Prof. Amit Gupta', 'CS508', 'Cloud Computing',   'Tuesday',   'Period 3', 'CSE-AI', '7th Sem', 'Lab A1'),
+            ('EMP003', 'Prof. Amit Gupta', 'CS507', 'Machine Learning',  'Wednesday', 'Period 5', 'CSE-AI', '7th Sem', 'Lab A1'),
+            ('EMP003', 'Prof. Amit Gupta', 'CS508', 'Cloud Computing',   'Thursday',  'Period 3', 'CSE-AI', '7th Sem', 'Lab A1'),
+            ('EMP003', 'Prof. Amit Gupta', 'CS507', 'Machine Learning',  'Friday',    'Period 5', 'CSE-AI', '7th Sem', 'Lab A1'),
+        ]
+        for entry in sample_timetable:
+            fid, fname, scode, sname, day, period, branch, sem, room = entry
+            st, et = _PERIOD_TIMES.get(period, ('', ''))
+            try:
+                cursor.execute(
+                    """INSERT INTO timetable
+                       (faculty_id, faculty_name, subject_code, subject_name,
+                        day_of_week, period, start_time, end_time, branch, semester, room)
+                       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
+                    (fid, fname, scode, sname, day, period, st, et, branch, sem, room)
+                )
+            except Exception:
+                pass  # skip duplicates on re-run
 
     conn.commit()
     conn.close()
@@ -612,7 +715,10 @@ def delete_subject(subject_id):
 # LECTURE SESSION OPERATIONS
 # ============================================================
 
-def create_lecture_session(subject_code, subject_name, period, faculty_name):
+def create_lecture_session(subject_code, subject_name, period, faculty_name,
+                          session_type='regular', faculty_id='',
+                          original_faculty_id='', original_faculty_name='',
+                          timetable_id=None):
     """Create a new lecture session and return the session ID"""
     conn = get_connection()
     cursor = conn.cursor()
@@ -621,9 +727,11 @@ def create_lecture_session(subject_code, subject_name, period, faculty_name):
     try:
         cursor.execute(
             """INSERT INTO lecture_sessions 
-               (subject_code, subject_name, period, faculty_name, date, start_time, status) 
-               VALUES (?, ?, ?, ?, ?, ?, 'active')""",
-            (subject_code, subject_name, period, faculty_name, today, time_now)
+               (subject_code, subject_name, period, faculty_name, date, start_time, status,
+                session_type, faculty_id, original_faculty_id, original_faculty_name, timetable_id) 
+               VALUES (?, ?, ?, ?, ?, ?, 'active', ?, ?, ?, ?, ?)""",
+            (subject_code, subject_name, period, faculty_name, today, time_now,
+             session_type, faculty_id, original_faculty_id, original_faculty_name, timetable_id)
         )
         conn.commit()
         return cursor.lastrowid
@@ -744,3 +852,207 @@ def get_today_records():
     """Get today's attendance records"""
     today = datetime.now().strftime("%Y-%m-%d")
     return get_attendance_records(date_from=today, date_to=today)
+
+# ============================================================
+# TIMETABLE OPERATIONS
+# ============================================================
+
+PERIOD_TIMES = {
+    'Period 1': ('09:00', '09:50'), 'Period 2': ('10:00', '10:50'),
+    'Period 3': ('11:00', '11:50'), 'Period 4': ('12:00', '12:50'),
+    'Period 5': ('14:00', '14:50'), 'Period 6': ('15:00', '15:50'),
+    'Period 7': ('16:00', '16:50'), 'Period 8': ('17:00', '17:50'),
+}
+
+def get_timetable_for_faculty(faculty_id):
+    """Get all timetable entries for a faculty member"""
+    conn = get_connection()
+    cursor = conn.cursor()
+    cursor.execute(
+        "SELECT * FROM timetable WHERE faculty_id = ? AND is_active = 1 ORDER BY "
+        "CASE day_of_week "
+        "  WHEN 'Monday' THEN 1 WHEN 'Tuesday' THEN 2 WHEN 'Wednesday' THEN 3 "
+        "  WHEN 'Thursday' THEN 4 WHEN 'Friday' THEN 5 WHEN 'Saturday' THEN 6 "
+        "  ELSE 7 END, start_time ASC",
+        (faculty_id,)
+    )
+    entries = [dict(row) for row in cursor.fetchall()]
+    conn.close()
+    return entries
+
+def get_current_class(faculty_id):
+    """
+    Check the current day and time against the timetable.
+    Returns the matching timetable entry dict or None.
+    """
+    now = datetime.now()
+    day_name = now.strftime("%A")  # 'Monday', 'Tuesday', etc.
+    current_time = now.strftime("%H:%M")
+
+    conn = get_connection()
+    cursor = conn.cursor()
+    cursor.execute(
+        """SELECT * FROM timetable
+           WHERE faculty_id = ? AND day_of_week = ? AND is_active = 1
+           ORDER BY start_time ASC""",
+        (faculty_id, day_name)
+    )
+    entries = [dict(row) for row in cursor.fetchall()]
+    conn.close()
+
+    for entry in entries:
+        st = entry.get('start_time', '')
+        et = entry.get('end_time', '')
+        if st and et and st <= current_time <= et:
+            return entry
+
+    # Also check if we are within 10 minutes before the next class
+    for entry in entries:
+        st = entry.get('start_time', '')
+        if st:
+            try:
+                start_dt = datetime.strptime(st, "%H:%M")
+                now_dt = datetime.strptime(current_time, "%H:%M")
+                diff_min = (start_dt - now_dt).total_seconds() / 60
+                if 0 < diff_min <= 10:
+                    entry['upcoming'] = True
+                    return entry
+            except Exception:
+                pass
+
+    return None
+
+def get_all_timetable():
+    """Get the full timetable (admin view)"""
+    conn = get_connection()
+    cursor = conn.cursor()
+    cursor.execute(
+        "SELECT * FROM timetable WHERE is_active = 1 ORDER BY faculty_name, "
+        "CASE day_of_week "
+        "  WHEN 'Monday' THEN 1 WHEN 'Tuesday' THEN 2 WHEN 'Wednesday' THEN 3 "
+        "  WHEN 'Thursday' THEN 4 WHEN 'Friday' THEN 5 WHEN 'Saturday' THEN 6 "
+        "  ELSE 7 END, start_time ASC"
+    )
+    entries = [dict(row) for row in cursor.fetchall()]
+    conn.close()
+    return entries
+
+def add_timetable_entry(faculty_id, faculty_name, subject_code, subject_name,
+                        day_of_week, period, branch='', semester='', room=''):
+    """Add a new timetable entry"""
+    st, et = PERIOD_TIMES.get(period, ('', ''))
+    conn = get_connection()
+    cursor = conn.cursor()
+    try:
+        cursor.execute(
+            """INSERT INTO timetable
+               (faculty_id, faculty_name, subject_code, subject_name,
+                day_of_week, period, start_time, end_time, branch, semester, room)
+               VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
+            (faculty_id, faculty_name, subject_code, subject_name,
+             day_of_week, period, st, et, branch, semester, room)
+        )
+        conn.commit()
+        return cursor.lastrowid
+    except Exception:
+        return None
+    finally:
+        conn.close()
+
+def delete_timetable_entry(entry_id):
+    """Delete a timetable entry"""
+    conn = get_connection()
+    cursor = conn.cursor()
+    cursor.execute("DELETE FROM timetable WHERE id = ?", (entry_id,))
+    conn.commit()
+    conn.close()
+
+# ============================================================
+# SESSION ATTENDANCE DETAILS
+# ============================================================
+
+def get_session_attendance(session_id):
+    """Get detailed list of students marked present in a specific lecture session"""
+    conn = get_connection()
+    cursor = conn.cursor()
+    cursor.execute("""
+        SELECT a.id, a.date, a.time, a.status, a.subject_code, a.subject_name,
+               a.period, a.faculty_name,
+               s.name, s.roll_number, s.department, s.academic_year
+        FROM attendance a
+        JOIN students s ON a.student_id = s.id
+        WHERE a.session_id = ?
+        ORDER BY s.name ASC
+    """, (session_id,))
+    records = [dict(row) for row in cursor.fetchall()]
+    conn.close()
+    return records
+
+def get_total_students_count():
+    """Get total number of registered students"""
+    conn = get_connection()
+    cursor = conn.cursor()
+    cursor.execute("SELECT COUNT(*) FROM students")
+    count = cursor.fetchone()[0]
+    conn.close()
+    return count
+
+# ============================================================
+# EXTRA CLASS / SUBSTITUTE TRACKING
+# ============================================================
+
+def get_faculty_extra_classes_count(faculty_id):
+    """Count how many extra/substitute classes this faculty has taken"""
+    conn = get_connection()
+    cursor = conn.cursor()
+    cursor.execute(
+        "SELECT COUNT(*) FROM lecture_sessions WHERE faculty_id = ? AND session_type = 'extra'",
+        (faculty_id,)
+    )
+    count = cursor.fetchone()[0]
+    conn.close()
+    return count
+
+def get_faculty_missed_classes_count(faculty_id):
+    """Count how many of this faculty's classes were taken by a substitute"""
+    conn = get_connection()
+    cursor = conn.cursor()
+    cursor.execute(
+        "SELECT COUNT(*) FROM lecture_sessions WHERE original_faculty_id = ? AND session_type = 'extra'",
+        (faculty_id,)
+    )
+    count = cursor.fetchone()[0]
+    conn.close()
+    return count
+
+def get_all_extra_classes_summary():
+    """Admin view: get all extra/substitute classes with details"""
+    conn = get_connection()
+    cursor = conn.cursor()
+    cursor.execute("""
+        SELECT id, subject_code, subject_name, period, faculty_name, faculty_id,
+               date, start_time, end_time, total_present, status,
+               session_type, original_faculty_id, original_faculty_name
+        FROM lecture_sessions
+        WHERE session_type = 'extra'
+        ORDER BY date DESC, start_time DESC
+    """)
+    sessions = [dict(row) for row in cursor.fetchall()]
+    conn.close()
+    return sessions
+
+def get_faculty_logbook(faculty_id):
+    """Get all past lecture sessions for a faculty (both regular and extra)"""
+    conn = get_connection()
+    cursor = conn.cursor()
+    cursor.execute("""
+        SELECT id, subject_code, subject_name, period, faculty_name, faculty_id,
+               date, start_time, end_time, total_present, status,
+               session_type, original_faculty_id, original_faculty_name
+        FROM lecture_sessions
+        WHERE faculty_id = ? OR faculty_name = ?
+        ORDER BY date DESC, start_time DESC
+    """, (faculty_id, faculty_id))
+    sessions = [dict(row) for row in cursor.fetchall()]
+    conn.close()
+    return sessions

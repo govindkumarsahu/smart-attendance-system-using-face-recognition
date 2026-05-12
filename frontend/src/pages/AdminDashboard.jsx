@@ -60,6 +60,10 @@ export default function AdminDashboard() {
       case 'Classroom Setup': return <ClassroomSetupView showToast={showToast} />;
       case 'Assign Subjects': return <AssignSubjectsView showToast={showToast} />;
       case 'View Mappings': return <ViewMappingsView />;
+      case 'Timetable': return <TimetableView showToast={showToast} />;
+      case 'Rooms': return <RoomsView showToast={showToast} />;
+      case 'Attendance Tracker': return <AttendanceTrackerView showToast={showToast} />;
+      case 'Extra Classes': return <ExtraClassesView />;
       default: return <DashboardView setActiveView={setActiveView} />;
     }
   };
@@ -152,6 +156,33 @@ export default function AdminDashboard() {
                 )}
               </button>
             )
+          })}
+
+          <div style={{ fontSize: '9px', color: '#334155', letterSpacing: '0.8px', fontWeight: '600', padding: '16px 14px 5px', borderTop: '0.5px solid rgba(255,255,255,0.04)', marginTop: '8px' }}>
+            SCHEDULE & AUDIT
+          </div>
+          {[
+            { name: 'Timetable', isNew: true, icon: <><rect x="3" y="4" width="18" height="18" rx="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></> },
+            { name: 'Rooms', isNew: true, icon: <><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></> },
+            { name: 'Attendance Tracker', isNew: true, icon: <><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></> },
+            { name: 'Extra Classes', isNew: true, icon: <><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></> },
+          ].map(btn => {
+            const isActive = activeView === btn.name;
+            return (
+              <button key={btn.name} onClick={() => setActiveView(btn.name)} style={{
+                display: 'flex', alignItems: 'center', gap: '9px',
+                padding: '9px 16px', fontSize: '12px', fontWeight: '500',
+                cursor: 'pointer', border: 'none',
+                borderLeft: `2.5px solid ${isActive ? '#ef4444' : 'transparent'}`,
+                backgroundColor: isActive ? 'rgba(239,68,68,0.08)' : 'transparent',
+                color: isActive ? '#fca5a5' : '#64748b',
+                width: '100%', textAlign: 'left', transition: 'all 0.15s'
+              }}>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill={isActive ? '#ef4444' : 'none'} stroke="currentColor" strokeWidth="2">{btn.icon}</svg>
+                {btn.name}
+                {btn.isNew && <span style={{ marginLeft:'auto', backgroundColor:'rgba(168,85,247,0.15)', color:'#c084fc', fontSize:'9px', padding:'1px 6px', borderRadius:'4px' }}>NEW</span>}
+              </button>
+            );
           })}
         </div>
 
@@ -422,9 +453,9 @@ function ViewMappingsView() {
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" strokeWidth="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
             <span style={{ fontSize: '12px', fontWeight: '600', color: '#94a3b8' }}>All Assignments</span>
           </div>
-          <select value={filter} onChange={e => setFilter(e.target.value)} style={{ backgroundColor: '#070b14', border: '0.5px solid rgba(255,255,255,0.1)', color: '#94a3b8', fontSize: '11px', padding: '4px 8px', borderRadius: '4px', outline: 'none', cursor: 'pointer' }}>
-            <option value="All Faculty">All Faculty</option>
-            {Object.keys(grouped).map(name => <option key={name} value={name}>{name}</option>)}
+          <select value={filter} onChange={e => setFilter(e.target.value)} style={{ backgroundColor: '#0d1117', border: '0.5px solid rgba(255,255,255,0.1)', color: '#f1f5f9', fontSize: '11px', padding: '4px 8px', borderRadius: '4px', outline: 'none', cursor: 'pointer' }}>
+            <option value="All Faculty" style={{backgroundColor:'#0d1117', color:'#f1f5f9'}}>All Faculty</option>
+            {Object.keys(grouped).map(name => <option key={name} value={name} style={{backgroundColor:'#0d1117', color:'#f1f5f9'}}>{name}</option>)}
           </select>
         </div>
 
@@ -463,7 +494,7 @@ function ViewMappingsView() {
 
 function ManageStudentsView({ showToast }) {
   const [students, setStudents] = useState([]);
-  const [form, setForm] = useState({ name: '', roll: '', branch: 'CSE-AI', semester: '1', dob: '' });
+  const [form, setForm] = useState({ name: '', roll: '', branch: 'CSE-AI', semester: '1', dob: '', email: '' });
   const [loading, setLoading] = useState(false);
   const [captureStatus, setCaptureStatus] = useState('');
 
@@ -492,11 +523,11 @@ function ManageStudentsView({ showToast }) {
     setLoading(true);
     setCaptureStatus('Camera Open: Please move your head for different angles...');
     try {
-      const res = await axios.post('http://localhost:8000/api/admin/register-student', form, { timeout: 40000 });
+      const res = await axios.post('http://localhost:8000/api/admin/register-student-v2', form, { timeout: 40000 });
       if (res.data.success) {
         setCaptureStatus('');
         showToast(`✅ ${res.data.message || 'Student registered & face captured!'}`);
-        setForm({ name: '', roll: '', branch: 'CSE-AI', semester: '1', dob: '' });
+        setForm({ name: '', roll: '', branch: 'CSE-AI', semester: '1', dob: '', email: '' });
         fetchStudents();
       } else {
         setCaptureStatus('');
@@ -508,7 +539,7 @@ function ManageStudentsView({ showToast }) {
     } finally { setLoading(false); setCaptureStatus(''); }
   };
 
-  const inputStyle = { width: '100%', backgroundColor: 'rgba(255,255,255,0.03)', border: '0.5px solid rgba(255,255,255,0.07)', borderRadius: '6px', padding: '8px 10px', color: '#f1f5f9', fontSize: '12px', outline: 'none', boxSizing: 'border-box' };
+  const inputStyle = { width: '100%', backgroundColor: '#0d1117', border: '0.5px solid rgba(255,255,255,0.07)', borderRadius: '6px', padding: '8px 10px', color: '#f1f5f9', fontSize: '12px', outline: 'none', boxSizing: 'border-box' };
 
   return (
     <div>
@@ -543,13 +574,17 @@ function ManageStudentsView({ showToast }) {
                 ))}
               </select>
             </div>
-            <div style={{ marginBottom: '16px' }}>
+            <div style={{ marginBottom: '12px' }}>
               <input style={inputStyle} className="w-full bg-gray-800 text-white rounded p-2" type="date" value={form.dob} onChange={e => setForm({...form, dob: e.target.value})} required disabled={loading} />
+            </div>
+            <div style={{ marginBottom: '16px' }}>
+              <input style={inputStyle} className="w-full bg-gray-800 text-white rounded p-2" type="email" placeholder="Student Email (for defaulter alerts)" value={form.email} onChange={e => setForm({...form, email: e.target.value})} disabled={loading} />
             </div>
             <div style={{ backgroundColor: 'rgba(96,165,250,0.06)', border: '0.5px solid rgba(96,165,250,0.14)', borderRadius: '6px', padding: '8px 10px', fontSize: '11px', color: '#64748b', display: 'flex', alignItems: 'center', gap: '7px', marginBottom: '16px' }} className="bg-blue-900/20 border border-blue-500/30 rounded p-2 text-blue-300 text-xs flex items-center gap-2 mb-4">
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" strokeWidth="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
               Student Username = Registration No | Password = DOB
             </div>
+
             
             {/* Camera status message */}
             {captureStatus && (
@@ -830,6 +865,309 @@ function ClassroomSetupView({ showToast }) {
             ))}
           </div>
         </div>
+      </div>
+    </div>
+  );
+}
+
+// ============================================================
+// TIMETABLE VIEW
+// ============================================================
+function TimetableView({ showToast }) {
+  const [entries, setEntries] = useState([]);
+  const [faculty, setFaculty] = useState([]);
+  const [rooms, setRooms] = useState([]);
+  const [facultySubjects, setFacultySubjects] = useState([]);
+  const [form, setForm] = useState({ faculty_id:'', faculty_name:'', subject_code:'', subject_name:'', day_of_week:'Monday', period:'Period 1', room:'', room_id:'' });
+  const [loading, setLoading] = useState(false);
+
+  const fetchAll = () => {
+    axios.get('http://localhost:8000/api/timetable/all').then(r => setEntries(Array.isArray(r.data)?r.data:[])).catch(console.error);
+    axios.get('http://localhost:8000/api/admin/faculty').then(r => setFaculty(Array.isArray(r.data)?r.data:[])).catch(console.error);
+    axios.get('http://localhost:8000/api/rooms').then(r => setRooms(Array.isArray(r.data)?r.data:[])).catch(console.error);
+  };
+  useEffect(() => { fetchAll(); }, []);
+
+  // When faculty changes, fetch their assigned subjects
+  useEffect(() => {
+    if (!form.faculty_id) { setFacultySubjects([]); return; }
+    axios.get(`http://localhost:8000/api/get-faculty-subjects?faculty_id=${form.faculty_id}`)
+      .then(r => setFacultySubjects(Array.isArray(r.data) ? r.data : []))
+      .catch(() => setFacultySubjects([]));
+  }, [form.faculty_id]);
+
+  const handleAdd = async () => {
+    if(!form.faculty_id || !form.subject_name) return showToast('Fill required fields','error');
+    setLoading(true);
+    try {
+      const res = await axios.post('http://localhost:8000/api/timetable', form);
+      if(res.data.success) { showToast('Entry added'); fetchAll(); setForm(p=>({...p, subject_name:'', subject_code:'', room:'', room_id:''})); }
+      else showToast(res.data.message,'error');
+    } catch(e) { showToast(e.response?.data?.message||'Error','error'); }
+    setLoading(false);
+  };
+  const handleDelete = async (id) => { await axios.delete(`http://localhost:8000/api/timetable/${id}`); showToast('Deleted'); fetchAll(); };
+  const cs = { backgroundColor:'#0d1117', border:'0.5px solid rgba(255,255,255,0.05)', borderRadius:'10px', padding:'16px', marginBottom:'14px' };
+  const inp = { width:'100%', backgroundColor:'#0d1117', border:'0.5px solid rgba(255,255,255,0.12)', borderRadius:'7px', padding:'9px 11px', color:'#f1f5f9', fontSize:'12px', outline:'none', boxSizing:'border-box' };
+  return (
+    <div>
+      <h2 style={{ color:'#f1f5f9', fontSize:'18px', margin:'0 0 16px' }}>📅 Timetable Management</h2>
+      <div style={cs}>
+        <div style={{ fontSize:'13px', fontWeight:'700', color:'#f1f5f9', marginBottom:'12px' }}>Add Entry</div>
+        <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr 1fr', gap:'10px' }}>
+          {/* Faculty Dropdown */}
+          <select style={inp} value={form.faculty_id} onChange={e => {
+            const f = faculty.find(x => x.employee_id === e.target.value);
+            setForm(p => ({...p, faculty_id: e.target.value, faculty_name: f?.name||'', subject_name:'', subject_code:''}));
+          }}>
+            <option value="" style={{backgroundColor:'#0d1117', color:'#f1f5f9'}}>Select Faculty</option>
+            {faculty.map(f => <option key={f.employee_id} value={f.employee_id} style={{backgroundColor:'#0d1117', color:'#f1f5f9'}}>{f.name} ({f.employee_id})</option>)}
+          </select>
+
+          {/* Dynamic Subject Dropdown */}
+          <select style={inp} value={form.subject_name} onChange={e => {
+            const sub = facultySubjects.find(s => s.subject_name === e.target.value);
+            setForm(p => ({...p, subject_name: e.target.value, subject_code: sub?.subject_code||''}));
+          }} disabled={!form.faculty_id}>
+            <option value="" style={{backgroundColor:'#0d1117', color:'#f1f5f9'}}>{form.faculty_id ? (facultySubjects.length ? 'Select Subject' : 'No subjects assigned') : 'Select faculty first'}</option>
+            {facultySubjects.map((s,i) => <option key={i} value={s.subject_name} style={{backgroundColor:'#0d1117', color:'#f1f5f9'}}>{s.subject_name} {s.subject_code && `(${s.subject_code})`}</option>)}
+          </select>
+
+          {/* Room Dropdown */}
+          <select style={inp} value={form.room_id} onChange={e => {
+            const rm = rooms.find(r => String(r.id) === e.target.value);
+            setForm(p => ({...p, room_id: e.target.value, room: rm?.room_name||''}));
+          }}>
+            <option value="" style={{backgroundColor:'#0d1117', color:'#f1f5f9'}}>Select Room (optional)</option>
+            {rooms.map(r => <option key={r.id} value={r.id} style={{backgroundColor:'#0d1117', color:'#f1f5f9'}}>{r.room_name}</option>)}
+          </select>
+
+          <select style={inp} value={form.day_of_week} onChange={e=>setForm(p=>({...p, day_of_week:e.target.value}))}>
+            {['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'].map(d => <option key={d} style={{backgroundColor:'#0d1117', color:'#f1f5f9'}}>{d}</option>)}
+          </select>
+          <select style={inp} value={form.period} onChange={e=>setForm(p=>({...p, period:e.target.value}))}>
+            {[1,2,3,4,5,6,7,8].map(n => <option key={n} value={`Period ${n}`} style={{backgroundColor:'#0d1117', color:'#f1f5f9'}}>Period {n}</option>)}
+          </select>
+        </div>
+        <button onClick={handleAdd} disabled={loading} style={{ marginTop:'12px', backgroundColor:'#ef4444', color:'#fff', border:'none', borderRadius:'8px', padding:'10px 24px', fontSize:'12px', fontWeight:'700', cursor:'pointer' }}>
+          {loading ? 'Adding...' : '+ Add Entry'}
+        </button>
+      </div>
+      <div style={cs}>
+        <div style={{ fontSize:'13px', fontWeight:'700', color:'#f1f5f9', marginBottom:'10px' }}>All Entries ({entries.length})</div>
+        <table style={{ width:'100%', borderCollapse:'collapse' }}>
+          <thead><tr>{['Faculty','Subject','Day','Period','Time','Room',''].map(h => (
+            <th key={h} style={{ fontSize:'10px', color:'#475569', padding:'6px 8px', textAlign:'left', borderBottom:'0.5px solid rgba(255,255,255,0.05)' }}>{h}</th>
+          ))}</tr></thead>
+          <tbody>{entries.map(e => (
+            <tr key={e.id}>
+              <td style={{ fontSize:'12px', color:'#e2e8f0', padding:'8px' }}>{e.faculty_name}</td>
+              <td style={{ fontSize:'12px', color:'#94a3b8', padding:'8px' }}>{e.subject_name}</td>
+              <td style={{ fontSize:'12px', color:'#94a3b8', padding:'8px' }}>{e.day_of_week}</td>
+              <td style={{ fontSize:'12px', color:'#94a3b8', padding:'8px' }}>{e.period}</td>
+              <td style={{ fontSize:'12px', color:'#94a3b8', padding:'8px' }}>{e.start_time}–{e.end_time}</td>
+              <td style={{ fontSize:'12px', color:'#94a3b8', padding:'8px' }}>{e.room||'—'}</td>
+              <td style={{ padding:'8px' }}><button onClick={()=>handleDelete(e.id)} style={{ fontSize:'10px', color:'#ef4444', backgroundColor:'rgba(239,68,68,0.08)', border:'0.5px solid rgba(239,68,68,0.2)', borderRadius:'5px', padding:'3px 10px', cursor:'pointer' }}>Delete</button></td>
+            </tr>
+          ))}</tbody>
+        </table>
+      </div>
+    </div>
+  );
+}
+
+
+// ============================================================
+// EXTRA CLASSES VIEW
+// ============================================================
+function ExtraClassesView() {
+  const [sessions, setSessions] = useState([]);
+  useEffect(() => {
+    axios.get('http://localhost:8000/api/admin/extra-classes-summary').then(r => setSessions(Array.isArray(r.data)?r.data:[])).catch(console.error);
+  }, []);
+  return (
+    <div>
+      <h2 style={{ color:'#f1f5f9', fontSize:'18px', margin:'0 0 16px' }}>⚡ Extra Classes Summary</h2>
+      <div style={{ backgroundColor:'#0d1117', border:'0.5px solid rgba(255,255,255,0.05)', borderRadius:'10px', padding:'16px' }}>
+        {sessions.length === 0 ? (
+          <div style={{ textAlign:'center', padding:'40px', color:'#475569', fontSize:'13px' }}>No extra classes recorded yet</div>
+        ) : (
+          <table style={{ width:'100%', borderCollapse:'collapse' }}>
+            <thead><tr>{['Date','Subject','Period','Taken By','Original Faculty','Present'].map(h => (
+              <th key={h} style={{ fontSize:'10px', color:'#475569', padding:'6px 10px', textAlign:'left', borderBottom:'0.5px solid rgba(255,255,255,0.05)' }}>{h}</th>
+            ))}</tr></thead>
+            <tbody>{sessions.map(s => (
+              <tr key={s.id}>
+                <td style={{ fontSize:'12px', color:'#e2e8f0', padding:'10px' }}>{s.date}<br/><span style={{ fontSize:'10px', color:'#475569' }}>{s.start_time}</span></td>
+                <td style={{ fontSize:'12px', color:'#e2e8f0', padding:'10px' }}>{s.subject_name}</td>
+                <td style={{ fontSize:'12px', color:'#94a3b8', padding:'10px' }}>{s.period}</td>
+                <td style={{ fontSize:'12px', color:'#c084fc', padding:'10px' }}>{s.faculty_name}</td>
+                <td style={{ fontSize:'12px', color:'#fb923c', padding:'10px' }}>{s.original_faculty_name || '—'}</td>
+                <td style={{ fontSize:'12px', color:'#22c55e', padding:'10px' }}>{s.total_present}</td>
+              </tr>
+            ))}</tbody>
+          </table>
+        )}
+      </div>
+    </div>
+  );
+}
+
+// ============================================================
+// ROOMS VIEW — IP / RTSP Camera Management
+// ============================================================
+function RoomsView({ showToast }) {
+  const [rooms, setRooms] = useState([]);
+  const [form, setForm] = useState({ room_name: '', rtsp_url: '' });
+  const [loading, setLoading] = useState(false);
+  const inp = { width:'100%', backgroundColor:'rgba(255,255,255,0.04)', border:'0.5px solid rgba(255,255,255,0.08)', borderRadius:'7px', padding:'9px 11px', color:'#f1f5f9', fontSize:'12px', outline:'none', boxSizing:'border-box', marginBottom:'10px' };
+
+  const fetchRooms = () => {
+    axios.get('http://localhost:8000/api/rooms')
+      .then(r => setRooms(Array.isArray(r.data) ? r.data : []))
+      .catch(console.error);
+  };
+  useEffect(() => { fetchRooms(); }, []);
+
+  const handleAdd = async () => {
+    if (!form.room_name || !form.rtsp_url) return showToast('Room name and RTSP URL are required', 'error');
+    setLoading(true);
+    try {
+      const res = await axios.post('http://localhost:8000/api/rooms', form);
+      if (res.data.success) { showToast(`✅ Room "${form.room_name}" added`); setForm({ room_name:'', rtsp_url:'' }); fetchRooms(); }
+      else showToast(res.data.message, 'error');
+    } catch(e) { showToast(e.response?.data?.message||'Error', 'error'); }
+    setLoading(false);
+  };
+
+  const handleDelete = async (id, name) => {
+    if (!window.confirm(`Delete room "${name}"?`)) return;
+    await axios.delete(`http://localhost:8000/api/rooms/${id}`);
+    showToast('Room deleted'); fetchRooms();
+  };
+
+  const cs = { backgroundColor:'#0d1117', border:'0.5px solid rgba(255,255,255,0.05)', borderRadius:'10px', padding:'16px', marginBottom:'14px' };
+  return (
+    <div>
+      <h2 style={{ color:'#f1f5f9', fontSize:'18px', margin:'0 0 4px' }}>🏫 Room & Camera Management</h2>
+      <p style={{ fontSize:'12px', color:'#475569', marginBottom:'20px' }}>Map rooms to their RTSP/IP camera streams for automated attendance scanning.</p>
+      <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'16px' }}>
+        <div style={cs}>
+          <div style={{ fontSize:'13px', fontWeight:'700', color:'#f1f5f9', marginBottom:'14px' }}>Add New Room</div>
+          <input style={inp} placeholder="Room Name (e.g. Lab A1, Room 101)" value={form.room_name} onChange={e => setForm({...form, room_name: e.target.value})} />
+          <input style={inp} placeholder="RTSP/IP URL (e.g. rtsp://192.168.1.5:554/stream or 0 for webcam)" value={form.rtsp_url} onChange={e => setForm({...form, rtsp_url: e.target.value})} />
+          <div style={{ backgroundColor:'rgba(96,165,250,0.06)', border:'0.5px solid rgba(96,165,250,0.14)', borderRadius:'6px', padding:'8px 10px', fontSize:'11px', color:'#64748b', marginBottom:'12px' }}>
+            💡 Use <strong style={{color:'#60a5fa'}}>0</strong> for laptop webcam {' '}|{' '} Use full RTSP URL for IP cameras
+          </div>
+          <button onClick={handleAdd} disabled={loading} style={{ width:'100%', backgroundColor:'#3b82f6', color:'#fff', border:'none', borderRadius:'7px', padding:'10px', fontSize:'12px', fontWeight:'700', cursor:'pointer', opacity: loading ? 0.7 : 1 }}>
+            {loading ? 'Adding...' : '+ Add Room'}
+          </button>
+        </div>
+        <div style={cs}>
+          <div style={{ fontSize:'13px', fontWeight:'700', color:'#f1f5f9', marginBottom:'10px' }}>Configured Rooms ({rooms.length})</div>
+          <div style={{ maxHeight:'320px', overflowY:'auto' }}>
+            {rooms.length === 0 ? <div style={{ color:'#475569', fontSize:'12px', textAlign:'center', padding:'30px' }}>No rooms configured yet</div> : rooms.map(r => (
+              <div key={r.id} style={{ display:'flex', alignItems:'center', gap:'10px', padding:'10px 0', borderBottom:'0.5px solid rgba(255,255,255,0.04)' }}>
+                <div style={{ width:'32px', height:'32px', borderRadius:'8px', backgroundColor:'rgba(59,130,246,0.1)', color:'#60a5fa', display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0 }}>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
+                </div>
+                <div style={{ flex:1, overflow:'hidden' }}>
+                  <div style={{ fontSize:'12px', color:'#e2e8f0', fontWeight:'600' }}>{r.room_name}</div>
+                  <div style={{ fontSize:'10px', color:'#475569', overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>{r.rtsp_url}</div>
+                </div>
+                <button onClick={() => handleDelete(r.id, r.room_name)} style={{ background:'none', border:'none', cursor:'pointer', padding:'4px', color:'#ef4444' }}>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                </button>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ============================================================
+// ATTENDANCE TRACKER VIEW — Defaulter Alert System
+// ============================================================
+function AttendanceTrackerView({ showToast }) {
+  const [students, setStudents] = useState([]);
+  const [totalSessions, setTotalSessions] = useState(0);
+  const [sending, setSending] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+  const fetchOverview = () => {
+    setLoading(true);
+    axios.get('http://localhost:8000/api/admin/attendance-overview')
+      .then(res => { setStudents(res.data.students || []); setTotalSessions(res.data.total_sessions || 0); })
+      .catch(console.error)
+      .finally(() => setLoading(false));
+  };
+  useEffect(() => { fetchOverview(); }, []);
+
+  const handleSendAlerts = async () => {
+    setSending(true);
+    try {
+      const res = await axios.post('http://localhost:8000/api/admin/send-defaulter-alerts');
+      if (res.data.success) showToast(`✅ ${res.data.message}`);
+      else showToast(res.data.message, 'error');
+    } catch(e) { showToast(e.response?.data?.message || 'Error sending alerts', 'error'); }
+    setSending(false);
+  };
+
+  const cs = { backgroundColor:'#0d1117', border:'0.5px solid rgba(255,255,255,0.05)', borderRadius:'10px', padding:'16px' };
+  const defaulters = students.filter(s => s.pct < 75).length;
+
+  return (
+    <div>
+      <h2 style={{ color:'#f1f5f9', fontSize:'18px', margin:'0 0 4px' }}>📊 Student Attendance Overview</h2>
+      <p style={{ fontSize:'12px', color:'#475569', marginBottom:'16px' }}>Total Classes Held: <strong style={{color:'#94a3b8'}}>{totalSessions}</strong> {' '}|{' '} Defaulters ({'<'}75%): <strong style={{color:'#ef4444'}}>{defaulters}</strong></p>
+
+      {/* Send Alerts Button */}
+      <button onClick={handleSendAlerts} disabled={sending || defaulters === 0} style={{
+        marginBottom:'16px', backgroundColor: sending ? '#7f1d1d' : '#ef4444', color:'#fff', border:'none',
+        borderRadius:'8px', padding:'11px 24px', fontSize:'13px', fontWeight:'700', cursor: (sending||defaulters===0)?'not-allowed':'pointer',
+        opacity: defaulters === 0 ? 0.5 : 1, display:'flex', alignItems:'center', gap:'8px'
+      }}>
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+        {sending ? 'Sending Emails...' : `⚠️ Send Alerts to ${defaulters} Defaulter${defaulters !== 1 ? 's' : ''}`}
+      </button>
+
+      <div style={cs}>
+        {loading ? (
+          <div style={{ textAlign:'center', padding:'40px', color:'#475569' }}>Loading...</div>
+        ) : students.length === 0 ? (
+          <div style={{ textAlign:'center', padding:'40px', color:'#475569', fontSize:'13px' }}>No students registered yet</div>
+        ) : (
+          <table style={{ width:'100%', borderCollapse:'collapse' }}>
+            <thead><tr>{['Name','Reg No','Email','Attended','Total','Attendance %'].map(h => (
+              <th key={h} style={{ fontSize:'10px', color:'#475569', padding:'8px 10px', textAlign:'left', borderBottom:'0.5px solid rgba(255,255,255,0.05)', fontWeight:'600', letterSpacing:'0.5px' }}>{h.toUpperCase()}</th>
+            ))}</tr></thead>
+            <tbody>{students.map(st => {
+              const isDefaulter = st.pct < 75;
+              return (
+                <tr key={st.id} style={{ backgroundColor: isDefaulter ? 'rgba(239,68,68,0.04)' : 'transparent' }}>
+                  <td style={{ fontSize:'12px', color:'#e2e8f0', padding:'10px', fontWeight:'500' }}>{st.name}</td>
+                  <td style={{ fontSize:'12px', color:'#94a3b8', padding:'10px' }}>{st.roll_number || '—'}</td>
+                  <td style={{ fontSize:'11px', color:'#64748b', padding:'10px' }}>{st.email || <em>No email</em>}</td>
+                  <td style={{ fontSize:'12px', color:'#94a3b8', padding:'10px', textAlign:'center' }}>{st.attended}</td>
+                  <td style={{ fontSize:'12px', color:'#94a3b8', padding:'10px', textAlign:'center' }}>{st.total}</td>
+                  <td style={{ padding:'10px' }}>
+                    <span style={{
+                      display:'inline-block', fontWeight:'700', fontSize:'12px',
+                      color: isDefaulter ? '#fca5a5' : '#86efac',
+                      backgroundColor: isDefaulter ? 'rgba(239,68,68,0.1)' : 'rgba(34,197,94,0.08)',
+                      border: `0.5px solid ${isDefaulter ? 'rgba(239,68,68,0.3)' : 'rgba(34,197,94,0.2)'}`,
+                      borderRadius:'6px', padding:'3px 10px'
+                    }}>
+                      {st.pct}% {isDefaulter ? '⚠️' : '✅'}
+                    </span>
+                  </td>
+                </tr>
+              );
+            })}</tbody>
+          </table>
+        )}
       </div>
     </div>
   );

@@ -131,11 +131,11 @@ export default function StudentRegistration() {
                           onChange={handleInputChange} 
                           className="block w-full pl-10 pr-10 py-3 border border-border-light/80 dark:border-border-dark/80 rounded-xl bg-background-light/50 dark:bg-background-dark/50 text-text-primary-light dark:text-text-primary-dark focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all font-medium shadow-inner text-sm appearance-none cursor-pointer form-select-arrow"
                         >
-                          <option value="">Select Year</option>
-                          <option value="1st Year">1st Year</option>
-                          <option value="2nd Year">2nd Year</option>
-                          <option value="3rd Year">3rd Year</option>
-                          <option value="4th Year">4th Year</option>
+                          <option value="" style={{backgroundColor:'#0d1117', color:'#f1f5f9'}}>Select Year</option>
+                          <option value="1st Year" style={{backgroundColor:'#0d1117', color:'#f1f5f9'}}>1st Year</option>
+                          <option value="2nd Year" style={{backgroundColor:'#0d1117', color:'#f1f5f9'}}>2nd Year</option>
+                          <option value="3rd Year" style={{backgroundColor:'#0d1117', color:'#f1f5f9'}}>3rd Year</option>
+                          <option value="4th Year" style={{backgroundColor:'#0d1117', color:'#f1f5f9'}}>4th Year</option>
                         </select>
                       </div>
                     </div>
@@ -155,10 +155,10 @@ export default function StudentRegistration() {
                         onChange={handleInputChange} 
                         className="block w-full pl-10 pr-10 py-3 border border-border-light/80 dark:border-border-dark/80 rounded-xl bg-background-light/50 dark:bg-background-dark/50 text-text-primary-light dark:text-text-primary-dark focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all font-medium shadow-inner text-sm appearance-none cursor-pointer form-select-arrow"
                       >
-                        <option value="">Select Department</option>
-                        <option value="Computer Science & Engineering">Computer Science & Engineering (CSE)</option>
-                        <option value="Computer Science & Engineering (AI)">Computer Science & Engineering (AI)</option>
-                        <option value="Electronics and Communication Engineering">Electronics and Communication Engg. (ECE)</option>
+                        <option value="" style={{backgroundColor:'#0d1117', color:'#f1f5f9'}}>Select Department</option>
+                        <option value="Computer Science & Engineering" style={{backgroundColor:'#0d1117', color:'#f1f5f9'}}>Computer Science & Engineering (CSE)</option>
+                        <option value="Computer Science & Engineering (AI)" style={{backgroundColor:'#0d1117', color:'#f1f5f9'}}>Computer Science & Engineering (AI)</option>
+                        <option value="Electronics and Communication Engineering" style={{backgroundColor:'#0d1117', color:'#f1f5f9'}}>Electronics and Communication Engg. (ECE)</option>
                       </select>
                     </div>
                   </div>

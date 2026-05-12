@@ -151,10 +151,10 @@ export default function FacultyRegistration() {
                     <div className="relative group">
                       <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"><span className="material-symbols-outlined text-text-secondary-light dark:text-text-secondary-dark text-[20px] group-focus-within:text-primary transition-colors">school</span></div>
                       <select name="department" value={formData.department} onChange={handleInputChange} className={selectCls}>
-                        <option value="">Select Dept</option>
-                        <option value="CSE">CSE</option>
-                        <option value="CSE-AI">CSE (AI)</option>
-                        <option value="ECE">ECE</option>
+                        <option value="" style={{backgroundColor:'#0d1117', color:'#f1f5f9'}}>Select Dept</option>
+                        <option value="CSE" style={{backgroundColor:'#0d1117', color:'#f1f5f9'}}>CSE</option>
+                        <option value="CSE-AI" style={{backgroundColor:'#0d1117', color:'#f1f5f9'}}>CSE (AI)</option>
+                        <option value="ECE" style={{backgroundColor:'#0d1117', color:'#f1f5f9'}}>ECE</option>
                       </select>
                     </div>
                   </div>
@@ -167,11 +167,11 @@ export default function FacultyRegistration() {
                     <div className="relative group">
                       <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"><span className="material-symbols-outlined text-text-secondary-light dark:text-text-secondary-dark text-[20px] group-focus-within:text-primary transition-colors">work</span></div>
                       <select name="designation" value={formData.designation} onChange={handleInputChange} className={selectCls}>
-                        <option value="Assistant Professor">Assistant Professor</option>
-                        <option value="Associate Professor">Associate Professor</option>
-                        <option value="Professor">Professor</option>
-                        <option value="HOD">HOD</option>
-                        <option value="Lab Assistant">Lab Assistant</option>
+                        <option value="Assistant Professor" style={{backgroundColor:'#0d1117', color:'#f1f5f9'}}>Assistant Professor</option>
+                        <option value="Associate Professor" style={{backgroundColor:'#0d1117', color:'#f1f5f9'}}>Associate Professor</option>
+                        <option value="Professor" style={{backgroundColor:'#0d1117', color:'#f1f5f9'}}>Professor</option>
+                        <option value="HOD" style={{backgroundColor:'#0d1117', color:'#f1f5f9'}}>HOD</option>
+                        <option value="Lab Assistant" style={{backgroundColor:'#0d1117', color:'#f1f5f9'}}>Lab Assistant</option>
                       </select>
                     </div>
                   </div>

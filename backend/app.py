@@ -14,6 +14,13 @@ import jwt
 from datetime import datetime
 import database
 
+# Load .env for email credentials
+try:
+    from dotenv import load_dotenv
+    load_dotenv(os.path.join(os.path.dirname(__file__), '.env'))
+except ImportError:
+    pass  # dotenv not installed — credentials must be set as system env vars
+
 from flask_cors import CORS
 
 app = Flask(__name__)
@@ -1346,6 +1353,225 @@ def delete_student_admin(student_id):
         if conn:
             conn.close()
 
+# ============================================================
+# TIMETABLE API ROUTES
+# ============================================================
+
+@app.route('/api/timetable', methods=['GET'])
+def api_get_timetable():
+    """Get timetable entries for a specific faculty"""
+    try:
+        faculty_id = request.args.get('faculty_id')
+        if not faculty_id:
+            return jsonify({'success': False, 'message': 'faculty_id required'}), 400
+        entries = database.get_timetable_for_faculty(faculty_id)
+        return jsonify(entries)
+    except Exception as e:
+        return jsonify({'success': False, 'message': str(e)}), 500
+
+@app.route('/api/timetable/current-class', methods=['GET'])
+def api_current_class():
+    """Get the currently scheduled class for a faculty (checks day & time)"""
+    try:
+        faculty_id = request.args.get('faculty_id')
+        if not faculty_id:
+            return jsonify({'success': False, 'message': 'faculty_id required'}), 400
+        entry = database.get_current_class(faculty_id)
+        if entry:
+            return jsonify({'found': True, 'class': entry})
+        return jsonify({'found': False, 'class': None})
+    except Exception as e:
+        return jsonify({'success': False, 'message': str(e)}), 500
+
+@app.route('/api/timetable/all', methods=['GET'])
+def api_all_timetable():
+    """Admin: Get full timetable for all faculty"""
+    try:
+        entries = database.get_all_timetable()
+        return jsonify(entries)
+    except Exception as e:
+        return jsonify({'success': False, 'message': str(e)}), 500
+
+@app.route('/api/timetable', methods=['POST'])
+def api_add_timetable():
+    """Admin: Add a timetable entry"""
+    try:
+        data = request.get_json()
+        faculty_id = data.get('faculty_id')
+        faculty_name = data.get('faculty_name')
+        subject_code = data.get('subject_code', '')
+        subject_name = data.get('subject_name')
+        day_of_week = data.get('day_of_week')
+        period = data.get('period')
+        branch = data.get('branch', '')
+        semester = data.get('semester', '')
+        room = data.get('room', '')
+
+        if not all([faculty_id, faculty_name, subject_name, day_of_week, period]):
+            return jsonify({'success': False, 'message': 'Missing required fields'}), 400
+
+        result = database.add_timetable_entry(
+            faculty_id, faculty_name, subject_code, subject_name,
+            day_of_week, period, branch, semester, room
+        )
+        if result:
+            return jsonify({'success': True, 'message': 'Timetable entry added', 'id': result})
+        return jsonify({'success': False, 'message': 'Slot already taken for this faculty on this day/period'}), 409
+    except Exception as e:
+        return jsonify({'success': False, 'message': str(e)}), 500
+
+@app.route('/api/timetable/<int:entry_id>', methods=['DELETE'])
+def api_delete_timetable(entry_id):
+    """Admin: Delete a timetable entry"""
+    try:
+        database.delete_timetable_entry(entry_id)
+        return jsonify({'success': True, 'message': 'Timetable entry deleted'})
+    except Exception as e:
+        return jsonify({'success': False, 'message': str(e)}), 500
+
+# ============================================================
+# SESSION ATTENDANCE DETAIL & LOGBOOK ROUTES
+# ============================================================
+
+@app.route('/api/session-attendance/<int:session_id>', methods=['GET'])
+def api_session_attendance(session_id):
+    """Get detailed list of students present in a specific lecture session"""
+    try:
+        records = database.get_session_attendance(session_id)
+        total_students = database.get_total_students_count()
+        return jsonify({
+            'students': records,
+            'total_present': len(records),
+            'total_students': total_students
+        })
+    except Exception as e:
+        return jsonify({'success': False, 'message': str(e)}), 500
+
+@app.route('/api/faculty-logbook', methods=['GET'])
+def api_faculty_logbook():
+    """Get all past sessions for a faculty member (regular + extra)"""
+    try:
+        faculty_id = request.args.get('faculty_id')
+        if not faculty_id:
+            return jsonify({'success': False, 'message': 'faculty_id required'}), 400
+        sessions = database.get_faculty_logbook(faculty_id)
+        total_students = database.get_total_students_count()
+        return jsonify({'sessions': sessions, 'total_students': total_students})
+    except Exception as e:
+        return jsonify({'success': False, 'message': str(e)}), 500
+
+@app.route('/api/faculty-extra-stats', methods=['GET'])
+def api_faculty_extra_stats():
+    """Get extra classes taken and classes missed/substituted counts"""
+    try:
+        faculty_id = request.args.get('faculty_id')
+        if not faculty_id:
+            return jsonify({'success': False, 'message': 'faculty_id required'}), 400
+        extra_taken = database.get_faculty_extra_classes_count(faculty_id)
+        classes_substituted = database.get_faculty_missed_classes_count(faculty_id)
+        return jsonify({
+            'extra_taken': extra_taken,
+            'classes_substituted': classes_substituted
+        })
+    except Exception as e:
+        return jsonify({'success': False, 'message': str(e)}), 500
+
+@app.route('/api/admin/extra-classes-summary', methods=['GET'])
+def api_admin_extra_classes_summary():
+    """Admin: Get summary of all extra/substitute classes"""
+    try:
+        sessions = database.get_all_extra_classes_summary()
+        return jsonify(sessions)
+    except Exception as e:
+        return jsonify({'success': False, 'message': str(e)}), 500
+
+# ============================================================
+# TAKE ATTENDANCE ROUTES (SCHEDULED + EXTRA)
+# ============================================================
+
+@app.route('/api/take-extra-class', methods=['POST'])
+def api_take_extra_class():
+    """Faculty: Start an extra/substitute class attendance session"""
+    try:
+        data = request.get_json() or {}
+        faculty_id = data.get('faculty_id', 'UNKNOWN')
+        faculty_name = data.get('faculty_name', localStorage_fallback(faculty_id))
+        subject_name = data.get('subject_name', '')
+        subject_code = data.get('subject_code', '')
+        period = data.get('period', '')
+        original_faculty_id = data.get('original_faculty_id', '')
+        original_faculty_name = data.get('original_faculty_name', '')
+
+        if not subject_name or not period:
+            return jsonify({'success': False, 'message': 'Subject and period are required'}), 400
+
+        # Create lecture session with type=extra
+        session_id = database.create_lecture_session(
+            subject_code=subject_code,
+            subject_name=subject_name,
+            period=period,
+            faculty_name=faculty_name,
+            session_type='extra',
+            faculty_id=faculty_id,
+            original_faculty_id=original_faculty_id,
+            original_faculty_name=original_faculty_name
+        )
+
+        write_log(f"Extra class started: {subject_name} by {faculty_name} (substituting {original_faculty_name or 'N/A'})", "info")
+
+        # Fetch RTSP URL from rooms if room_id provided
+        rtsp_url = None
+        room_id = data.get('room_id', None)
+        if room_id:
+            try:
+                conn_rt = database.get_connection()
+                cursor_rt = conn_rt.cursor()
+                cursor_rt.execute("SELECT rtsp_url FROM rooms WHERE id = ?", (room_id,))
+                rt_row = cursor_rt.fetchone()
+                conn_rt.close()
+                if rt_row:
+                    rtsp_url = dict(rt_row).get('rtsp_url')
+            except Exception:
+                pass
+
+        # Launch recognition
+        try:
+            cmd_args = [
+                sys.executable, "recognize_attendance.py",
+                subject_code, subject_name, period, faculty_name,
+                str(session_id) if session_id else "0"
+            ]
+            if rtsp_url:
+                cmd_args.append(rtsp_url)
+                write_log(f"Using IP camera for extra class: {rtsp_url}", "info")
+            if sys.platform == 'win32':
+                process = subprocess.Popen(cmd_args, creationflags=subprocess.CREATE_NEW_CONSOLE)
+            else:
+                process = subprocess.Popen(cmd_args)
+
+            process.wait(timeout=60)
+
+            conn = database.get_connection()
+            cursor = conn.cursor()
+            cursor.execute("SELECT total_present FROM lecture_sessions WHERE id = ?", (session_id,))
+            row = cursor.fetchone()
+            total_marked = dict(row)['total_present'] if row else 0
+            conn.close()
+
+            return jsonify({
+                'success': True,
+                'message': f'Extra class attendance completed! {total_marked} students marked.',
+                'session_id': session_id,
+                'total_marked': total_marked
+            })
+        except subprocess.TimeoutExpired:
+            process.kill()
+            return jsonify({'success': True, 'message': 'Scan timed out.', 'session_id': session_id})
+        except Exception as cam_err:
+            return jsonify({'success': False, 'message': f'Camera error: {str(cam_err)}'}), 500
+    except Exception as e:
+        return jsonify({'success': False, 'message': str(e)}), 500
+
 @app.route('/api/take-attendance', methods=['POST'])
 def api_take_attendance():
     """One-click attendance: launches recognize_attendance.py with laptop camera for 20 seconds"""
@@ -1358,17 +1584,61 @@ def api_take_attendance():
         subject_name = data.get('subject_name', 'General')
         subject_code = data.get('subject_code', 'GEN')
         period = data.get('period', 'Demo')
+        session_type = data.get('session_type', 'regular')
+        timetable_id = data.get('timetable_id', None)
         
         # Create session in DB
         session_id = database.create_lecture_session(
             subject_code=subject_code,
             subject_name=subject_name,
             period=period,
-            faculty_name=faculty_name
+            faculty_name=faculty_name,
+            session_type=session_type,
+            faculty_id=faculty_id,
+            timetable_id=timetable_id
         )
         
-        write_log(f"Starting 20-sec attendance scan (Session #{session_id}) by {faculty_name}", "info")
-        
+        write_log(f"Starting attendance scan (Session #{session_id}) by {faculty_name} for {subject_name}", "info")
+
+        # AUTO-DETECT CAMERA: timetable room → any single room → laptop fallback
+        rtsp_url = None
+
+        # Step 1: Try room linked to timetable
+        if timetable_id:
+            try:
+                conn_rt = database.get_connection()
+                cursor_rt = conn_rt.cursor()
+                cursor_rt.execute(
+                    "SELECT r.rtsp_url FROM timetable t JOIN rooms r ON t.room_id = r.id WHERE t.id = ?",
+                    (timetable_id,)
+                )
+                rt_row = cursor_rt.fetchone()
+                conn_rt.close()
+                if rt_row:
+                    rtsp_url = dict(rt_row).get('rtsp_url')
+                    write_log(f"Using timetable room camera: {rtsp_url}", "info")
+            except Exception:
+                pass
+
+        # Step 2: No timetable room → auto-use the only configured room
+        if not rtsp_url:
+            try:
+                conn_rt = database.get_connection()
+                cursor_rt = conn_rt.cursor()
+                cursor_rt.execute("SELECT rtsp_url, room_name FROM rooms ORDER BY id LIMIT 1")
+                rt_row = cursor_rt.fetchone()
+                conn_rt.close()
+                if rt_row:
+                    rtsp_url = dict(rt_row).get('rtsp_url')
+                    room_name = dict(rt_row).get('room_name', '')
+                    write_log(f"Auto-selected camera from room '{room_name}': {rtsp_url}", "info")
+            except Exception:
+                pass
+
+        # Step 3: If still no RTSP → laptop camera (handled in recognize_attendance.py)
+        if not rtsp_url:
+            write_log("No IP camera configured — using laptop camera", "info")
+
         # Launch recognize_attendance.py in NEW CONSOLE WINDOW
         try:
             cmd_args = [
@@ -1376,6 +1646,8 @@ def api_take_attendance():
                 subject_code, subject_name, period, faculty_name,
                 str(session_id) if session_id else "0"
             ]
+            if rtsp_url:
+                cmd_args.append(rtsp_url)
             
             if sys.platform == 'win32':
                 process = subprocess.Popen(
@@ -1820,46 +2092,6 @@ STUDENT_DUMMY = {
     ]
 }
 
-@app.route('/api/student/login', methods=['POST'])
-def student_login_api():
-    try:
-        data = request.get_json()
-        username = data.get('username', '').strip().upper()
-        password_plain = data.get('password', '').strip()
-        
-        if not username or not password_plain:
-            return jsonify({'success': False, 'message': 'Registration number and password required'}), 400
-
-        conn = database.get_connection()
-        cursor = conn.cursor()
-        
-        # Check credentials in DB
-        hashed_pw = hashlib.sha256(password_plain.encode()).hexdigest()
-        cursor.execute(
-            "SELECT name, roll_number, department, academic_year FROM students WHERE username = ? AND password = ?",
-            (username, hashed_pw)
-        )
-        student = cursor.fetchone()
-        conn.close()
-
-        if student:
-            s = dict(student)
-            token = jwt.encode(
-                {'roll': s['roll_number'], 'exp': datetime.utcnow() + __import__('datetime').timedelta(hours=12)},
-                JWT_SECRET, algorithm="HS256"
-            )
-            return jsonify({
-                'success': True,
-                'token': token,
-                'name': s['name'],
-                'roll_number': s['roll_number'],
-                'branch': s.get('department', 'CSE'),
-                'semester': s.get('academic_year', '8th Sem')
-            })
-        else:
-            return jsonify({'success': False, 'message': 'Invalid Registration Number or Password.'}), 404
-    except Exception as e:
-        return jsonify({'success': False, 'message': str(e)}), 500
 
 @app.route('/api/student-stats/<roll_no>', methods=['GET'])
 def student_stats(roll_no):
@@ -1872,9 +2104,11 @@ def student_stats(roll_no):
         cursor.execute('''
             SELECT
                 COUNT(*) as total,
-                SUM(CASE WHEN status='Present' THEN 1 ELSE 0 END) as attended,
-                ROUND(SUM(CASE WHEN status='Present' THEN 1 ELSE 0 END) * 100.0 / NULLIF(COUNT(*),0), 1) as overall_pct
-            FROM attendance WHERE student_roll = ?
+                SUM(CASE WHEN a.status='Present' THEN 1 ELSE 0 END) as attended,
+                ROUND(SUM(CASE WHEN a.status='Present' THEN 1 ELSE 0 END) * 100.0 / NULLIF(COUNT(*),0), 1) as overall_pct
+            FROM attendance a
+            JOIN students s ON a.student_id = s.id
+            WHERE s.roll_number = ?
         ''', (roll_no,))
         overall = cursor.fetchone()
 
@@ -1890,21 +2124,25 @@ def student_stats(roll_no):
         # 2. Subject-wise
         cursor.execute('''
             SELECT
-                subject_name as name,
+                a.subject_name as name,
                 COUNT(*) as total,
-                SUM(CASE WHEN status='Present' THEN 1 ELSE 0 END) as attended,
-                ROUND(SUM(CASE WHEN status='Present' THEN 1 ELSE 0 END) * 100.0 / NULLIF(COUNT(*),0), 1) as pct
-            FROM attendance WHERE student_roll = ?
-            GROUP BY subject_name ORDER BY pct DESC
+                SUM(CASE WHEN a.status='Present' THEN 1 ELSE 0 END) as attended,
+                ROUND(SUM(CASE WHEN a.status='Present' THEN 1 ELSE 0 END) * 100.0 / NULLIF(COUNT(*),0), 1) as pct
+            FROM attendance a
+            JOIN students s ON a.student_id = s.id
+            WHERE s.roll_number = ?
+            GROUP BY a.subject_name ORDER BY pct DESC
         ''', (roll_no,))
         subjects = [dict(r) for r in cursor.fetchall()]
 
         # 3. Recent history
         cursor.execute('''
-            SELECT date, subject_name as subject, period,
-                   faculty_name as faculty, status
-            FROM attendance WHERE student_roll = ?
-            ORDER BY date DESC, period ASC LIMIT 5
+            SELECT a.date, a.subject_name as subject, a.period,
+                   a.faculty_name as faculty, a.status
+            FROM attendance a
+            JOIN students s ON a.student_id = s.id
+            WHERE s.roll_number = ?
+            ORDER BY a.date DESC, a.period ASC LIMIT 5
         ''', (roll_no,))
         history = [dict(r) for r in cursor.fetchall()]
 
@@ -1926,6 +2164,283 @@ def student_stats(roll_no):
         })
 
 # ============================================================
+# STUDENT AUTH API (Roll Number + DOB login)
+# ============================================================
+
+@app.route('/api/student/login', methods=['POST'])
+def student_login_api():
+    try:
+        data = request.get_json()
+        roll_number = data.get('roll_number', '').strip().upper()
+        dob = data.get('dob', '').strip()
+
+        if not roll_number or not dob:
+            return jsonify({'success': False, 'message': 'Registration Number and Date of Birth are required'}), 400
+
+        conn = database.get_connection()
+        cursor = conn.cursor()
+        # Match roll_number AND dob stored as hash (set during registration) OR plain dob
+        hashed_dob = hashlib.sha256(dob.encode()).hexdigest()
+        cursor.execute(
+            "SELECT id, name, roll_number, department, academic_year, dob, password FROM students WHERE UPPER(roll_number) = ?",
+            (roll_number,)
+        )
+        student = cursor.fetchone()
+        conn.close()
+
+        if student:
+            s = dict(student)
+            # Accept if password matches hashed dob OR dob field matches plain dob
+            pw_match = (s.get('password') == hashed_dob)
+            dob_match = (s.get('dob') == dob)
+            if pw_match or dob_match:
+                token = jwt.encode(
+                    {'roll': s['roll_number'], 'exp': datetime.utcnow() + __import__('datetime').timedelta(hours=12)},
+                    JWT_SECRET, algorithm="HS256"
+                )
+                return jsonify({
+                    'success': True,
+                    'token': token,
+                    'name': s['name'],
+                    'roll_number': s['roll_number'],
+                    'branch': s.get('department', 'CSE'),
+                    'semester': s.get('academic_year', '1st Sem')
+                })
+        return jsonify({'success': False, 'message': 'Invalid Registration Number or Date of Birth'}), 401
+    except Exception as e:
+        return jsonify({'success': False, 'message': str(e)}), 500
+
+# ============================================================
+# ROOMS (IP/RTSP CAMERA) API ROUTES
+# ============================================================
+
+@app.route('/api/rooms', methods=['GET'])
+def api_get_rooms():
+    try:
+        conn = database.get_connection()
+        cursor = conn.cursor()
+        cursor.execute("SELECT * FROM rooms ORDER BY room_name ASC")
+        rooms = [dict(r) for r in cursor.fetchall()]
+        conn.close()
+        return jsonify(rooms)
+    except Exception as e:
+        return jsonify({'success': False, 'message': str(e)}), 500
+
+@app.route('/api/rooms', methods=['POST'])
+def api_add_room():
+    try:
+        data = request.get_json()
+        room_name = data.get('room_name', '').strip()
+        rtsp_url = data.get('rtsp_url', '').strip()
+        if not room_name or not rtsp_url:
+            return jsonify({'success': False, 'message': 'Room name and RTSP URL are required'}), 400
+        conn = database.get_connection()
+        cursor = conn.cursor()
+        cursor.execute("INSERT INTO rooms (room_name, rtsp_url) VALUES (?, ?)", (room_name, rtsp_url))
+        conn.commit()
+        room_id = cursor.lastrowid
+        conn.close()
+        write_log(f"Room '{room_name}' added with URL: {rtsp_url}", "info")
+        return jsonify({'success': True, 'message': f"Room '{room_name}' added", 'id': room_id})
+    except Exception as e:
+        if 'UNIQUE' in str(e):
+            return jsonify({'success': False, 'message': 'A room with this name already exists'}), 409
+        return jsonify({'success': False, 'message': str(e)}), 500
+
+@app.route('/api/rooms/<int:room_id>', methods=['DELETE'])
+def api_delete_room(room_id):
+    try:
+        conn = database.get_connection()
+        cursor = conn.cursor()
+        cursor.execute("DELETE FROM rooms WHERE id = ?", (room_id,))
+        conn.commit()
+        conn.close()
+        return jsonify({'success': True, 'message': 'Room deleted'})
+    except Exception as e:
+        return jsonify({'success': False, 'message': str(e)}), 500
+
+# ============================================================
+# STUDENT ATTENDANCE OVERVIEW & DEFAULTER ALERTS
+# ============================================================
+
+@app.route('/api/admin/attendance-overview', methods=['GET'])
+def api_attendance_overview():
+    """Returns per-student attendance summary for Admin defaulter tracker"""
+    try:
+        conn = database.get_connection()
+        cursor = conn.cursor()
+        # Count total unique lecture sessions as 'total classes'
+        cursor.execute("SELECT COUNT(DISTINCT id) FROM lecture_sessions")
+        total_sessions = cursor.fetchone()[0] or 0
+
+        cursor.execute('''
+            SELECT s.id, s.name, s.roll_number, s.email,
+                   COUNT(a.id) as attended,
+                   ? as total
+            FROM students s
+            LEFT JOIN attendance a ON a.student_id = s.id AND a.status = 'Present'
+            GROUP BY s.id, s.name, s.roll_number, s.email
+            ORDER BY s.name ASC
+        ''', (total_sessions,))
+        rows = []
+        for r in cursor.fetchall():
+            d = dict(r)
+            attended = d['attended'] or 0
+            total = d['total'] or 0
+            d['pct'] = round((attended / total * 100), 1) if total > 0 else 0.0
+            rows.append(d)
+        conn.close()
+        return jsonify({'students': rows, 'total_sessions': total_sessions})
+    except Exception as e:
+        return jsonify({'success': False, 'message': str(e)}), 500
+
+@app.route('/api/admin/send-defaulter-alerts', methods=['POST'])
+def api_send_defaulter_alerts():
+    """Send automated email alerts to students with attendance < 75%"""
+    import smtplib
+    import os
+    from email.mime.text import MIMEText
+    from email.mime.multipart import MIMEMultipart
+
+    MAIL_USERNAME = os.getenv('MAIL_USERNAME', '')
+    MAIL_PASSWORD = os.getenv('MAIL_PASSWORD', '')
+
+    if not MAIL_USERNAME or not MAIL_PASSWORD:
+        return jsonify({'success': False, 'message': 'Email credentials not configured. Set MAIL_USERNAME and MAIL_PASSWORD in .env'}), 500
+
+    try:
+        conn = database.get_connection()
+        cursor = conn.cursor()
+        cursor.execute("SELECT COUNT(DISTINCT id) FROM lecture_sessions")
+        total_sessions = cursor.fetchone()[0] or 0
+
+        cursor.execute('''
+            SELECT s.name, s.roll_number, s.email,
+                   COUNT(a.id) as attended
+            FROM students s
+            LEFT JOIN attendance a ON a.student_id = s.id AND a.status = 'Present'
+            GROUP BY s.id
+            HAVING s.email IS NOT NULL AND s.email != ''
+        ''')
+        students = [dict(r) for r in cursor.fetchall()]
+        conn.close()
+
+        sent = 0
+        skipped = 0
+        errors = []
+
+        for st in students:
+            attended = st['attended'] or 0
+            pct = round((attended / total_sessions * 100), 1) if total_sessions > 0 else 0.0
+            if pct >= 75:
+                skipped += 1
+                continue
+
+            try:
+                msg = MIMEMultipart('alternative')
+                msg['Subject'] = f"⚠️ Attendance Warning — {st['name']}"
+                msg['From'] = MAIL_USERNAME
+                msg['To'] = st['email']
+
+                html_body = f"""
+                <div style="font-family:Arial,sans-serif;background:#0f172a;color:#f1f5f9;padding:30px;border-radius:12px;max-width:480px">
+                  <h2 style="color:#ef4444">⚠️ Attendance Shortage Alert</h2>
+                  <p>Dear <strong>{st['name']}</strong>,</p>
+                  <p>Your current attendance is <strong style="color:#ef4444">{pct}%</strong>
+                     ({attended} / {total_sessions} classes attended).</p>
+                  <p>You must maintain a minimum of <strong>75%</strong> attendance to be eligible for examinations.</p>
+                  <p>Please contact your class coordinator immediately.</p>
+                  <hr style="border-color:#334155;margin:20px 0"/>
+                  <small style="color:#64748b">SmartAttend AI — Auto-generated Alert</small>
+                </div>
+                """
+                msg.attach(MIMEText(html_body, 'html'))
+
+                with smtplib.SMTP_SSL('smtp.gmail.com', 465) as server:
+                    server.login(MAIL_USERNAME, MAIL_PASSWORD)
+                    server.sendmail(MAIL_USERNAME, st['email'], msg.as_string())
+                sent += 1
+                write_log(f"Defaulter alert sent to {st['name']} ({st['email']}) — {pct}%", "info")
+            except Exception as mail_err:
+                errors.append(f"{st['name']}: {str(mail_err)}")
+
+        return jsonify({
+            'success': True,
+            'sent': sent,
+            'skipped': skipped,
+            'errors': errors,
+            'message': f"Alerts sent to {sent} defaulter(s). {skipped} student(s) above 75% skipped."
+        })
+    except Exception as e:
+        return jsonify({'success': False, 'message': str(e)}), 500
+
+# ============================================================
+# UPDATED admin/register-student — add email field
+# ============================================================
+
+@app.route('/api/admin/register-student-v2', methods=['POST'])
+def admin_register_student_v2():
+    """Updated registration with email field"""
+    try:
+        data = request.get_json()
+        name = data.get('name', '').strip()
+        roll = data.get('roll', '').strip().upper()
+        branch = data.get('branch', '').strip()
+        semester = data.get('semester', '').strip()
+        dob = data.get('dob', '').strip()
+        email = data.get('email', '').strip()
+
+        if not all([name, roll, branch, semester, dob]):
+            return jsonify({'success': False, 'message': 'Name, roll, branch, semester and DOB are required'}), 400
+
+        username = roll.upper()
+        password = hashlib.sha256(dob.encode()).hexdigest()
+
+        conn = database.get_connection()
+        cursor = conn.cursor()
+        try:
+            cursor.execute(
+                "INSERT INTO students (name, roll_number, department, academic_year, dob, email, username, password, face_registered) VALUES (?,?,?,?,?,?,?,?,0)",
+                (name, roll, branch, semester, dob, email, username, password)
+            )
+            conn.commit()
+            student_id = cursor.lastrowid
+        except Exception as db_err:
+            conn.close()
+            return jsonify({'success': False, 'message': 'Roll number or username already exists'}), 409
+        conn.close()
+
+        folder_name = f"{name}_{roll}"
+        save_path = os.path.join('TrainingImage', folder_name)
+        os.makedirs(save_path, exist_ok=True)
+
+        write_log(f"Launching face capture for {name} ({roll})", "info")
+        try:
+            if sys.platform == 'win32':
+                process = subprocess.Popen(
+                    [sys.executable, "capture_faces.py", folder_name],
+                    creationflags=subprocess.CREATE_NEW_CONSOLE
+                )
+            else:
+                process = subprocess.Popen([sys.executable, "capture_faces.py", folder_name])
+            process.wait(timeout=30)
+
+            conn2 = database.get_connection()
+            cursor2 = conn2.cursor()
+            cursor2.execute("UPDATE students SET face_registered = 1 WHERE roll_number = ?", (roll,))
+            conn2.commit()
+            conn2.close()
+            write_log(f"Face capture completed for {name} ({roll})", "success")
+            return jsonify({'success': True, 'message': f'Student registered & face captured!', 'credentials': {'username': username, 'password': dob}})
+        except subprocess.TimeoutExpired:
+            process.kill()
+            return jsonify({'success': True, 'message': 'Registered but face capture timed out.', 'credentials': {'username': username, 'password': dob}})
+        except Exception as cam_err:
+            return jsonify({'success': True, 'message': f'Registered but camera failed: {cam_err}', 'credentials': {'username': username, 'password': dob}})
+    except Exception as e:
+        return jsonify({'success': False, 'message': str(e)}), 500
+
+# ============================================================
 # MAIN
 # ============================================================
 
@@ -1934,3 +2449,4 @@ if __name__ == "__main__":
     init_log()
     write_log("Flask server starting on port 8000", "success")
     app.run(debug=True, port=8000)
+

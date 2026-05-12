@@ -2,25 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-const DUMMY_DATA = {
-  overall_pct: 84,
-  attended: 42,
-  total: 50,
-  subjects: [
-    { name: "Machine Learning", pct: 88, attended: 22, total: 25 },
-    { name: "Deep Learning",    pct: 80, attended: 20, total: 25 },
-    { name: "Soft Computing",   pct: 68, attended: 17, total: 25 },
-    { name: "NLP",              pct: 92, attended: 23, total: 25 },
-    { name: "Cloud Computing",  pct: 72, attended: 18, total: 25 },
-    { name: "Major Project",    pct: 96, attended: 24, total: 25 },
-  ],
-  history: [
-    { date: "04 May 2026", subject: "Machine Learning", period: "Period 3", faculty: "Dr. R. Kumar",   status: "Present" },
-    { date: "04 May 2026", subject: "Deep Learning",    period: "Period 1", faculty: "Dr. R. Kumar",   status: "Present" },
-    { date: "03 May 2026", subject: "Soft Computing",   period: "Period 5", faculty: "Prof. A. Verma", status: "Absent"  },
-    { date: "03 May 2026", subject: "NLP",              period: "Period 3", faculty: "Prof. S. Patel", status: "Present" },
-    { date: "02 May 2026", subject: "Cloud Computing",  period: "Period 6", faculty: "Dr. M. Singh",   status: "Absent"  },
-  ]
+const EMPTY_DATA = {
+  overall_pct: 0,
+  attended: 0,
+  total: 0,
+  subjects: [],
+  history: []
 };
 
 function subjectColor(pct) {
@@ -36,7 +23,7 @@ export default function StudentDashboard() {
   const studentBranch = localStorage.getItem("studentBranch") || "CSE-AI";
   const studentSem = localStorage.getItem("studentSem") || "8th Sem";
 
-  const [stats, setStats] = useState(DUMMY_DATA);
+  const [stats, setStats] = useState(EMPTY_DATA);
   const [loading, setLoading] = useState(true);
   const [historyFilter, setHistoryFilter] = useState("Last 5 Classes");
 
@@ -45,7 +32,7 @@ export default function StudentDashboard() {
     if (!roll) { navigate("/student/login"); return; }
     axios.get(`http://localhost:8000/api/student-stats/${roll}`)
       .then(res => { if (res.data && res.data.overall_pct !== undefined) setStats(res.data); })
-      .catch(() => setStats(DUMMY_DATA))
+      .catch(() => setStats(EMPTY_DATA))
       .finally(() => setLoading(false));
   }, [navigate]);
 
@@ -243,12 +230,12 @@ export default function StudentDashboard() {
               </div>
 
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
-                {stats.subjects.map((sub, i) => {
+                {stats.subjects.length > 0 ? stats.subjects.map((sub, i) => {
                   const col = subjectColor(sub.pct);
                   return (
                     <SubjectCell key={i} sub={sub} color={col} />
                   );
-                })}
+                }) : <div style={{color:'#64748b', fontSize:'12px', padding:'10px', gridColumn:'span 2', textAlign:'center'}}>No subject data recorded yet.</div>}
               </div>
             </div>
 
@@ -265,11 +252,11 @@ export default function StudentDashboard() {
                 <select
                   value={historyFilter}
                   onChange={e => setHistoryFilter(e.target.value)}
-                  style={{ marginLeft: 'auto', backgroundColor: '#070b14', border: '0.5px solid rgba(255,255,255,0.07)', borderRadius: '6px', padding: '4px 9px', color: '#64748b', fontSize: '11px', outline: 'none', cursor: 'pointer' }}
+                  style={{ marginLeft: 'auto', backgroundColor: '#0d1117', border: '0.5px solid rgba(255,255,255,0.1)', borderRadius: '6px', padding: '4px 9px', color: '#f1f5f9', fontSize: '11px', outline: 'none', cursor: 'pointer' }}
                 >
-                  <option>Last 5 Classes</option>
-                  <option>This Week</option>
-                  <option>This Month</option>
+                  <option style={{backgroundColor:'#0d1117', color:'#f1f5f9'}}>Last 5 Classes</option>
+                  <option style={{backgroundColor:'#0d1117', color:'#f1f5f9'}}>This Week</option>
+                  <option style={{backgroundColor:'#0d1117', color:'#f1f5f9'}}>This Month</option>
                 </select>
               </div>
 
@@ -284,7 +271,7 @@ export default function StudentDashboard() {
                   </tr>
                 </thead>
                 <tbody>
-                  {stats.history.map((row, i) => (
+                  {stats.history.length > 0 ? stats.history.map((row, i) => (
                     <tr key={i}>
                       <td style={{ fontSize: '12px', color: '#e2e8f0', fontWeight: '500', padding: '9px 10px', borderBottom: '0.5px solid rgba(255,255,255,0.03)' }}>{row.date}</td>
                       <td style={{ fontSize: '12px', color: '#94a3b8', padding: '9px 10px', borderBottom: '0.5px solid rgba(255,255,255,0.03)' }}>{row.subject}</td>
@@ -304,7 +291,13 @@ export default function StudentDashboard() {
                         )}
                       </td>
                     </tr>
-                  ))}
+                  )) : (
+                    <tr>
+                      <td colSpan="5" style={{ color: '#64748b', fontSize: '12px', padding: '20px', textAlign: 'center', borderBottom: '0.5px solid rgba(255,255,255,0.03)' }}>
+                        No recent classes attended
+                      </td>
+                    </tr>
+                  )}
                 </tbody>
               </table>
             </div>

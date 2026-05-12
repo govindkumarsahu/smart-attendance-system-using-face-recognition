@@ -2,6 +2,15 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
+const S = {
+  card: { backgroundColor:'#0d1117', border:'0.5px solid rgba(255,255,255,0.05)', borderRadius:'10px', padding:'14px 16px' },
+  btn2: { backgroundColor:'rgba(168,85,247,0.15)', color:'#c084fc', border:'1px solid rgba(168,85,247,0.3)', borderRadius:'10px', padding:'14px 32px', fontSize:'14px', fontWeight:'700', cursor:'pointer', display:'flex', alignItems:'center', gap:'8px' },
+  modal: { position:'fixed', inset:0, zIndex:1000, display:'flex', alignItems:'center', justifyContent:'center' },
+  overlay: { position:'absolute', inset:0, backgroundColor:'rgba(0,0,0,0.7)' },
+  mbox: { position:'relative', backgroundColor:'#0d1117', border:'1px solid rgba(255,255,255,0.1)', borderRadius:'14px', padding:'28px', maxWidth:'600px', width:'90%', maxHeight:'80vh', overflowY:'auto' },
+  inp: { width:'100%', backgroundColor:'#0d1117', border:'0.5px solid rgba(255,255,255,0.12)', borderRadius:'8px', padding:'10px 12px', color:'#f1f5f9', fontSize:'13px', outline:'none', boxSizing:'border-box' },
+};
+
 export default function FacultyDashboard() {
   const navigate = useNavigate();
   
@@ -15,6 +24,20 @@ export default function FacultyDashboard() {
   const [scanning, setScanning] = useState(false);
   const [scanResult, setScanResult] = useState(null);
   const [countdown, setCountdown] = useState(0);
+  const [activeTab, setActiveTab] = useState('dashboard');
+  const [currentClass, setCurrentClass] = useState(null);
+  const [extraStats, setExtraStats] = useState({ extra_taken:0, classes_substituted:0 });
+  const [showExtraModal, setShowExtraModal] = useState(false);
+  const [showReviewModal, setShowReviewModal] = useState(false);
+  const [reviewData, setReviewData] = useState({ students:[], total_present:0, total_students:0 });
+  const [logbookData, setLogbookData] = useState([]);
+  const [logbookTotal, setLogbookTotal] = useState(60);
+  const [sessionDetailId, setSessionDetailId] = useState(null);
+  const [sessionDetail, setSessionDetail] = useState(null);
+  const [extraForm, setExtraForm] = useState({ subject_name:'', subject_code:'', period:'', original_faculty_name:'', room_id:'' });
+  const [subjects, setSubjects] = useState([]);
+  const [rooms, setRooms] = useState([]);
+  const [extraScanning, setExtraScanning] = useState(false);
   
   const [stats, setStats] = useState({
     classes_today: 0,
@@ -22,14 +45,6 @@ export default function FacultyDashboard() {
     avg_attendance: "0%",
     subjects_assigned: 0
   });
-
-  const [logData, setLogData] = useState([
-    { id: 1, dateStr: "04 May 2026", timeStr: "10:00AM", subject: "Machine Learning", present: 47, total: 60, pct: 78, status: "Saved" },
-    { id: 2, dateStr: "04 May 2026", timeStr: "8:00AM", subject: "Deep Learning", present: 52, total: 60, pct: 87, status: "Saved" },
-    { id: 3, dateStr: "03 May 2026", timeStr: "2:00PM", subject: "Soft Computing", present: 38, total: 60, pct: 63, status: "Low" },
-    { id: 4, dateStr: "03 May 2026", timeStr: "10:00AM", subject: "NLP", present: 55, total: 60, pct: 92, status: "Saved" },
-    { id: 5, dateStr: "02 May 2026", timeStr: "11:00AM", subject: "Cloud Computing", present: 50, total: 60, pct: 83, status: "Saved" },
-  ]);
 
   // Clock
   useEffect(() => {
@@ -41,7 +56,7 @@ export default function FacultyDashboard() {
     return () => clearInterval(timer);
   }, []);
 
-  // Fetch stats
+  // Fetch stats + timetable + extra stats
   useEffect(() => {
     axios.get(`http://localhost:8000/api/faculty-stats?faculty_id=${facultyId}`)
       .then(res => {
@@ -52,7 +67,21 @@ export default function FacultyDashboard() {
           avg_attendance: res.data.avg_attendance ? `${parseFloat(res.data.avg_attendance).toFixed(0)}%` : '0%'
         }));
       }).catch(console.error);
+    axios.get(`http://localhost:8000/api/timetable/current-class?faculty_id=${facultyId}`)
+      .then(res => { if(res.data.found) setCurrentClass(res.data.class); }).catch(console.error);
+    axios.get(`http://localhost:8000/api/faculty-extra-stats?faculty_id=${facultyId}`)
+      .then(res => setExtraStats(res.data)).catch(console.error);
+    axios.get(`http://localhost:8000/api/get-faculty-subjects?faculty_id=${facultyId}`)
+      .then(res => { if(Array.isArray(res.data)) setSubjects(res.data); }).catch(console.error);
+    axios.get('http://localhost:8000/api/rooms')
+      .then(res => { if(Array.isArray(res.data)) setRooms(res.data); }).catch(console.error);
   }, [facultyId]);
+
+  const fetchLogbook = () => {
+    axios.get(`http://localhost:8000/api/faculty-logbook?faculty_id=${facultyId}`)
+      .then(res => { setLogbookData(res.data.sessions||[]); setLogbookTotal(res.data.total_students||60); }).catch(console.error);
+  };
+  useEffect(() => { if(activeTab==='logbook') fetchLogbook(); }, [activeTab]);
 
   // Countdown timer during scan
   useEffect(() => {
@@ -72,54 +101,61 @@ export default function FacultyDashboard() {
   const handleTakeAttendance = async () => {
     setScanning(true);
     setScanResult(null);
-    setCountdown(25); // ~20s recognition + ~5s init
-    
+    setCountdown(35);
+    const subName = currentClass ? currentClass.subject_name : 'General';
+    const subCode = currentClass ? currentClass.subject_code : 'GEN';
+    const per = currentClass ? currentClass.period : 'Demo';
+    const ttId = currentClass ? currentClass.id : null;
     try {
       const res = await axios.post('http://localhost:8000/api/take-attendance', {
-        faculty_id: facultyId,
-        faculty_name: facultyName,
-        subject_name: 'General',
-        subject_code: 'GEN',
-        period: 'Demo'
+        faculty_id: facultyId, faculty_name: facultyName,
+        subject_name: subName, subject_code: subCode, period: per,
+        session_type: 'regular', timetable_id: ttId
       }, { timeout: 70000 });
-      
-      setScanning(false);
-      setCountdown(0);
-      
+      setScanning(false); setCountdown(0);
       if (res.data.success) {
-        setScanResult({
-          type: 'success',
-          message: res.data.message || 'Attendance completed!',
-          total: res.data.total_marked || 0
-        });
-        
-        // Add to logbook
-        const now = new Date();
-        setLogData(prev => [{
-          id: Date.now(),
-          dateStr: now.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }),
-          timeStr: now.toLocaleTimeString('en-US', { hour12: true, hour: '2-digit', minute: '2-digit' }),
-          subject: "Attendance Scan",
-          present: res.data.total_marked || 0,
-          total: 60,
-          pct: Math.round(((res.data.total_marked || 0) / 60) * 100),
-          status: (res.data.total_marked || 0) > 0 ? "Saved" : "Low"
-        }, ...prev]);
-        
-        // Update stats
+        setScanResult({ type:'success', message: res.data.message, total: res.data.total_marked||0, session_id: res.data.session_id });
         setStats(prev => ({ ...prev, classes_today: prev.classes_today + 1 }));
-      } else {
-        setScanResult({ type: 'error', message: res.data.message });
-      }
+        // Auto-fetch review data
+        if(res.data.session_id) {
+          axios.get(`http://localhost:8000/api/session-attendance/${res.data.session_id}`)
+            .then(r => { setReviewData(r.data); setShowReviewModal(true); }).catch(console.error);
+        }
+      } else { setScanResult({ type:'error', message: res.data.message }); }
     } catch (err) {
-      setScanning(false);
-      setCountdown(0);
-      setScanResult({
-        type: 'error',
-        message: err.response?.data?.message || 'Camera error — check if camera is connected'
-      });
+      setScanning(false); setCountdown(0);
+      setScanResult({ type:'error', message: err.response?.data?.message || 'Camera error — check if camera is connected' });
     }
   };
+
+  // EXTRA CLASS
+  const handleExtraClass = async () => {
+    if(!extraForm.subject_name || !extraForm.period) return;
+    setExtraScanning(true);
+    try {
+      const res = await axios.post('http://localhost:8000/api/take-extra-class', {
+        faculty_id: facultyId, faculty_name: facultyName, ...extraForm
+      }, { timeout: 70000 });
+      setExtraScanning(false); setShowExtraModal(false);
+      if(res.data.success) {
+        setScanResult({ type:'success', message: res.data.message, total: res.data.total_marked||0, session_id: res.data.session_id });
+        setStats(prev => ({ ...prev, classes_today: prev.classes_today + 1 }));
+        setExtraStats(prev => ({ ...prev, extra_taken: prev.extra_taken + 1 }));
+        if(res.data.session_id) {
+          axios.get(`http://localhost:8000/api/session-attendance/${res.data.session_id}`)
+            .then(r => { setReviewData(r.data); setShowReviewModal(true); }).catch(console.error);
+        }
+      }
+    } catch(err) { setExtraScanning(false); setScanResult({ type:'error', message:'Camera error' }); }
+  };
+
+  // VIEW SESSION DETAIL
+  const handleViewSession = (sid) => {
+    setSessionDetailId(sid);
+    axios.get(`http://localhost:8000/api/session-attendance/${sid}`)
+      .then(r => setSessionDetail(r.data)).catch(console.error);
+  };
+
 
   const handleLogout = () => {
     localStorage.removeItem("facultyToken");
@@ -161,19 +197,53 @@ export default function FacultyDashboard() {
       </div>
 
       <div style={{ padding: '22px 28px' }}>
-        {/* SECTION 2 — STATS ROW */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '12px', marginTop: '22px' }}>
+        {/* STATS ROW — 6 cards */}
+        <div style={{ display:'grid', gridTemplateColumns:'repeat(6, 1fr)', gap:'10px', marginTop:'22px' }}>
           {[
-            { label: 'Classes Today', value: stats.classes_today, sub: 'Sessions taken', color: '#22c55e' },
-            { label: 'Total Students', value: stats.total_students, sub: 'Assigned batch', color: '#818cf8' },
-            { label: 'Avg Attendance', value: stats.avg_attendance, sub: 'This month', color: '#f59e0b' },
-            { label: 'Subjects Assigned', value: stats.subjects_assigned, sub: 'Active subjects', color: '#60a5fa' }
-          ].map(stat => (
-            <div key={stat.label} style={{ backgroundColor: '#0d1117', border: '0.5px solid rgba(255,255,255,0.05)', borderRadius: '10px', padding: '14px 16px' }}>
-              <div style={{ fontSize: '10px', color: '#475569', marginBottom: '5px' }}>{stat.label}</div>
-              <div style={{ fontSize: '22px', fontWeight: '800', color: '#f1f5f9' }}>{stat.value}</div>
-              <div style={{ fontSize: '10px', color: stat.color, marginTop: '3px' }}>{stat.sub}</div>
+            { label:'Classes Today', value:stats.classes_today, sub:'Sessions taken', color:'#22c55e' },
+            { label:'Total Students', value:stats.total_students, sub:'Registered', color:'#818cf8' },
+            { label:'Avg Attendance', value:stats.avg_attendance, sub:'This month', color:'#f59e0b' },
+            { label:'Subjects', value:stats.subjects_assigned, sub:'Assigned', color:'#60a5fa' },
+            { label:'Extra Classes', value:extraStats.extra_taken, sub:'Taken by you', color:'#c084fc' },
+            { label:'Substituted', value:extraStats.classes_substituted, sub:'Your classes covered', color:'#fb923c' },
+          ].map(s => (
+            <div key={s.label} style={S.card}>
+              <div style={{ fontSize:'10px', color:'#475569', marginBottom:'5px' }}>{s.label}</div>
+              <div style={{ fontSize:'20px', fontWeight:'800', color:'#f1f5f9' }}>{s.value}</div>
+              <div style={{ fontSize:'10px', color:s.color, marginTop:'3px' }}>{s.sub}</div>
             </div>
+          ))}
+        </div>
+
+        {/* TIMETABLE BANNER */}
+        {currentClass && (
+          <div style={{ marginTop:'14px', padding:'14px 18px', borderRadius:'10px', backgroundColor: currentClass.upcoming ? 'rgba(245,158,11,0.08)' : 'rgba(34,197,94,0.08)', border: currentClass.upcoming ? '1px solid rgba(245,158,11,0.25)' : '1px solid rgba(34,197,94,0.25)', display:'flex', alignItems:'center', justifyContent:'space-between' }}>
+            <div style={{ display:'flex', alignItems:'center', gap:'10px' }}>
+              <span style={{ fontSize:'20px' }}>{currentClass.upcoming ? '⏰' : '📚'}</span>
+              <div>
+                <div style={{ fontSize:'13px', fontWeight:'700', color:'#f1f5f9' }}>
+                  {currentClass.upcoming ? 'Upcoming' : 'Current'} Class: {currentClass.subject_name}
+                </div>
+                <div style={{ fontSize:'11px', color:'#94a3b8' }}>
+                  {currentClass.period} · {currentClass.start_time}–{currentClass.end_time} · {currentClass.room || 'No room'}
+                </div>
+              </div>
+            </div>
+            <div style={{ fontSize:'11px', color: currentClass.upcoming ? '#fbbf24' : '#86efac', fontWeight:'600' }}>
+              {currentClass.upcoming ? 'Starts soon' : 'In Progress'}
+            </div>
+          </div>
+        )}
+
+        {/* TAB NAVIGATION */}
+        <div style={{ display:'flex', gap:'4px', marginTop:'18px', borderBottom:'1px solid rgba(255,255,255,0.05)', paddingBottom:'0' }}>
+          {['dashboard','logbook'].map(tab => (
+            <button key={tab} onClick={() => setActiveTab(tab)} style={{
+              padding:'10px 20px', fontSize:'12px', fontWeight:'600', cursor:'pointer', border:'none',
+              borderBottom: activeTab===tab ? '2px solid #22c55e' : '2px solid transparent',
+              color: activeTab===tab ? '#f1f5f9' : '#475569',
+              backgroundColor:'transparent', textTransform:'capitalize'
+            }}>{tab === 'dashboard' ? '📷 Dashboard' : '📋 Attendance Logbook'}</button>
           ))}
         </div>
 
@@ -297,78 +367,163 @@ export default function FacultyDashboard() {
                     boxShadow: '0 0 30px rgba(34,197,94,0.2)',
                     transition: 'all 0.2s'
                   }}
-                  onMouseEnter={e => { e.target.style.backgroundColor = '#15803d'; e.target.style.transform = 'scale(1.02)'; }}
-                  onMouseLeave={e => { e.target.style.backgroundColor = '#16a34a'; e.target.style.transform = 'scale(1)'; }}
+                  onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.02)'}
+                  onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'}
                 >
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2">
                     <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
                     <circle cx="12" cy="13" r="4"></circle>
                   </svg>
-                  Take Attendance (20 Sec Scan)
+                  Take Attendance
                 </button>
 
-                <div style={{ fontSize: '11px', color: '#475569', textAlign: 'center' }}>
-                  Click to open laptop camera · YOLOv8 detects faces · DeepFace matches with registered students · Auto-marks attendance
+                <button onClick={() => setShowExtraModal(true)} style={S.btn2}>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                  Take Extra Class
+                </button>
+
+                <div style={{ fontSize:'11px', color:'#475569', textAlign:'center' }}>
+                  {currentClass ? `Auto-detected: ${currentClass.subject_name} — ${currentClass.period}` : 'No scheduled class — will use General mode'}
                 </div>
               </>
             )}
           </div>
         </div>
 
-        {/* SECTION 4 — MY CLASS LOGBOOK TABLE */}
-        <div style={{ backgroundColor: '#0d1117', border: '0.5px solid rgba(255,255,255,0.05)', borderRadius: '12px', padding: '18px 20px', marginTop: '22px' }}>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingBottom: '13px', borderBottom: '0.5px solid rgba(255,255,255,0.05)', marginBottom: '10px' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" strokeWidth="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
-              <span style={{ fontSize: '13px', fontWeight: '700', color: '#f1f5f9' }}>My Class Logbook</span>
-            </div>
+        {activeTab === 'logbook' && (
+        <div style={{ backgroundColor:'#0d1117', border:'0.5px solid rgba(255,255,255,0.05)', borderRadius:'12px', padding:'18px 20px', marginTop:'18px' }}>
+          <div style={{ display:'flex', alignItems:'center', gap:'8px', paddingBottom:'13px', borderBottom:'0.5px solid rgba(255,255,255,0.05)', marginBottom:'10px' }}>
+            <span style={{ fontSize:'13px', fontWeight:'700', color:'#f1f5f9' }}>📋 Attendance Logbook</span>
+            <span style={{ fontSize:'11px', color:'#475569', marginLeft:'auto' }}>{logbookData.length} sessions</span>
           </div>
-
-          <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-            <thead>
-              <tr>
-                {["DATE & TIME", "SUBJECT", "PRESENT/TOTAL", "STATUS"].map(th => (
-                  <th key={th} style={{ fontSize: '10px', color: '#334155', fontWeight: '600', letterSpacing: '.5px', padding: '8px 10px', textAlign: 'left', borderBottom: '0.5px solid rgba(255,255,255,0.05)' }}>{th}</th>
-                ))}
-              </tr>
-            </thead>
+          {logbookData.length === 0 ? (
+            <div style={{ textAlign:'center', padding:'40px 0', color:'#475569', fontSize:'13px' }}>No sessions recorded yet</div>
+          ) : (
+          <table style={{ width:'100%', borderCollapse:'collapse' }}>
+            <thead><tr>
+              {['DATE','SUBJECT','PERIOD','TYPE','PRESENT','ACTION'].map(h => (
+                <th key={h} style={{ fontSize:'10px', color:'#334155', fontWeight:'600', letterSpacing:'.5px', padding:'8px 10px', textAlign:'left', borderBottom:'0.5px solid rgba(255,255,255,0.05)' }}>{h}</th>
+              ))}
+            </tr></thead>
             <tbody>
-              {logData.map(log => {
-                const isGood = log.pct >= 75;
-                const statusColor = isGood ? '#86efac' : '#fbbf24';
-                const statusBg = isGood ? 'rgba(34,197,94,0.08)' : 'rgba(245,158,11,0.08)';
-                const statusBorder = isGood ? 'rgba(34,197,94,0.2)' : 'rgba(245,158,11,0.2)';
-
+              {logbookData.map(s => {
+                const pct = s.total_present > 0 ? Math.round((s.total_present / Math.max(logbookTotal,1)) * 100) : 0;
                 return (
-                  <tr key={log.id}>
-                    <td style={{ fontSize: '12px', color: '#94a3b8', padding: '10px 10px', borderBottom: '0.5px solid rgba(255,255,255,0.03)' }}>
-                      <div style={{ fontSize: '12px', color: '#e2e8f0', fontWeight: '500' }}>{log.dateStr}</div>
-                      <div style={{ fontSize: '10px', color: '#475569' }}>{log.timeStr}</div>
-                    </td>
-                    <td style={{ fontSize: '12px', color: '#e2e8f0', fontWeight: '500', padding: '10px 10px', borderBottom: '0.5px solid rgba(255,255,255,0.03)' }}>{log.subject}</td>
-                    <td style={{ fontSize: '12px', color: '#94a3b8', padding: '10px 10px', borderBottom: '0.5px solid rgba(255,255,255,0.03)' }}>
-                      <div style={{ color: isGood ? '#22c55e' : '#ef4444' }}>{log.present} / {log.total} ({log.pct}%)</div>
-                      <div style={{ height: '3px', width: '60px', borderRadius: '2px', backgroundColor: 'rgba(255,255,255,0.06)', marginTop: '4px' }}>
-                        <div style={{ height: '100%', width: `${log.pct}%`, backgroundColor: isGood ? '#22c55e' : '#ef4444', borderRadius: '2px' }}></div>
-                      </div>
-                    </td>
-                    <td style={{ fontSize: '12px', color: '#94a3b8', padding: '10px 10px', borderBottom: '0.5px solid rgba(255,255,255,0.03)' }}>
-                      <div style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', fontSize: '10px', padding: '2px 8px', borderRadius: '5px', backgroundColor: statusBg, border: `0.5px solid ${statusBorder}`, color: statusColor }}>
-                        {isGood ? (
-                          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                        ) : (
-                          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
-                        )}
-                        {log.status}
-                      </div>
-                    </td>
-                  </tr>
-                );
+                <tr key={s.id} style={{ cursor:'pointer' }} onClick={() => handleViewSession(s.id)}>
+                  <td style={{ fontSize:'12px', color:'#e2e8f0', padding:'10px', borderBottom:'0.5px solid rgba(255,255,255,0.03)' }}>
+                    <div>{s.date}</div><div style={{ fontSize:'10px', color:'#475569' }}>{s.start_time}</div>
+                  </td>
+                  <td style={{ fontSize:'12px', color:'#e2e8f0', fontWeight:'500', padding:'10px', borderBottom:'0.5px solid rgba(255,255,255,0.03)' }}>{s.subject_name}</td>
+                  <td style={{ fontSize:'12px', color:'#94a3b8', padding:'10px', borderBottom:'0.5px solid rgba(255,255,255,0.03)' }}>{s.period}</td>
+                  <td style={{ padding:'10px', borderBottom:'0.5px solid rgba(255,255,255,0.03)' }}>
+                    <span style={{ fontSize:'10px', padding:'2px 8px', borderRadius:'5px',
+                      backgroundColor: s.session_type==='extra' ? 'rgba(168,85,247,0.1)' : 'rgba(34,197,94,0.08)',
+                      border: s.session_type==='extra' ? '0.5px solid rgba(168,85,247,0.3)' : '0.5px solid rgba(34,197,94,0.2)',
+                      color: s.session_type==='extra' ? '#c084fc' : '#86efac' }}>
+                      {s.session_type==='extra' ? '⚡ Extra' : '📅 Regular'}
+                    </span>
+                  </td>
+                  <td style={{ fontSize:'12px', color: pct>=75?'#22c55e':'#ef4444', padding:'10px', borderBottom:'0.5px solid rgba(255,255,255,0.03)' }}>
+                    {s.total_present}/{logbookTotal} ({pct}%)
+                  </td>
+                  <td style={{ padding:'10px', borderBottom:'0.5px solid rgba(255,255,255,0.03)' }}>
+                    <button style={{ fontSize:'10px', color:'#60a5fa', backgroundColor:'rgba(96,165,250,0.08)', border:'0.5px solid rgba(96,165,250,0.2)', borderRadius:'5px', padding:'3px 10px', cursor:'pointer' }}>View</button>
+                  </td>
+                </tr>);
               })}
             </tbody>
-          </table>
-        </div>
+          </table>)}
+        </div>)}
       </div>
+
+      {/* === REVIEW ATTENDANCE MODAL === */}
+      {showReviewModal && (
+        <div style={S.modal}>
+          <div style={S.overlay} onClick={() => setShowReviewModal(false)} />
+          <div style={{...S.mbox, maxWidth:'700px'}}>
+            <h3 style={{ color:'#f1f5f9', margin:'0 0 4px', fontSize:'18px' }}>✅ Attendance Review</h3>
+            <p style={{ color:'#94a3b8', fontSize:'12px', margin:'0 0 16px' }}>Session completed — {reviewData.total_present} / {reviewData.total_students} students present</p>
+            <div style={{ backgroundColor:'rgba(34,197,94,0.06)', border:'1px solid rgba(34,197,94,0.2)', borderRadius:'10px', padding:'16px', textAlign:'center', marginBottom:'16px' }}>
+              <div style={{ fontSize:'36px', fontWeight:'800', color:'#22c55e' }}>{reviewData.total_present}</div>
+              <div style={{ fontSize:'12px', color:'#86efac' }}>out of {reviewData.total_students} students present</div>
+            </div>
+            {reviewData.students?.length > 0 && (
+              <table style={{ width:'100%', borderCollapse:'collapse' }}>
+                <thead><tr>{['#','Name','Roll No','Time'].map(h => (<th key={h} style={{ fontSize:'10px', color:'#475569', padding:'6px 8px', textAlign:'left', borderBottom:'0.5px solid rgba(255,255,255,0.05)' }}>{h}</th>))}</tr></thead>
+                <tbody>{reviewData.students.map((s,i) => (
+                  <tr key={i}><td style={{ fontSize:'12px', color:'#475569', padding:'6px 8px', borderBottom:'0.5px solid rgba(255,255,255,0.03)' }}>{i+1}</td>
+                  <td style={{ fontSize:'12px', color:'#e2e8f0', padding:'6px 8px', borderBottom:'0.5px solid rgba(255,255,255,0.03)' }}>{s.name}</td>
+                  <td style={{ fontSize:'12px', color:'#94a3b8', padding:'6px 8px', borderBottom:'0.5px solid rgba(255,255,255,0.03)' }}>{s.roll_number||'N/A'}</td>
+                  <td style={{ fontSize:'12px', color:'#94a3b8', padding:'6px 8px', borderBottom:'0.5px solid rgba(255,255,255,0.03)' }}>{s.time}</td></tr>
+                ))}</tbody>
+              </table>)}
+            <button onClick={() => setShowReviewModal(false)} style={{ marginTop:'16px', width:'100%', backgroundColor:'#16a34a', color:'#fff', border:'none', borderRadius:'8px', padding:'11px', fontSize:'13px', fontWeight:'700', cursor:'pointer' }}>Close Review</button>
+          </div>
+        </div>)}
+
+      {/* === EXTRA CLASS MODAL === */}
+      {showExtraModal && (
+        <div style={S.modal}>
+          <div style={S.overlay} onClick={() => !extraScanning && setShowExtraModal(false)} />
+          <div style={S.mbox}>
+            <h3 style={{ color:'#f1f5f9', margin:'0 0 4px', fontSize:'18px' }}>⚡ Take Extra Class</h3>
+            <p style={{ color:'#94a3b8', fontSize:'12px', margin:'0 0 20px' }}>Start an extra/substitute class attendance session</p>
+            <div style={{ display:'flex', flexDirection:'column', gap:'14px' }}>
+              <div><label style={{ fontSize:'11px', color:'#94a3b8', display:'block', marginBottom:'5px' }}>Subject *</label>
+                <select style={{...S.inp, cursor:'pointer'}} value={extraForm.subject_name} onChange={e => {
+                  const sel = subjects.find(s => s.subject_name === e.target.value);
+                  setExtraForm(p => ({...p, subject_name: e.target.value, subject_code: sel?.subject_code||'' }));
+                }}>
+                  <option value="" style={{backgroundColor:'#0d1117', color:'#f1f5f9'}}>Select subject...</option>
+                  {subjects.map(s => <option key={s.subject_name} value={s.subject_name} style={{backgroundColor:'#0d1117', color:'#f1f5f9'}}>{s.subject_name} ({s.subject_code})</option>)}
+                </select>
+              </div>
+              <div><label style={{ fontSize:'11px', color:'#94a3b8', display:'block', marginBottom:'5px' }}>Period *</label>
+                <select style={{...S.inp, cursor:'pointer'}} value={extraForm.period} onChange={e => setExtraForm(p => ({...p, period: e.target.value}))}>
+                  <option value="" style={{backgroundColor:'#0d1117', color:'#f1f5f9'}}>Select period...</option>
+                  {[1,2,3,4,5,6,7,8].map(n => <option key={n} value={`Period ${n}`} style={{backgroundColor:'#0d1117', color:'#f1f5f9'}}>Period {n}</option>)}
+                </select>
+              </div>
+              <div><label style={{ fontSize:'11px', color:'#94a3b8', display:'block', marginBottom:'5px' }}>Original Faculty (optional)</label>
+                <input style={S.inp} placeholder="Name of faculty being substituted" value={extraForm.original_faculty_name} onChange={e => setExtraForm(p => ({...p, original_faculty_name: e.target.value}))} />
+              </div>
+              <div><label style={{ fontSize:'11px', color:'#94a3b8', display:'block', marginBottom:'5px' }}>📷 Camera / Room (optional)</label>
+                <select style={{...S.inp, cursor:'pointer'}} value={extraForm.room_id} onChange={e => setExtraForm(p => ({...p, room_id: e.target.value}))}>
+                  <option value="" style={{backgroundColor:'#0d1117', color:'#f1f5f9'}}>🖥️ Use Laptop Camera (default)</option>
+                  {rooms.map(r => <option key={r.id} value={r.id} style={{backgroundColor:'#0d1117', color:'#f1f5f9'}}>📱 {r.room_name} — {r.rtsp_url}</option>)}
+                </select>
+              </div>
+            </div>
+            <div style={{ display:'flex', gap:'10px', marginTop:'20px' }}>
+              <button onClick={() => setShowExtraModal(false)} disabled={extraScanning} style={{ flex:1, backgroundColor:'transparent', color:'#94a3b8', border:'1px solid rgba(255,255,255,0.1)', borderRadius:'8px', padding:'11px', fontSize:'13px', cursor:'pointer' }}>Cancel</button>
+              <button onClick={handleExtraClass} disabled={extraScanning || !extraForm.subject_name || !extraForm.period} style={{ flex:1, backgroundColor:'#7c3aed', color:'#fff', border:'none', borderRadius:'8px', padding:'11px', fontSize:'13px', fontWeight:'700', cursor:'pointer', opacity: (!extraForm.subject_name || !extraForm.period) ? 0.5 : 1 }}>
+                {extraScanning ? 'Scanning...' : '🎯 Start Scan'}
+              </button>
+            </div>
+          </div>
+        </div>)}
+
+      {/* === SESSION DETAIL MODAL === */}
+      {sessionDetailId && sessionDetail && (
+        <div style={S.modal}>
+          <div style={S.overlay} onClick={() => { setSessionDetailId(null); setSessionDetail(null); }} />
+          <div style={{...S.mbox, maxWidth:'700px'}}>
+            <h3 style={{ color:'#f1f5f9', margin:'0 0 4px', fontSize:'18px' }}>📋 Session #{sessionDetailId} — Details</h3>
+            <p style={{ color:'#94a3b8', fontSize:'12px', margin:'0 0 16px' }}>{sessionDetail.total_present} / {sessionDetail.total_students} students present</p>
+            {sessionDetail.students?.length > 0 ? (
+              <table style={{ width:'100%', borderCollapse:'collapse' }}>
+                <thead><tr>{['#','Name','Roll No','Time'].map(h => (<th key={h} style={{ fontSize:'10px', color:'#475569', padding:'6px 8px', textAlign:'left', borderBottom:'0.5px solid rgba(255,255,255,0.05)' }}>{h}</th>))}</tr></thead>
+                <tbody>{sessionDetail.students.map((s,i) => (
+                  <tr key={i}><td style={{ fontSize:'12px', color:'#475569', padding:'6px 8px', borderBottom:'0.5px solid rgba(255,255,255,0.03)' }}>{i+1}</td>
+                  <td style={{ fontSize:'12px', color:'#e2e8f0', padding:'6px 8px', borderBottom:'0.5px solid rgba(255,255,255,0.03)' }}>{s.name}</td>
+                  <td style={{ fontSize:'12px', color:'#94a3b8', padding:'6px 8px', borderBottom:'0.5px solid rgba(255,255,255,0.03)' }}>{s.roll_number||'N/A'}</td>
+                  <td style={{ fontSize:'12px', color:'#94a3b8', padding:'6px 8px', borderBottom:'0.5px solid rgba(255,255,255,0.03)' }}>{s.time}</td></tr>
+                ))}</tbody>
+              </table>
+            ) : <div style={{ textAlign:'center', padding:'30px', color:'#475569', fontSize:'13px' }}>No students recorded</div>}
+            <button onClick={() => { setSessionDetailId(null); setSessionDetail(null); }} style={{ marginTop:'16px', width:'100%', backgroundColor:'rgba(255,255,255,0.05)', color:'#94a3b8', border:'1px solid rgba(255,255,255,0.1)', borderRadius:'8px', padding:'11px', fontSize:'13px', cursor:'pointer' }}>Close</button>
+          </div>
+        </div>)}
     </div>
   );
 }
